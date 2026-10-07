@@ -63,4 +63,12 @@ router.get("/", async (req, res) => {
   res.render("dashboard", { featured, loading: false });
 });
 
+router.get("/settings", (req, res) => {
+  res.render("settings");
+});
+
+router.get("/logout", (req, res) => {
+  res.redirect("/login");
+});
+
 module.exports = router;
