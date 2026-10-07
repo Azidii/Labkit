@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Labkit — Hardware Kits for Engineers</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a href="/" class="navbar__brand">
+        <span class="navbar__logo-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="16" height="16" x="4" y="4" rx="2"/>
+            <rect width="6" height="6" x="9" y="9"/>
+            <path d="M15 2v2"/>
+            <path d="M15 20v2"/>
+            <path d="M2 15h2"/>
+            <path d="M2 9h2"/>
+            <path d="M20 15h2"/>
+            <path d="M20 9h2"/>
+            <path d="M9 2v2"/>
+            <path d="M9 20v2"/>
+          </svg>
+        </span>
+        <span class="navbar__wordmark">LabKit</span>
+        <span class="navbar__sub">/MARKET</span>
+      </a>
+
+      <nav class="navbar__nav">
+        <a href="/shop" class="navbar__link">Shop Bundles</a>
+        <a href="#categories" class="navbar__link">Categories</a>
+        <a href="/how-it-works" class="navbar__link">How It Works</a>
+      </nav>
+
+      <div class="navbar__actions">
+        <button class="navbar__icon-btn" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <a href="/cart" class="navbar__icon-btn navbar__cart" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="navbar__cart-badge">4</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__bg">
+      <div class="hero__gradient"></div>
+      <div class="hero__grid"></div>
+    </div>
+    <div class="container">
+      <div class="hero__inner">
+        <span class="hero__badge">
+          <span class="hero__dot">
+            <span class="hero__dot-ping"></span>
+            <span class="hero__dot-core"></span>
+          </span>
+          Project-ready bundles · never lose components
+        </span>
+
+        <h1>
+          Hardware kits that ship with the
+          <span class="accent">schematics</span>, topologies, and code.
+        </h1>
+
+        <p class="hero__desc">
+          A marketplace built for engineering students and hobbyists. Every
+          bundle — from ESP8266 climate stations to 7400-series logic
+          breadboards — arrives with downloadable circuit diagrams, Packet
+          Tracer topologies, and integration code, unlocked the moment you
+          check out.
+        </p>
+
+        <div class="hero__actions">
+          <a href="/shop" class="btn btn--primary">
+            Browse bundles
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="/how-it-works" class="btn btn--outline">
+            How digital delivery works
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="value-props">
+    <div class="container value-props__inner">
+      <div class="value-props__grid">
+        <% const valueProps = [
+          { icon: "⬡",  title: "Circuit diagrams",          text: "Clean, annotated schematics for every kit — ready to print or pin above your bench." },
+          { icon: "⬢",  title: "Packet Tracer topologies",  text: "Pre-built .pkt files modeling the network side of each IoT bundle." },
+          { icon: "⟨/⟩", title: "Integration code",         text: "Commented firmware and host scripts, version-matched to the hardware." },
+          { icon: "⚡",  title: "Instant at checkout",       text: "Digital assets unlock the moment payment clears — no waiting on the mail." },
+        ]; %>
+        <% valueProps.forEach(function(f) { %>
+          <div class="value-card">
+            <div class="value-card__icon"><%= f.icon %></div>
+            <h3><%= f.title %></h3>
+            <p><%= f.text %></p>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured">
+    <div class="container">
+      <div class="featured__header">
+        <div>
+          <h2>Featured bundles</h2>
+          <p class="subtitle">Curated kits our community keeps coming back to.</p>
+        </div>
+        <a href="/shop" class="featured__view-all">
+          View all
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <% if (loading) { %>
+        <div class="product-grid">
+          <% for (let i = 0; i < 4; i++) { %>
+            <div class="skeleton"></div>
+          <% } %>
+        </div>
+      <% } else if (!featured || featured.length === 0) { %>
+        <p class="product-grid__empty">No bundles yet — check back soon.</p>
+      <% } else { %>
+        <div class="product-grid">
+          <% featured.forEach(function(p) { %>
+            <a href="/bundle/<%= p.slug %>" class="product-card">
+              <div class="product-card__img-wrap">
+                <img src="<%= p.image_url %>" alt="<%= p.name %>" />
+                <% if (p.difficulty) { %>
+                  <span class="product-card__badge product-card__badge--<%= p.difficulty.toLowerCase() %>">
+                    <%= p.difficulty %>
+                  </span>
+                <% } %>
+              </div>
+              <div class="product-card__body">
+                <span class="product-card__category"><%= p.category %></span>
+                <h3 class="product-card__name"><%= p.name %></h3>
+                <p class="product-card__tagline"><%= p.tagline %></p>
+                <div class="product-card__footer">
+                  <div>
+                    <span class="product-card__price">$<%= p.price.toFixed(2) %></span>
+                    <% if (p.compare_at_price) { %>
+                      <span class="product-card__compare">$<%= p.compare_at_price.toFixed(2) %></span>
+                    <% } %>
+                  </div>
+                  <span class="product-card__rating">
+                    ★ <%= p.rating ? p.rating.toFixed(1) : '—' %>
+                    (<%= p.review_count || 0 %>)
+                  </span>
+                </div>
+              </div>
+            </a>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+  </section>
+
+  <section id="categories" class="categories">
+    <div class="container categories__inner">
+      <h2>Shop by domain</h2>
+      <p class="subtitle">Bundles grouped by the engineering discipline they teach.</p>
+      <div class="categories__grid">
+        <% const categories = [
+          { name: "IoT & WiFi",        count: "ESP8266 / ESP32 bundles" },
+          { name: "Sensor Systems",    count: "DHT11, ultrasonic, PIR kits" },
+          { name: "Digital Logic",     count: "7400-series IC breadboards" },
+          { name: "Robotics & Motion", count: "Motor + driver bundles" },
+        ]; %>
+        <% categories.forEach(function(c) { %>
+          <a href="/shop?category=<%= encodeURIComponent(c.name) %>" class="category-card">
+            <div class="category-card__inner">
+              <div>
+                <h3><%= c.name %></h3>
+                <p class="category-card__count"><%= c.count %></p>
+              </div>
+              <svg class="category-card__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </a>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="cta__card">
+        <div class="cta__grid-overlay"></div>
+        <div class="cta__inner">
+          <div>
+            <span class="cta__badge">⬇ Digital delivery</span>
+            <h2>The kit is physical. The schematics are instant.</h2>
+            <p class="cta__desc">
+              Every purchase unlocks a private download vault: the circuit
+              diagram, the Packet Tracer topology, and the integration code
+              — all available the second your order is confirmed. Start
+              building before the box even arrives.
+            </p>
+            <a href="/shop" class="btn btn--secondary">
+              Start building
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+          <div class="vault-files">
+            <% const vaultFiles = [
+              { icon: "⬡",   label: "circuit-diagram.pdf", note: "Annotated schematic" },
+              { icon: "⬢",   label: "topology.pkt",        note: "Packet Tracer file" },
+              { icon: "⟨/⟩", label: "firmware.zip",        note: "Integration code" },
+            ]; %>
+            <% vaultFiles.forEach(function(f) { %>
+              <div class="vault-file">
+                <div class="vault-file__icon"><%= f.icon %></div>
+                <div class="vault-file__info">
+                  <p class="vault-file__name"><%= f.label %></p>
+                  <p class="vault-file__note"><%= f.note %></p>
+                </div>
+                <span class="vault-file__dl">⬇</span>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>
