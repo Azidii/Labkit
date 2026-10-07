@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop Bundles — LabKit Market</title>
+  <link rel="stylesheet" href="/css/shop.css" />
+  <link rel="stylesheet" href="/css/cart.css" />
+  <script src="/js/theme.js"></script>
+  <script src="/js/page-transitions.js"></script>
+</head>
+<body>
+
+  
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a href="/" class="navbar__brand">
+        <span class="navbar__logo-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="16" height="16" x="4" y="4" rx="2"/>
+            <rect width="6" height="6" x="9" y="9"/>
+            <path d="M15 2v2"/><path d="M15 20v2"/>
+            <path d="M2 15h2"/><path d="M2 9h2"/>
+            <path d="M20 15h2"/><path d="M20 9h2"/>
+            <path d="M9 2v2"/><path d="M9 20v2"/>
+          </svg>
+        </span>
+        <span class="navbar__wordmark">LabKit</span>
+        <span class="navbar__sub">/MARKET</span>
+      </a>
+
+      <nav class="navbar__nav">
+        <a href="/" class="navbar__link">Home</a>
+        <a href="/shop" class="navbar__link active">Shop Bundles</a>
+        <a href="/#how-it-works" class="navbar__link">How It Works</a>
+      </nav>
+
+      <div class="navbar__actions">
+        <button class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="navbar__cart-badge" id="cartBadge">4</span>
+        </button>
+
+        <div class="profile-dropdown-wrapper">
+          <button class="navbar__avatar-btn" id="avatarBtn" aria-label="User menu" aria-expanded="false">
+            <span class="navbar__avatar">A</span>
+            <svg class="navbar__avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-dropdown__header">
+              <p class="profile-dropdown__name">Alain Bibaoco</p>
+              <p class="profile-dropdown__email">bibaocoalain@gmail.com</p>
+            </div>
+            <div class="profile-dropdown__divider"></div>
+            <a href="/settings" class="profile-dropdown__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+              <span>Settings</span>
+            </a>
+            <a href="/login" class="profile-dropdown__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              <span>Sign out</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  
+  <main class="shop-page container page-main">
+    <div class="shop-header">
+      <div>
+        <h1 class="shop-title">Hardware Bundles</h1>
+        <p class="shop-subtitle">Project-ready kits delivered with full schematics, topologies, and firmware.</p>
+      </div>
+
+      
+      <form action="/shop" method="GET" class="shop-controls" id="filterForm">
+        <input type="hidden" name="category" value="<%= activeCategory %>" id="categoryInput" />
+        <input type="hidden" name="difficulty" value="<%= activeDifficulty %>" id="difficultyInput" />
+
+        <div class="search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="search" name="q" id="searchInput" class="search-input" placeholder="Search bundles..." value="<%= searchQuery %>" />
+        </div>
+
+        <select name="sort" class="sort-select" onchange="this.form.submit()">
+          <option value="featured" <%= activeSort === 'featured' ? 'selected' : '' %>>Featured</option>
+          <option value="price-asc" <%= activeSort === 'price-asc' ? 'selected' : '' %>>Price: Low to High</option>
+          <option value="price-desc" <%= activeSort === 'price-desc' ? 'selected' : '' %>>Price: High to Low</option>
+          <option value="rating" <%= activeSort === 'rating' ? 'selected' : '' %>>Highest Rated</option>
+        </select>
+      </form>
+    </div>
+
+    <div class="shop-layout">
+      
+      <aside class="shop-sidebar">
+        <div class="sidebar-section">
+          <h2 class="sidebar-heading">Category</h2>
+          <div class="filter-group">
+            <% const cats = ["All", "IoT & WiFi", "Sensor Systems", "Digital Logic", "Robotics & Motion"]; %>
+            <% cats.forEach(c => { %>
+              <button type="button" class="filter-pill <%= activeCategory === c ? 'is-active' : '' %>" onclick="setFilter('category', '<%= c %>')">
+                <%= c %>
+              </button>
+            <% }) %>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h2 class="sidebar-heading">Difficulty</h2>
+          <div class="filter-group">
+            <% const diffs = ["All", "Beginner", "Intermediate", "Advanced"]; %>
+            <% diffs.forEach(d => { %>
+              <button type="button" class="filter-pill <%= activeDifficulty === d ? 'is-active' : '' %>" onclick="setFilter('difficulty', '<%= d %>')">
+                <%= d %>
+              </button>
+            <% }) %>
+          </div>
+        </div>
+
+        <% if (activeCategory !== 'All' || activeDifficulty !== 'All' || searchQuery) { %>
+          <a href="/shop" class="btn-clear-filters">
+            Reset all filters
+          </a>
+        <% } %>
+      </aside>
+
+      
+      <section class="shop-products">
+        <div class="results-meta">
+          <span>Showing <strong><%= totalCount %></strong> bundles</span>
+        </div>
+
+        <% if (!products || products.length === 0) { %>
+          <div class="empty-state">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <line x1="8" y1="11" x2="14" y2="11"/>
+            </svg>
+            <h3>No bundles match your criteria</h3>
+            <p>Try clearing your active filters or searching for another keyword.</p>
+            <a href="/shop" class="btn-clear-filters">Clear all filters</a>
+          </div>
+        <% } else { %>
+          <div class="product-grid">
+            <% products.forEach(p => { %>
+              <div class="product-card" data-slug="<%= p.slug %>">
+                <div class="product-card__img-wrap">
+                  <img src="<%= p.image_url %>" alt="<%= p.name %>" loading="lazy" />
+                  <% if (p.difficulty) { %>
+                    <span class="product-card__badge product-card__badge--<%= p.difficulty.toLowerCase() %>">
+                      <%= p.difficulty %>
+                    </span>
+                  <% } %>
+                </div>
+                <div class="product-card__body">
+                  <span class="product-card__category"><%= p.category %></span>
+                  <h3 class="product-card__name"><%= p.name %></h3>
+                  <p class="product-card__tagline"><%= p.tagline %></p>
+                  <div class="product-card__footer">
+                    <div>
+                      <span class="product-card__price">$<%= p.price.toFixed(2) %></span>
+                      <% if (p.compare_at_price) { %>
+                        <span class="product-card__compare">$<%= p.compare_at_price.toFixed(2) %></span>
+                      <% } %>
+                    </div>
+                    <span class="product-card__rating">
+                      ★ <%= p.rating ? p.rating.toFixed(1) : '—' %> (<%= p.review_count %>)
+                    </span>
+                  </div>
+                  <button type="button" class="btn-add-cart" onclick="addToCart('<%= p.id %>', '<%= p.name %>', <%= p.price %>, '<%= p.image_url %>')">
+                    Add to bundle cart
+                  </button>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } %>
+      </section>
+    </div>
+  </main>
+
+  
+  <div class="cart-drawer-backdrop" id="cartBackdrop"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+    <div class="cart-drawer__header">
+      <div class="cart-drawer__title-wrap">
+        <svg class="cart-drawer__bag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+          <path d="M3 6h18"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <h2>Your Bundles</h2>
+      </div>
+      <button type="button" class="cart-drawer__close" id="closeCartBtn" aria-label="Close cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-drawer__body" id="cartDrawerBody"></div>
+
+    <div class="cart-drawer__footer" id="cartDrawerFooter">
+      <div class="cart-drawer__subtotal">
+        <span>Subtotal</span>
+        <strong id="cartSubtotal">$0.00</strong>
+      </div>
+      <div class="cart-drawer__notice">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2"/>
+          <path d="M7 8h10"/>
+          <path d="M7 12h10"/>
+          <path d="M7 16h6"/>
+        </svg>
+        <span>Every bundle unlocks instant digital assets at checkout.</span>
+      </div>
+      <a href="/checkout" class="btn-checkout" id="checkoutBtn">
+        Checkout · <span id="checkoutTotal">$0.00</span>
+      </a>
+    </div>
+  </aside>
+
+  
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__top">
+        <div class="footer__brand-block">
+          <div class="footer__logo">
+            <span class="navbar__logo-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="16" height="16" x="4" y="4" rx="2"/>
+                <rect width="6" height="6" x="9" y="9"/>
+                <path d="M15 2v2"/><path d="M15 20v2"/>
+                <path d="M2 15h2"/><path d="M2 9h2"/>
+                <path d="M20 15h2"/><path d="M20 9h2"/>
+                <path d="M9 2v2"/><path d="M9 20v2"/>
+              </svg>
+            </span>
+            <span class="footer__brand-text">LabKit Market</span>
+          </div>
+          <p class="footer__desc">
+            Project-ready hardware bundles for engineering students and hobbyists. Every kit ships with circuit diagrams, Packet Tracer topologies, and integration code — delivered digitally the moment you check out.
+          </p>
+        </div>
+
+        <nav class="footer__links">
+          <a href="/shop" class="footer__link">Shop</a>
+          <a href="/#how-it-works" class="footer__link">How it works</a>
+          <a href="/#workbench" class="footer__link">Built for the workbench</a>
+        </nav>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2026 LabKit Market — Prototyping, bundled.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/cart.js"></script>
+  <script src="/js/shop.js"></script>
+</body>
+</html>

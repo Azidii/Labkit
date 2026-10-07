@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — LabKit Market</title>
+  <link rel="stylesheet" href="/css/checkout.css" />
+  <link rel="stylesheet" href="/css/cart.css" />
+  <script src="/js/theme.js"></script>
+  <script src="/js/page-transitions.js"></script>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a href="/" class="navbar__brand">
+        <span class="navbar__logo-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="16" height="16" x="4" y="4" rx="2"/>
+            <rect width="6" height="6" x="9" y="9"/>
+            <path d="M15 2v2"/><path d="M15 20v2"/>
+            <path d="M2 15h2"/><path d="M2 9h2"/>
+            <path d="M20 15h2"/><path d="M20 9h2"/>
+            <path d="M9 2v2"/><path d="M9 20v2"/>
+          </svg>
+        </span>
+        <span class="navbar__wordmark">LabKit</span>
+        <span class="navbar__sub">/MARKET</span>
+      </a>
+
+      <nav class="navbar__nav">
+        <a href="/" class="navbar__link">Home</a>
+        <a href="/shop" class="navbar__link">Shop Bundles</a>
+        <a href="/#how-it-works" class="navbar__link">How It Works</a>
+      </nav>
+
+      <div class="navbar__actions">
+        <button type="button" class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="navbar__cart-badge" id="cartBadge">1</span>
+        </button>
+
+        <div class="profile-dropdown-wrapper">
+          <button class="navbar__avatar-btn" id="avatarBtn" aria-label="User menu" aria-expanded="false">
+            <span class="navbar__avatar">A</span>
+            <svg class="navbar__avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-dropdown__header">
+              <p class="profile-dropdown__name">Alain Bibaoco</p>
+              <p class="profile-dropdown__email">bibaocoalain@gmail.com</p>
+            </div>
+            <div class="profile-dropdown__divider"></div>
+            <a href="/settings" class="profile-dropdown__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+              <span>Settings</span>
+            </a>
+            <a href="/login" class="profile-dropdown__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              <span>Sign out</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="checkout-page container page-main">
+    <div class="checkout-container">
+      <a href="/shop" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        <span>Continue shopping</span>
+      </a>
+
+      <h1 class="checkout-title">Checkout</h1>
+
+      <div class="checkout-grid">
+        <div class="checkout-form-column">
+          <form id="checkoutForm" onsubmit="event.preventDefault(); alert('Order placed successfully! Check your email for instant access to your digital vault.'); localStorage.removeItem('circuitCart'); window.location.href='/';">
+            
+            <section class="checkout-section">
+              <h2 class="checkout-section-title">Contact & shipping</h2>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fullName">Full name *</label>
+                  <input type="text" id="fullName" class="form-input" required />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" class="form-input" required />
+                  <span class="form-helper">Digital assets are sent here</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="address">Address *</label>
+                <input type="text" id="address" class="form-input" required />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="city">City *</label>
+                  <input type="text" id="city" class="form-input" required />
+                </div>
+                <div class="form-group">
+                  <label for="zipCode">ZIP / Postal code *</label>
+                  <input type="text" id="zipCode" class="form-input" required />
+                </div>
+              </div>
+            </section>
+
+            <section class="checkout-section">
+              <h2 class="checkout-section-title">Payment</h2>
+
+              <div class="payment-card">
+                <div class="payment-card__demo-note">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  <span>Secure checkout — this is a demo store. No real card is charged.</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="cardNumber">Card number</label>
+                  <input type="text" id="cardNumber" class="form-input" placeholder="4242 4242 4242 4242" required />
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="cardExpiry">Expiry</label>
+                    <input type="text" id="cardExpiry" class="form-input" placeholder="MM / YY" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="cardCvc">CVC</label>
+                    <input type="text" id="cardCvc" class="form-input" placeholder="123" required />
+                  </div>
+                </div>
+              </div>
+            </section>
+          </form>
+        </div>
+
+        <aside class="checkout-sidebar">
+          <div class="order-summary-card">
+            <h2 class="order-summary-title">Order summary</h2>
+
+            <div class="order-summary-items" id="summaryItemsList"></div>
+
+            <div class="order-summary-totals">
+              <div class="summary-line">
+                <span>Subtotal</span>
+                <span id="subtotalAmount">$24.00</span>
+              </div>
+              <div class="summary-line">
+                <span>Shipping</span>
+                <span id="shippingAmount">$6.50</span>
+              </div>
+              <div class="summary-line summary-line--total">
+                <span>Total</span>
+                <span id="totalAmount">$30.50</span>
+              </div>
+            </div>
+
+            <div class="unlocks-vault-card">
+              <div class="unlocks-vault-header">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+                <h3>Unlocks instantly</h3>
+              </div>
+              <p class="unlocks-vault-desc">
+                The moment your order is confirmed, your download vault opens with every bundle's digital assets.
+              </p>
+              <ul class="unlocks-vault-list">
+                <li>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2"/>
+                    <path d="M7 8h10"/>
+                    <path d="M7 12h10"/>
+                    <path d="M7 16h6"/>
+                  </svg>
+                  <span>Circuit diagrams</span>
+                </li>
+                <li>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="3"/>
+                    <circle cx="6" cy="19" r="3"/>
+                    <circle cx="18" cy="19" r="3"/>
+                    <path d="M12 8v4"/>
+                    <path d="M6 16l6-4 6 4"/>
+                  </svg>
+                  <span>Packet Tracer topologies</span>
+                </li>
+                <li>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"/>
+                    <polyline points="8 6 2 12 8 18"/>
+                  </svg>
+                  <span>Integration code</span>
+                </li>
+              </ul>
+            </div>
+
+            <button type="submit" form="checkoutForm" class="btn-pay-order" id="payBtn">
+              Pay <span id="payBtnAmount">$30.50</span>
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div class="cart-drawer-backdrop" id="cartBackdrop"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+    <div class="cart-drawer__header">
+      <div class="cart-drawer__title-wrap">
+        <svg class="cart-drawer__bag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+          <path d="M3 6h18"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <h2>Your Bundles</h2>
+      </div>
+      <button type="button" class="cart-drawer__close" id="closeCartBtn" aria-label="Close cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="cart-drawer__body" id="cartDrawerBody"></div>
+    <div class="cart-drawer__footer" id="cartDrawerFooter">
+      <div class="cart-drawer__subtotal">
+        <span>Subtotal</span>
+        <strong id="cartSubtotal">$0.00</strong>
+      </div>
+      <div class="cart-drawer__notice">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2"/>
+          <path d="M7 8h10"/>
+          <path d="M7 12h10"/>
+          <path d="M7 16h6"/>
+        </svg>
+        <span>Every bundle unlocks instant digital assets at checkout.</span>
+      </div>
+      <a href="/checkout" class="btn-checkout" id="checkoutBtn">
+        Checkout · <span id="checkoutTotal">$0.00</span>
+      </a>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__top">
+        <div class="footer__brand-block">
+          <div class="footer__logo">
+            <span class="navbar__logo-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="16" height="16" x="4" y="4" rx="2"/>
+                <rect width="6" height="6" x="9" y="9"/>
+                <path d="M15 2v2"/><path d="M15 20v2"/>
+                <path d="M2 15h2"/><path d="M2 9h2"/>
+                <path d="M20 15h2"/><path d="M20 9h2"/>
+                <path d="M9 2v2"/><path d="M9 20v2"/>
+              </svg>
+            </span>
+            <span class="footer__brand-text">LabKit Market</span>
+          </div>
+          <p class="footer__desc">
+            Project-ready hardware bundles for engineering students and hobbyists. Every kit ships with circuit diagrams, Packet Tracer topologies, and integration code — delivered digitally the moment you check out.
+          </p>
+        </div>
+
+        <nav class="footer__links">
+          <a href="/shop" class="footer__link">Shop</a>
+          <a href="/#how-it-works" class="footer__link">How it works</a>
+          <a href="/#workbench" class="footer__link">Built for the workbench</a>
+        </nav>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2026 LabKit Market — Prototyping, bundled.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/cart.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedCart = getCart();
+      const fallbackCart = [
+        {
+          id: "3",
+          name: "7400-Series Logic Gate Breadboard Starter",
+          price: 24.00,
+          qty: 1,
+          img: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600"
+        }
+      ];
+
+      const checkoutItems = savedCart.length > 0 ? savedCart : fallbackCart;
+
+      const subtotal = checkoutItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const shipping = 6.50;
+      const total = subtotal + shipping;
+
+      const itemsListEl = document.getElementById("summaryItemsList");
+      if (itemsListEl) {
+        itemsListEl.innerHTML = checkoutItems.map(item => `
+          <div class="order-summary-item">
+            <img src="${item.img}" alt="${item.name}" class="order-summary-item__img" />
+            <div class="order-summary-item__info">
+              <h4 class="order-summary-item__name">${item.name}</h4>
+              <span class="order-summary-item__qty">Qty ${item.qty}</span>
+            </div>
+            <span class="order-summary-item__price">$${(item.price * item.qty).toFixed(2)}</span>
+          </div>
+        `).join("");
+      }
+
+      document.getElementById("subtotalAmount").textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById("shippingAmount").textContent = `$${shipping.toFixed(2)}`;
+      document.getElementById("totalAmount").textContent = `$${total.toFixed(2)}`;
+      document.getElementById("payBtnAmount").textContent = `$${total.toFixed(2)}`;
+
+      const avatarBtn = document.getElementById("avatarBtn");
+      const dropdownWrapper = avatarBtn?.closest(".profile-dropdown-wrapper");
+      if (avatarBtn && dropdownWrapper) {
+        avatarBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const isOpen = dropdownWrapper.classList.toggle("is-open");
+          avatarBtn.setAttribute("aria-expanded", String(isOpen));
+        });
+        document.addEventListener("click", (e) => {
+          if (!dropdownWrapper.contains(e.target)) {
+            dropdownWrapper.classList.remove("is-open");
+            avatarBtn.setAttribute("aria-expanded", "false");
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
