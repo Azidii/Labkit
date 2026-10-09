@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shop Bundles — LabKit Market</title>
+  <title>Shop — LabKit Market</title>
+  <meta name="description" content="Browse individual electronic parts. Buzzers, sensors, boards, motors and more — every part sold as a single unit, no minimum order." />
   <link rel="stylesheet" href="/css/shop.css" />
   <link rel="stylesheet" href="/css/cart.css" />
   <script src="/js/theme.js"></script>
@@ -11,7 +12,7 @@
 </head>
 <body>
 
-  
+  <!-- Navbar -->
   <header class="navbar">
     <div class="container navbar__inner">
       <a href="/" class="navbar__brand">
@@ -31,17 +32,24 @@
 
       <nav class="navbar__nav">
         <a href="/" class="navbar__link">Home</a>
-        <a href="/shop" class="navbar__link active">Shop Bundles</a>
+        <a href="/shop" class="navbar__link navbar__link--active">Shop</a>
         <a href="/#how-it-works" class="navbar__link">How It Works</a>
       </nav>
 
       <div class="navbar__actions">
+        <button type="button" class="navbar__icon-btn" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+
         <button class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
           </svg>
-          <span class="navbar__cart-badge" id="cartBadge">4</span>
+          <span class="navbar__cart-badge" id="cartBadge">0</span>
         </button>
 
         <div class="profile-dropdown-wrapper">
@@ -79,43 +87,46 @@
     </div>
   </header>
 
-  
+  <!-- Shop Content -->
   <main class="shop-page container page-main">
     <div class="shop-header">
       <div>
-        <h1 class="shop-title">Hardware Bundles</h1>
-        <p class="shop-subtitle">Project-ready kits delivered with full schematics, topologies, and firmware.</p>
+        <h1 class="shop-title">Individual parts</h1>
+        <p class="shop-subtitle">
+          Buzzers, sensors, boards, motors and more — every part sold as a single unit, no minimum
+          order. Search or filter to find exactly what you need.
+        </p>
       </div>
-
-      
-      <form action="/shop" method="GET" class="shop-controls" id="filterForm">
-        <input type="hidden" name="category" value="<%= activeCategory %>" id="categoryInput" />
-        <input type="hidden" name="difficulty" value="<%= activeDifficulty %>" id="difficultyInput" />
-
-        <div class="search-wrap">
-          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-          <input type="search" name="q" id="searchInput" class="search-input" placeholder="Search bundles..." value="<%= searchQuery %>" />
-        </div>
-
-        <select name="sort" class="sort-select" onchange="this.form.submit()">
-          <option value="featured" <%= activeSort === 'featured' ? 'selected' : '' %>>Featured</option>
-          <option value="price-asc" <%= activeSort === 'price-asc' ? 'selected' : '' %>>Price: Low to High</option>
-          <option value="price-desc" <%= activeSort === 'price-desc' ? 'selected' : '' %>>Price: High to Low</option>
-          <option value="rating" <%= activeSort === 'rating' ? 'selected' : '' %>>Highest Rated</option>
-        </select>
-      </form>
     </div>
 
+    <!-- Search Bar -->
+    <form action="/shop" method="GET" class="shop-search-form" id="filterForm">
+      <input type="hidden" name="category" value="<%= activeCategory %>" id="categoryInput" />
+      <input type="hidden" name="difficulty" value="<%= activeDifficulty %>" id="difficultyInput" />
+
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="search" name="q" id="searchInput" class="search-input" placeholder="Search products, e.g. ESP32, Raspberry Pi, ultrasonic..." value="<%= searchQuery %>" />
+      </div>
+    </form>
+
     <div class="shop-layout">
-      
+      <!-- Sidebar Filters -->
       <aside class="shop-sidebar">
+        <div class="sidebar-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+          </svg>
+          <span class="sidebar-header__text">Filters</span>
+        </div>
+
         <div class="sidebar-section">
-          <h2 class="sidebar-heading">Category</h2>
+          <h2 class="sidebar-heading">DOMAIN</h2>
           <div class="filter-group">
-            <% const cats = ["All", "IoT & WiFi", "Sensor Systems", "Digital Logic", "Robotics & Motion"]; %>
+            <% const cats = ["All", "Microcontrollers", "Single-Board Computers", "Sensors & Modules", "Buzzers & Audio", "Motors & Actuators", "Displays & Power"]; %>
             <% cats.forEach(c => { %>
               <button type="button" class="filter-pill <%= activeCategory === c ? 'is-active' : '' %>" onclick="setFilter('category', '<%= c %>')">
                 <%= c %>
@@ -125,9 +136,9 @@
         </div>
 
         <div class="sidebar-section">
-          <h2 class="sidebar-heading">Difficulty</h2>
+          <h2 class="sidebar-heading">DIFFICULTY</h2>
           <div class="filter-group">
-            <% const diffs = ["All", "Beginner", "Intermediate", "Advanced"]; %>
+            <% const diffs = ["All levels", "Beginner", "Intermediate", "Advanced"]; %>
             <% diffs.forEach(d => { %>
               <button type="button" class="filter-pill <%= activeDifficulty === d ? 'is-active' : '' %>" onclick="setFilter('difficulty', '<%= d %>')">
                 <%= d %>
@@ -136,17 +147,26 @@
           </div>
         </div>
 
-        <% if (activeCategory !== 'All' || activeDifficulty !== 'All' || searchQuery) { %>
+        <% if (activeCategory !== 'All' || activeDifficulty !== 'All levels' || searchQuery) { %>
           <a href="/shop" class="btn-clear-filters">
             Reset all filters
           </a>
         <% } %>
       </aside>
 
-      
+      <!-- Products Grid -->
       <section class="shop-products">
-        <div class="results-meta">
-          <span>Showing <strong><%= totalCount %></strong> bundles</span>
+        <div class="results-bar">
+          <span class="results-count"><strong><%= totalCount %></strong> items</span>
+          <div class="results-sort">
+            <label for="sortSelect">Sort</label>
+            <select name="sort" id="sortSelect" class="sort-select" onchange="document.getElementById('filterForm').appendChild(this.cloneNode(true)); document.getElementById('filterForm').submit();">
+              <option value="rating" <%= activeSort === 'rating' ? 'selected' : '' %>>Top rated</option>
+              <option value="featured" <%= activeSort === 'featured' ? 'selected' : '' %>>Featured</option>
+              <option value="price-asc" <%= activeSort === 'price-asc' ? 'selected' : '' %>>Price: Low to High</option>
+              <option value="price-desc" <%= activeSort === 'price-desc' ? 'selected' : '' %>>Price: High to Low</option>
+            </select>
+          </div>
         </div>
 
         <% if (!products || products.length === 0) { %>
@@ -156,7 +176,7 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
               <line x1="8" y1="11" x2="14" y2="11"/>
             </svg>
-            <h3>No bundles match your criteria</h3>
+            <h3>No parts match your criteria</h3>
             <p>Try clearing your active filters or searching for another keyword.</p>
             <a href="/shop" class="btn-clear-filters">Clear all filters</a>
           </div>
@@ -165,31 +185,35 @@
             <% products.forEach(p => { %>
               <div class="product-card" data-slug="<%= p.slug %>">
                 <div class="product-card__img-wrap">
+                  <div class="product-card__badges">
+                    <span class="product-card__cat-badge"><%= p.category %></span>
+                    <% if (p.difficulty) { %>
+                      <span class="product-card__diff-badge product-card__diff-badge--<%= p.difficulty.toLowerCase().replace(/\s/g, '-') %>">
+                        <%= p.difficulty %>
+                      </span>
+                    <% } %>
+                  </div>
                   <img src="<%= p.image_url %>" alt="<%= p.name %>" loading="lazy" />
-                  <% if (p.difficulty) { %>
-                    <span class="product-card__badge product-card__badge--<%= p.difficulty.toLowerCase() %>">
-                      <%= p.difficulty %>
-                    </span>
-                  <% } %>
                 </div>
                 <div class="product-card__body">
-                  <span class="product-card__category"><%= p.category %></span>
                   <h3 class="product-card__name"><%= p.name %></h3>
                   <p class="product-card__tagline"><%= p.tagline %></p>
-                  <div class="product-card__footer">
-                    <div>
-                      <span class="product-card__price">$<%= p.price.toFixed(2) %></span>
-                      <% if (p.compare_at_price) { %>
-                        <span class="product-card__compare">$<%= p.compare_at_price.toFixed(2) %></span>
-                      <% } %>
-                    </div>
+                  <div class="product-card__meta">
                     <span class="product-card__rating">
-                      ★ <%= p.rating ? p.rating.toFixed(1) : '—' %> (<%= p.review_count %>)
+                      ★ <%= p.rating ? p.rating.toFixed(1) : '—' %>
+                      <span class="product-card__review-count">(<%= p.review_count %>)</span>
+                    </span>
+                    <span class="product-card__unit-tag">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                      Single unit
                     </span>
                   </div>
-                  <button type="button" class="btn-add-cart" onclick="addToCart('<%= p.id %>', '<%= p.name %>', <%= p.price %>, '<%= p.image_url %>')">
-                    Add to bundle cart
-                  </button>
+                  <div class="product-card__footer">
+                    <span class="product-card__price">$<%= p.price.toFixed(2) %></span>
+                    <button type="button" class="product-card__add-btn" onclick="addToCart('<%= p.id %>', '<%= p.name %>', <%= p.price %>, '<%= p.image_url %>')" aria-label="Add to cart">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             <% }) %>
@@ -199,7 +223,7 @@
     </div>
   </main>
 
-  
+  <!-- Cart Drawer -->
   <div class="cart-drawer-backdrop" id="cartBackdrop"></div>
   <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
     <div class="cart-drawer__header">
@@ -209,7 +233,7 @@
           <path d="M3 6h18"/>
           <path d="M16 10a4 4 0 0 1-8 0"/>
         </svg>
-        <h2>Your Bundles</h2>
+        <h2>Your Cart</h2>
       </div>
       <button type="button" class="cart-drawer__close" id="closeCartBtn" aria-label="Close cart">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -233,7 +257,7 @@
           <path d="M7 12h10"/>
           <path d="M7 16h6"/>
         </svg>
-        <span>Every bundle unlocks instant digital assets at checkout.</span>
+        <span>Every part ships with datasheets and pinout diagrams.</span>
       </div>
       <a href="/checkout" class="btn-checkout" id="checkoutBtn">
         Checkout · <span id="checkoutTotal">$0.00</span>
@@ -241,7 +265,7 @@
     </div>
   </aside>
 
-  
+  <!-- Footer -->
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__top">
@@ -260,7 +284,10 @@
             <span class="footer__brand-text">LabKit Market</span>
           </div>
           <p class="footer__desc">
-            Project-ready hardware bundles for engineering students and hobbyists. Every kit ships with circuit diagrams, Packet Tracer topologies, and integration code — delivered digitally the moment you check out.
+            Individual electronic parts for engineering students and
+            hobbyists — buzzers, sensors, boards, motors and more.
+            Every part is sold as a single unit, tested before it ships, with
+            no minimum order.
           </p>
         </div>
 
@@ -272,7 +299,7 @@
       </div>
 
       <div class="footer__bottom">
-        <p>© 2026 LabKit Market — Prototyping, bundled.</p>
+        <p>&copy; 2026 LabKit Market &mdash; Prototyping, bundled.</p>
       </div>
     </div>
   </footer>
