@@ -123,6 +123,7 @@ function renderCart() {
 
   document.querySelectorAll("#cartBadge, .navbar__cart-badge").forEach((badge) => {
     badge.textContent = String(totalCount);
+    badge.style.display = totalCount > 0 ? "inline-flex" : "none";
   });
 
   const bodyEl = document.getElementById("cartDrawerBody");
