@@ -354,6 +354,10 @@ img { display: block; max-width: 100%; }
   border-bottom: 1px solid hsl(var(--border) / .6);
 }
 
+.sidebar-header svg {
+  color: hsl(var(--primary));
+}
+
 .sidebar-header__text {
   font-size: 0.875rem;
   font-weight: 600;
@@ -394,32 +398,34 @@ img { display: block; max-width: 100%; }
   transition: background 0.15s, color 0.15s;
 }
 .filter-pill:hover {
-  color: hsl(var(--foreground));
-  background: hsl(var(--accent) / .5);
+  color: hsl(var(--primary));
+  background: hsl(var(--accent));
 }
 
-.filter-pill.is-active {
-  background: #0f172a;
-  color: #ffffff;
-  font-weight: 500;
-}
-.dark .filter-pill.is-active {
+.filter-pill.is-active,
+.filter-pill.is-active:hover {
   background: hsl(var(--primary));
   color: #ffffff;
-  font-weight: 500;
+  font-weight: 600;
+}
+.dark .filter-pill.is-active,
+.dark .filter-pill.is-active:hover {
+  background: hsl(var(--primary));
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .btn-clear-filters {
   display: inline-block;
   font-size: 0.8125rem;
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--primary));
   text-decoration: underline;
   text-underline-offset: 3px;
   margin-top: 0.5rem;
-  transition: color 0.15s;
+  transition: opacity 0.15s;
 }
 .btn-clear-filters:hover {
-  color: hsl(var(--foreground));
+  opacity: 0.8;
 }
 
 /* ── Results Bar ── */
