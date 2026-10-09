@@ -10,6 +10,7 @@ function setFilter(type, value) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Profile dropdown toggle
   const avatarBtn = document.getElementById("avatarBtn");
   const dropdownWrapper = avatarBtn?.closest(".profile-dropdown-wrapper");
   if (avatarBtn && dropdownWrapper) {
@@ -26,6 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Search submit on Enter
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        document.getElementById("filterForm").submit();
+      }
+    });
+  }
+
+  // Scroll-reveal animation for product cards
   const scrollObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
