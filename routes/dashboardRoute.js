@@ -80,6 +80,10 @@ router.get("/settings", (req, res) => {
   res.render("settings");
 });
 
+router.get("/admin", (req, res) => {
+  res.redirect("/settings");
+});
+
 router.get("/logout", (req, res) => {
   res.redirect("/login");
 });
