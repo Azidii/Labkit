@@ -149,7 +149,7 @@ function renderCart() {
         </div>
         <h3 class="cart-empty__title">Your cart is empty</h3>
         <p class="cart-empty__desc">Browse project-ready bundles — each one includes instant digital assets.</p>
-        <a href="/shop" class="btn-explore-bundles" id="exploreBundlesBtn">Explore bundles</a>
+        <a href="/shop" class="btn-explore-bundles" id="exploreBundlesBtn">Explore</a>
       </div>
     `;
     document.getElementById("exploreBundlesBtn")?.addEventListener("click", () => {
@@ -160,8 +160,8 @@ function renderCart() {
     bodyEl.innerHTML = `
       <div class="cart-items" id="cartItemsList">
         ${cart
-          .map(
-            (item) => `
+        .map(
+          (item) => `
           <div class="cart-item-card" data-id="${item.id}">
             <img src="${item.img}" alt="${item.name}" class="cart-item-card__img" />
             <div class="cart-item-card__content">
@@ -188,8 +188,8 @@ function renderCart() {
             </div>
           </div>
         `
-          )
-          .join("")}
+        )
+        .join("")}
       </div>
     `;
   }

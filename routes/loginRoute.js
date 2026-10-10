@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const loginController = require("../controllers/loginController");
 
-router.get("/", (req, res) => {
-  res.render("login");
-});
+// Login page & credentials authentication
+router.get("/", loginController.renderLogin);
+router.post("/", loginController.login);
 
-router.post("/", (req, res) => {
-  res.redirect("/");
-});
+// Google OAuth authentication
+router.get("/google", loginController.startGoogleAuth);
+router.get("/google/callback", loginController.handleGoogleCallback);
+
+// Logout
+router.get("/logout", loginController.logout);
 
 module.exports = router;

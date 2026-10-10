@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const resetpassController = require("../controllers/resetpassController");
 
-router.get("/", (req, res) => {
-  res.render("resetpass");
-});
+// Reset password page
+router.get("/", resetpassController.renderResetPass);
 
-router.post("/", (req, res) => {
-  res.redirect("/login");
-});
+// OTP actions
+router.post("/send-otp", resetpassController.sendOtp);
+router.post("/verify-otp", resetpassController.verifyOtp);
+
+// Final password change
+router.post("/reset", resetpassController.resetPassword);
 
 module.exports = router;

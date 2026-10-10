@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const registerController = require("../controllers/registerController");
 
-router.get("/", (req, res) => {
-  res.render("register");
-});
+// Registration page
+router.get("/", registerController.renderRegister);
 
-router.post("/", (req, res) => {
-  res.redirect("/login");
-});
+// Google OAuth shortcut
+router.get("/google", registerController.redirectToGoogle);
+
+// Create new user account
+router.post("/", registerController.register);
 
 module.exports = router;

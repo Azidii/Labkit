@@ -473,6 +473,305 @@ input:checked + .toggle-slider::before {
   transform: translateX(20px);
 }
 
+/* Action Button in Settings Rows */
+.btn-settings-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.9rem;
+  background: hsl(var(--secondary));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-settings-action:hover {
+  background: hsl(var(--primary));
+  color: #ffffff;
+  border-color: hsl(var(--primary));
+}
+
+.dark .btn-settings-action {
+  background: hsl(var(--secondary));
+  color: hsl(var(--foreground));
+  border-color: hsl(var(--border));
+}
+
+.dark .btn-settings-action:hover {
+  background: hsl(var(--primary));
+  color: #ffffff;
+  border-color: hsl(var(--primary));
+}
+
+/* Modal Backdrop & Dialog */
+.is-hidden {
+  display: none !important;
+}
+
+.settings-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 1000;
+  animation: modalFadeIn 0.2s cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.settings-modal {
+  width: 100%;
+  max-width: 440px;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  animation: modalScaleIn 0.25s cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes modalScaleIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.settings-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.settings-modal__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.settings-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+  background: transparent;
+  border: none;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.settings-modal__close:hover {
+  background: hsl(var(--secondary));
+  color: hsl(var(--foreground));
+}
+
+.settings-modal__form {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+}
+
+.settings-modal__desc {
+  font-size: 0.845rem;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.5;
+  margin: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.form-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-prefix {
+  position: absolute;
+  left: 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: hsl(var(--primary));
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  height: 2.625rem;
+  padding: 0 0.875rem;
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input--prefixed {
+  padding-left: 2.125rem;
+}
+
+.form-input:focus {
+  border-color: hsl(var(--foreground));
+  box-shadow: 0 0 0 1px hsl(var(--foreground));
+}
+
+.form-helper {
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.settings-modal__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.btn-modal-cancel {
+  padding: 0.55rem 1.1rem;
+  background: transparent;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  font-size: 0.845rem;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-modal-cancel:hover {
+  background: hsl(var(--secondary));
+}
+
+.btn-modal-save {
+  padding: 0.55rem 1.25rem;
+  background: hsl(var(--primary));
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.845rem;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btn-modal-save:hover {
+  opacity: 0.92;
+}
+
+/* Modal Alerts */
+.modal-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.modal-alert--error {
+  background: hsl(0 84% 60% / 0.1);
+  color: hsl(0 75% 45%);
+  border: 1px solid hsl(0 84% 60% / 0.25);
+}
+
+.dark .modal-alert--error {
+  background: hsl(0 75% 45% / 0.2);
+  color: hsl(0 90% 72%);
+  border-color: hsl(0 84% 60% / 0.35);
+}
+
+.modal-alert--success {
+  background: hsl(142 76% 36% / 0.1);
+  color: hsl(142 76% 32%);
+  border: 1px solid hsl(142 76% 36% / 0.25);
+}
+
+.dark .modal-alert--success {
+  background: hsl(142 76% 36% / 0.2);
+  color: hsl(142 70% 65%);
+  border-color: hsl(142 76% 36% / 0.35);
+}
+
+/* Toast Notifications */
+.settings-toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.settings-toast {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem 1.15rem;
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.625rem;
+  font-size: 0.845rem;
+  font-weight: 500;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(12px);
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0, 0, 0.2, 1);
+  pointer-events: auto;
+}
+
+.settings-toast.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.settings-toast--success .toast-icon {
+  color: hsl(142 76% 36%);
+}
+
+.dark .settings-toast--success .toast-icon {
+  color: hsl(142 70% 55%);
+}
+
 .btn-signout {
   display: inline-flex;
   align-items: center;

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-auth="<%= locals.currentUser ? 'true' : 'false' %>">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reset password — LabKit Market</title>
+  <title>Reset Password — LabKit Market</title>
   <link rel="stylesheet" href="/css/resetpass.css" />
   <script src="/js/theme.js"></script>
   <script src="/js/page-transitions.js"></script>
@@ -11,38 +11,165 @@
 <body>
   <main class="reset-page page-main">
     <div class="reset-container">
+      
+      <!-- Top Brand Icon & Header -->
       <div class="reset-header">
-        <div class="reset-icon">
+        <div class="reset-icon" id="resetIcon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect width="20" height="16" x="2" y="4" rx="2"/>
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
           </svg>
         </div>
-        <h1 class="reset-title">Reset your password</h1>
-        <p class="reset-subtitle">Enter your email and we'll send you a link to reset your password.</p>
+        <h1 class="reset-title" id="resetTitle">Reset your password</h1>
+        <p class="reset-subtitle" id="resetSubtitle">
+          Enter your registered email and we'll send you a single-use verification code.
+        </p>
       </div>
 
+      <!-- Main Interactive Card -->
       <div class="reset-card">
-        <form action="/resetpass" method="POST" class="auth-form" id="resetForm">
+        <div id="alertBox"></div>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="auth-alert auth-alert--error" role="alert">
+            <svg class="alert-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span><%= error %></span>
+          </div>
+        <% } %>
+
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="auth-alert auth-alert--success" role="alert">
+            <svg class="alert-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <span><%= success %></span>
+          </div>
+        <% } %>
+
+        <!-- STEP 1: Enter Email to Send OTP -->
+        <form class="auth-form" id="step1Form">
           <div class="form-group">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">Account Email</label>
             <div class="input-wrap">
               <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect width="20" height="16" x="2" y="4" rx="2"/>
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
               </svg>
-              <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required autocomplete="email" />
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-input" 
+                placeholder="you@example.com" 
+                required 
+                autocomplete="email"
+              />
             </div>
           </div>
 
-          <button type="submit" class="btn-submit">
-            <span>Send reset link</span>
+          <button type="submit" class="btn-submit" id="sendOtpBtn">
+            <span>Send verification code</span>
             <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"/>
               <polyline points="12 5 19 12 12 19"/>
             </svg>
           </button>
         </form>
+
+        <!-- STEP 2: Enter OTP & Set New Password (Initially hidden) -->
+        <form class="auth-form is-hidden" id="step2Form">
+          
+          <div class="email-summary-pill">
+            <div class="email-summary-text">
+              <span class="label">Code sent to:</span>
+              <strong id="displayTargetEmail">your email</strong>
+            </div>
+            <button type="button" class="btn-link-action" id="changeEmailBtn">Change</button>
+          </div>
+
+          <!-- 6-digit OTP Input -->
+          <div class="form-group">
+            <div class="label-row">
+              <label for="otpCode" class="form-label">6-Digit Verification Code</label>
+              <span class="expiry-hint">Expires in 10 mins</span>
+            </div>
+            <div class="input-wrap">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <input 
+                type="text" 
+                id="otpCode" 
+                name="code" 
+                class="form-input otp-input" 
+                placeholder="••••••" 
+                maxlength="6" 
+                pattern="[0-9]{6}" 
+                inputmode="numeric" 
+                required 
+                autocomplete="one-time-code"
+              />
+            </div>
+          </div>
+
+          <!-- New Password Input -->
+          <div class="form-group">
+            <label for="newPassword" class="form-label">New Password</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input 
+                type="password" 
+                id="newPassword" 
+                name="newPassword" 
+                class="form-input" 
+                placeholder="Min. 6 characters" 
+                minlength="6" 
+                required 
+                autocomplete="new-password"
+              />
+            </div>
+          </div>
+
+          <!-- Confirm Password Input -->
+          <div class="form-group">
+            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input 
+                type="password" 
+                id="confirmPassword" 
+                name="confirmPassword" 
+                class="form-input" 
+                placeholder="Re-enter password" 
+                minlength="6" 
+                required 
+                autocomplete="new-password"
+              />
+            </div>
+          </div>
+
+          <div class="resend-row">
+            <span class="resend-text">Didn't receive the email?</span>
+            <button type="button" class="btn-resend" id="resendOtpBtn">Resend code</button>
+            <span class="countdown-badge is-hidden" id="countdownBadge">60s</span>
+          </div>
+
+          <button type="submit" class="btn-submit" id="resetPasswordBtn">
+            <span>Change password</span>
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </button>
+        </form>
+
       </div>
 
       <p class="auth-footer">
