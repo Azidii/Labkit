@@ -5,21 +5,21 @@
 /* ── Design Tokens ── */
 :root {
   --background: 0 0% 100%;
-  --foreground: 0 0% 3.9%;
+  --foreground: 222 47% 11%;
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 3.9%;
-  --primary: 0 0% 9%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 0 0% 96.1%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 45.1%;
-  --accent: 0 0% 96.1%;
-  --accent-foreground: 0 0% 9%;
+  --card-foreground: 222 47% 11%;
+  --primary: 190 84% 28%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 190 75% 95%;
+  --accent-foreground: 190 84% 28%;
   --destructive: 0 84.2% 60.2%;
-  --border: 0 0% 89.8%;
-  --input: 0 0% 89.8%;
-  --ring: 0 0% 3.9%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 190 84% 28%;
   --radius: 0.5rem;
   --font-heading: ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-body: ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -27,22 +27,22 @@
 }
 
 .dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 7%;
-  --card-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 0 0% 9%;
-  --secondary: 0 0% 14.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  --accent: 0 0% 14.9%;
-  --accent-foreground: 0 0% 98%;
+  --background: 214 40% 7.5%;
+  --foreground: 210 40% 98%;
+  --card: 213 36% 11%;
+  --card-foreground: 210 40% 98%;
+  --primary: 187 80% 42%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 213 30% 15%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 213 30% 15%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 213 28% 18%;
+  --accent-foreground: 187 80% 75%;
   --destructive: 0 62.8% 30.6%;
-  --border: 0 0% 18%;
-  --input: 0 0% 18%;
-  --ring: 0 0% 83.1%;
+  --border: 213 25% 18%;
+  --input: 213 25% 18%;
+  --ring: 187 80% 42%;
 }
 
 /* ── Reset ── */
@@ -107,8 +107,8 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   width: 2.125rem;
   height: 2.125rem;
-  background: hsl(var(--foreground));
-  color: hsl(var(--background));
+  background: hsl(var(--primary));
+  color: #ffffff;
   border-radius: 0.5rem;
   flex-shrink: 0;
 }
@@ -354,6 +354,10 @@ img { display: block; max-width: 100%; }
   border-bottom: 1px solid hsl(var(--border) / .6);
 }
 
+.sidebar-header svg {
+  color: hsl(var(--primary));
+}
+
 .sidebar-header__text {
   font-size: 0.875rem;
   font-weight: 600;
@@ -394,27 +398,34 @@ img { display: block; max-width: 100%; }
   transition: background 0.15s, color 0.15s;
 }
 .filter-pill:hover {
-  color: hsl(var(--foreground));
-  background: hsl(var(--accent) / .5);
+  color: hsl(var(--primary));
+  background: hsl(var(--accent));
 }
 
-.filter-pill.is-active {
+.filter-pill.is-active,
+.filter-pill.is-active:hover {
   background: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
-  font-weight: 500;
+  color: #ffffff;
+  font-weight: 600;
+}
+.dark .filter-pill.is-active,
+.dark .filter-pill.is-active:hover {
+  background: hsl(var(--primary));
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .btn-clear-filters {
   display: inline-block;
   font-size: 0.8125rem;
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--primary));
   text-decoration: underline;
   text-underline-offset: 3px;
   margin-top: 0.5rem;
-  transition: color 0.15s;
+  transition: opacity 0.15s;
 }
 .btn-clear-filters:hover {
-  color: hsl(var(--foreground));
+  opacity: 0.8;
 }
 
 /* ── Results Bar ── */
@@ -641,9 +652,9 @@ img { display: block; max-width: 100%; }
   transition: background 0.15s, border-color 0.15s, transform 0.15s;
 }
 .product-card__add-btn:hover {
-  background: hsl(var(--foreground));
-  color: hsl(var(--background));
-  border-color: hsl(var(--foreground));
+  background: hsl(var(--primary));
+  color: #ffffff;
+  border-color: hsl(var(--primary));
   transform: scale(1.1);
 }
 

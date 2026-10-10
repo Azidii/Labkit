@@ -1,27 +1,41 @@
 :root {
   --background: 0 0% 100%;
-  --foreground: 0 0% 3.9%;
+  --foreground: 222 47% 11%;
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 3.9%;
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 45.1%;
-  --border: 0 0% 89.8%;
-  --input: 0 0% 89.8%;
-  --ring: 0 0% 3.9%;
+  --card-foreground: 222 47% 11%;
+  --primary: 190 84% 28%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 190 75% 95%;
+  --accent-foreground: 190 84% 28%;
+  --destructive: 0 84.2% 60.2%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 190 84% 28%;
   --radius: 0.5rem;
   --font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 .dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 7%;
-  --card-foreground: 0 0% 98%;
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  --border: 0 0% 18%;
-  --input: 0 0% 18%;
-  --ring: 0 0% 83.1%;
+  --background: 214 40% 7.5%;
+  --foreground: 210 40% 98%;
+  --card: 213 36% 11%;
+  --card-foreground: 210 40% 98%;
+  --primary: 187 80% 42%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 213 30% 15%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 213 30% 15%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 213 28% 18%;
+  --accent-foreground: 187 80% 75%;
+  --destructive: 0 62.8% 30.6%;
+  --border: 213 25% 18%;
+  --input: 213 25% 18%;
+  --ring: 187 80% 42%;
 }
 
 *, *::before, *::after {
@@ -74,15 +88,15 @@ a {
   justify-content: center;
   width: 2.75rem;
   height: 2.75rem;
-  background: #09090b;
+  background: hsl(var(--primary));
   color: #ffffff;
   border-radius: 0.75rem;
   margin-bottom: 1rem;
 }
 
 .dark .reset-icon {
-  background: #fafafa;
-  color: #09090b;
+  background: hsl(var(--primary));
+  color: #ffffff;
 }
 
 .reset-title {
@@ -166,7 +180,7 @@ a {
   width: 100%;
   height: 2.75rem;
   margin-top: 0.5rem;
-  background: #09090b;
+  background: hsl(var(--primary));
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
@@ -178,8 +192,8 @@ a {
 }
 
 .dark .btn-submit {
-  background: #fafafa;
-  color: #09090b;
+  background: hsl(var(--primary));
+  color: #ffffff;
 }
 
 .btn-submit:hover {

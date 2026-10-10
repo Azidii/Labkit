@@ -309,7 +309,7 @@
 .btn-checkout {
   width: 100%;
   height: 2.75rem;
-  background: #09090b;
+  background: hsl(var(--primary));
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
@@ -324,8 +324,8 @@
 }
 
 .dark .btn-checkout {
-  background: #fafafa;
-  color: #09090b;
+  background: hsl(var(--primary));
+  color: #ffffff;
 }
 
 .btn-checkout:hover {
@@ -343,8 +343,8 @@
   height: 1rem;
   padding: 0 0.25rem;
   border-radius: 9999px;
-  background: hsl(var(--foreground));
-  color: hsl(var(--background));
+  background: hsl(var(--primary));
+  color: #ffffff;
   font-size: 0.625rem;
   font-weight: 700;
 }
