@@ -151,8 +151,8 @@
         <div class="sidebar-section">
           <h2 class="sidebar-heading">DOMAIN</h2>
           <div class="filter-group">
-            <% const cats=["All", "Microcontrollers" , "Single-Board Computers" , "Sensors & Modules"
-              , "Buzzers & Audio" , "Motors & Actuators" , "Displays & Power" ]; %>
+            <% const cats=["All", "IoT Kits", "Microcontrollers", "Single-Board Computers", "Sensors & Modules"
+              , "Buzzers & Audio", "Motors & Actuators", "Displays & Power"]; %>
               <% cats.forEach(c=> { %>
                 <button type="button" class="filter-pill <%= activeCategory === c ? 'is-active' : '' %>"
                   onclick="setFilter('category', '<%= c %>')">
