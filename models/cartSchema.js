@@ -2,34 +2,28 @@ const mongoose = require("mongoose");
 
 const cartItemSchema = new mongoose.Schema(
   {
-    productId: {
-      type: String,
-      required: [true, "Product ID is required"],
-      trim: true
+    item: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Item",
+      default: null
     },
 
-    name: {
-      type: String,
-      required: [true, "Product name is required"],
-      trim: true
+    kit: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Kit",
+      default: null
     },
 
-    price: {
-      type: Number,
-      required: [true, "Price is required"],
-      min: [0, "Price cannot be negative"]
-    },
-
-    qty: {
+    quantity: {
       type: Number,
       required: [true, "Quantity is required"],
-      min: [1, "Quantity must be at least 1"],
-      default: 1
+      min: [1, "Quantity must be at least 1"]
     },
 
-    img: {
-      type: String,
-      default: ""
+    unitPrice: {
+      type: Number,
+      required: [true, "Unit price is required"],
+      min: [0, "Unit price cannot be negative"]
     }
   },
   { _id: true }
@@ -37,20 +31,26 @@ const cartItemSchema = new mongoose.Schema(
 
 const cartSchema = new mongoose.Schema(
   {
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, "User is required"],
+      default: null,
       index: true
     },
 
-    items: [cartItemSchema],
-
-    status: {
+    sessionId: {
       type: String,
-      enum: ["active", "completed", "abandoned"],
-      default: "active"
-    }
+      default: null,
+      index: true
+    },
+
+    subtotal: {
+      type: Number,
+      default: 0,
+      min: [0, "Subtotal cannot be negative"]
+    },
+
+    items: [cartItemSchema]
   },
   { timestamps: true }
 );
