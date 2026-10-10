@@ -1,17 +1,19 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
+/**
+ * Enumeration: Role
+ * Values: 'customer', 'admin'
+ * Note: 'guest' refers to an unauthenticated visitor, not a persisted database record.
+ */
+const ROLE_ENUM = ["customer", "admin"];
+
 const userSchema = new mongoose.Schema(
   {
-    firstName: {
+    username: {
       type: String,
-      required: [true, "First name is required"],
-      trim: true
-    },
-
-    lastName: {
-      type: String,
-      required: [true, "Last name is required"],
+      required: [true, "Username is required"],
+      unique: true,
       trim: true
     },
 
@@ -23,17 +25,34 @@ const userSchema = new mongoose.Schema(
       trim: true
     },
 
-    username: {
-      type: String,
-      required: [true, "Username is required"],
-      unique: true,
-      trim: true
-    },
-
     passwordHash: {
       type: String,
       required: function () {
         return !this.googleId;
+      },
+      default: null
+    },
+
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: null
+    },
+
+    role: {
+      type: String,
+      enum: {
+        values: ROLE_ENUM,
+        message: "{VALUE} is not a valid role. Allowed: customer, admin"
+      },
+      default: "customer",
+      lowercase: true,
+      set: function (val) {
+        if (!val) return "customer";
+        const normalized = String(val).toLowerCase();
+        // Automatically map legacy 'user' to UML standard 'customer'
+        return normalized === "user" ? "customer" : normalized;
       }
     },
 
@@ -47,27 +66,30 @@ const userSchema = new mongoose.Schema(
       default: null
     },
 
-    googleId: {
+    // Optional legacy helper fields for existing controllers/views
+    firstName: {
       type: String,
-      unique: true,
-      sparse: true
+      trim: true,
+      default: ""
+    },
+
+    lastName: {
+      type: String,
+      trim: true,
+      default: ""
     },
 
     avatar: {
       type: String,
       default: ""
-    },
-
-    role: {
-      type: String,
-      enum: ["admin", "user", "proctor"],
-      default: "user"
     }
   },
-  { timestamps: true }
+  {
+    timestamps: true // provides createdAt : Date, updatedAt : Date
+  }
 );
 
-// Compare password helper
+// Method: +comparePassword(password : String) : Boolean
 userSchema.methods.comparePassword = async function (candidatePassword) {
   if (!this.passwordHash) return false;
   return bcrypt.compare(candidatePassword, this.passwordHash);

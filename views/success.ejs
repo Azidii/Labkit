@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= typeof type !== 'undefined' && type === 'register' ? 'Account Created — LabKit Market' : 'Signed In — LabKit Market' %></title>
+  <% const isPurchase = typeof type !== 'undefined' && type === 'purchase'; %>
+  <title><%= isPurchase ? 'Purchase Successful — LabKit Market' : (typeof type !== 'undefined' && type === 'register' ? 'Account Created — LabKit Market' : 'Signed In — LabKit Market') %></title>
   <link rel="stylesheet" href="/css/success.css" />
   <script src="/js/theme.js"></script>
   <script src="/js/page-transitions.js"></script>
@@ -12,8 +13,27 @@
 <body>
   <% 
     const isRegister = typeof type !== 'undefined' && type === 'register';
-    const targetUrl = isRegister ? '/login?success=' + encodeURIComponent('Registration successful! Please log in.') : '/';
+    const targetUrl = isPurchase ? '/shop' : (isRegister ? '/login?success=' + encodeURIComponent('Registration successful! Please log in.') : '/');
   %>
+  <% if (isPurchase) { %>
+  <main class="success-page success-page--purchase page-main" data-target="<%= targetUrl %>" data-purchase-success="true">
+    <section class="purchase-toast" role="status" aria-live="polite">
+      <div class="purchase-toast__icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m5 12 4 4L19 6"/>
+        </svg>
+      </div>
+      <div class="purchase-toast__content">
+        <h1>Payment Successful!</h1>
+        <p>
+          Your receipt or invoice will be sent to your email shortly.
+          <% if (orderId) { %><span class="purchase-toast__order">Order <strong><%= orderId %></strong></span><% } %>
+        </p>
+        <a href="/" class="purchase-toast__button" id="continueBtn">Go back to home page</a>
+      </div>
+    </section>
+  </main>
+  <% } else { %>
   <main class="success-page page-main" data-target="<%= targetUrl %>">
     <div class="success-container">
       <div class="success-header">
@@ -41,7 +61,6 @@
         <p class="success-card__desc">
           <%= isRegister ? 'Your account has been created. Taking you to log in in a few seconds...' : "You're all signed in. Taking you home in a few seconds..." %>
         </p>
-
         <a href="<%= targetUrl %>" class="btn-continue" id="continueBtn">
           <span><%= isRegister ? 'Continue to log in' : 'Continue now' %></span>
           <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -56,5 +75,6 @@
       </div>
     </div>
   </main>
+  <% } %>
 </body>
 </html>

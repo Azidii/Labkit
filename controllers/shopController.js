@@ -1,3 +1,5 @@
+const Kit = require("../models/kitsSchema");
+
 const parts = [
   {
     id: "1",
@@ -212,10 +214,22 @@ const parts = [
 ];
 
 // GET /shop - Display shop catalog with filters
-exports.renderShop = (req, res) => {
+exports.renderShop = async (req, res) => {
   const { category, difficulty, sort, q } = req.query;
 
   let filtered = [...parts];
+  try {
+    const databaseKits = await Kit.find({ in_stock: true, stock_quantity: { $gt: 0 } }).lean();
+    const customProducts = databaseKits.map((kit) => ({
+      ...kit,
+      id: String(kit._id),
+      review_count: kit.review_count || 0,
+      maxPurchaseQuantity: kit.maxPurchaseQuantity || 10
+    }));
+    filtered = filtered.concat(customProducts);
+  } catch (error) {
+    console.error("Shop custom bundle load error:", error);
+  }
 
   if (category && category !== "All") {
     filtered = filtered.filter(

@@ -40,6 +40,9 @@
         <a href="/" class="navbar__link">Home</a>
         <a href="/shop" class="navbar__link">Shop</a>
         <a href="/about" class="navbar__link">About Us</a>
+        <% if (locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) { %>
+        <a href="/admin" class="navbar__link navbar__link--admin">Admin</a>
+        <% } %>
       </nav>
 
       <div class="navbar__actions">
@@ -74,6 +77,17 @@
               <p class="profile-dropdown__email"><%= locals.currentUser.email %></p>
             </div>
             <div class="profile-dropdown__divider"></div>
+            <% if (locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) { %>
+            <a href="/admin" class="profile-dropdown__item profile-dropdown__item--admin">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>Admin Dashboard</span>
+            </a>
+            <% } %>
             <a href="/settings" class="profile-dropdown__item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -113,6 +127,9 @@
         </svg>
         <h1 class="settings-title">Settings</h1>
       </div>
+      <% if (locals.currentUser && locals.currentUser.role === 'admin') { %>
+        <a href="/admin" class="btn-signout" style="display: inline-flex; margin: 0 0 1rem;">Manage shop bundles</a>
+      <% } %>
 
 
       <div class="settings-card">

@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const identifier = (document.getElementById("email")?.value || "").trim();
       const password = document.getElementById("password")?.value;
+      const returnTo = new URLSearchParams(window.location.search).get("returnTo");
 
       if (!identifier || !password) {
         showAlert("Please fill in both fields.");
@@ -75,7 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
             email: identifier,
             username: identifier,
             identifier,
-            password
+            password,
+            returnTo
           })
         });
 
