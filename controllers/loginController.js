@@ -311,13 +311,15 @@ exports.handleGoogleCallback = async (req, res) => {
  * Clears the token cookie and redirects to /login.
  */
 exports.logout = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", { httpOnly: true, path: "/" });
   if (req.session) {
     req.session.destroy((err) => {
       if (err) console.error("Session destroy error:", err);
+      res.clearCookie("connect.sid", { path: "/" });
       res.redirect("/login");
     });
   } else {
+    res.clearCookie("connect.sid", { path: "/" });
     res.redirect("/login");
   }
 };

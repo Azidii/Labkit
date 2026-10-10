@@ -86,13 +86,13 @@ async function getFeaturedProducts() {
 // GET / - Dashboard home
 exports.renderDashboard = async (req, res) => {
   const featured = await getFeaturedProducts();
-  const currentUser = (req.session && req.session.user) || null;
+  const currentUser = (req.session && req.session.user) || res.locals.currentUser || null;
   res.render("dashboard", { featured, loading: false, currentUser });
 };
 
 // GET /settings - User Settings page
 exports.renderSettings = async (req, res) => {
-  let currentUser = (req.session && req.session.user) || null;
+  let currentUser = (req.session && req.session.user) || res.locals.currentUser || null;
   if (currentUser && currentUser.id) {
     try {
       const dbUser = await User.findById(currentUser.id);
@@ -221,13 +221,15 @@ exports.redirectAdmin = (req, res) => {
 
 // GET /logout - Sign out user and destroy session
 exports.logout = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", { httpOnly: true, path: "/" });
   if (req.session) {
     req.session.destroy((err) => {
       if (err) console.error("Error destroying session:", err);
+      res.clearCookie("connect.sid", { path: "/" });
       res.redirect("/login");
     });
   } else {
+    res.clearCookie("connect.sid", { path: "/" });
     res.redirect("/login");
   }
 };
