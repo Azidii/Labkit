@@ -172,7 +172,7 @@ async function sendOtpEmail({ to, name, code }) {
 
       <div class="footer-bar">
         <p class="footer-text">
-          &copy; 2026 LabKit Market &mdash; Prototyping, bundled.<br>
+          &copy; 2026 LabKit Market &mdash; Individual parts for IoT & prototyping.<br>
           This is an automated system email. Please do not reply directly.
         </p>
       </div>

@@ -40,7 +40,7 @@
       <nav class="navbar__nav">
         <a href="/" class="navbar__link navbar__link--active">Home</a>
         <a href="/shop" class="navbar__link">Shop</a>
-        <a href="/#how-it-works" class="navbar__link">About</a>
+        <a href="/about" class="navbar__link">About Us</a>
       </nav>
 
       <div class="navbar__actions">
@@ -142,7 +142,7 @@
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-            <a href="/#how-it-works" class="btn btn--outline">
+            <a href="/about" class="btn btn--outline">
               How ordering works
             </a>
           </div>
@@ -333,20 +333,23 @@
               <span class="cta__badge">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
+                  <rect width="16" height="16" x="4" y="4" rx="2" />
+                  <rect width="6" height="6" x="9" y="9" />
+                  <path d="M15 2v2" /><path d="M15 20v2" />
+                  <path d="M2 15h2" /><path d="M2 9h2" />
+                  <path d="M20 15h2" /><path d="M20 9h2" />
+                  <path d="M9 2v2" /><path d="M9 20v2" />
                 </svg>
-                Digital delivery
+                IoT Hardware Essentials
               </span>
-              <h2>The kit is physical. The schematics are instant.</h2>
+              <h2>No bulky kits. Buy only the exact IoT parts you need.</h2>
               <p class="cta__desc">
-                Every purchase unlocks a private download vault: the circuit diagram, the Packet Tracer topology, and
-                the integration code &mdash; all available the second your order is confirmed. Start building before the
-                box even arrives.
+                Tired of paying for starter kits full of parts you'll never use? Pick individual ESP32 microcontrollers,
+                microphone sound modules, jumper wires, resistor packs, and buzzers. Every unit is bench-checked,
+                sold as a single piece with no minimum order.
               </p>
               <a href="/shop" class="btn btn--secondary">
-                Start building
+                Explore IoT parts
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12" />
@@ -355,82 +358,94 @@
               </a>
             </div>
             <div class="vault-files">
-              <div class="vault-file">
+              <!-- Category 1: Microcontrollers -->
+              <a href="/shop?category=Microcontrollers" class="vault-file">
                 <div class="vault-file__icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round">
                     <rect width="16" height="16" x="4" y="4" rx="2" />
                     <rect width="6" height="6" x="9" y="9" />
-                    <path d="M15 2v2" />
-                    <path d="M15 20v2" />
-                    <path d="M2 15h2" />
-                    <path d="M2 9h2" />
-                    <path d="M20 15h2" />
-                    <path d="M20 9h2" />
-                    <path d="M9 2v2" />
-                    <path d="M9 20v2" />
+                    <path d="M15 2v2" /><path d="M15 20v2" />
+                    <path d="M2 15h2" /><path d="M2 9h2" />
+                    <path d="M20 15h2" /><path d="M20 9h2" />
+                    <path d="M9 2v2" /><path d="M9 20v2" />
                   </svg>
                 </div>
                 <div class="vault-file__info">
-                  <p class="vault-file__name">circuit-diagram.pdf</p>
-                  <p class="vault-file__note">Annotated schematic</p>
+                  <p class="vault-file__name">Microcontrollers</p>
+                  <p class="vault-file__note">ESP32 DevKit V1 (WROOM-32) &amp; dev boards</p>
                 </div>
-                <span class="vault-file__dl">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
+                <span class="vault-file__arrow" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </span>
-              </div>
+              </a>
 
-              <div class="vault-file">
-                <div class="vault-file__icon">
+              <!-- Category 2: Sensors & Modules -->
+              <a href="/shop?category=<%= encodeURIComponent('Sensors & Modules') %>" class="vault-file">
+                <div class="vault-file__icon" style="color: #a78bfa; border-color: rgba(167, 139, 250, 0.25); background: rgba(139, 92, 246, 0.12);">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="5" r="3" />
-                    <circle cx="6" cy="19" r="3" />
-                    <circle cx="18" cy="19" r="3" />
-                    <path d="M12 8v4" />
-                    <path d="M6 16l6-4 6 4" />
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="22" />
                   </svg>
                 </div>
                 <div class="vault-file__info">
-                  <p class="vault-file__name">topology.pkt</p>
-                  <p class="vault-file__note">Packet Tracer file</p>
+                  <p class="vault-file__name">Sensors &amp; Modules</p>
+                  <p class="vault-file__note">KY-038 Microphone, ultrasonic &amp; detectors</p>
                 </div>
-                <span class="vault-file__dl">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
+                <span class="vault-file__arrow" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </span>
-              </div>
+              </a>
 
-              <div class="vault-file">
-                <div class="vault-file__icon">
+              <!-- Category 3: Displays & Power -->
+              <a href="/shop?category=<%= encodeURIComponent('Displays & Power') %>" class="vault-file">
+                <div class="vault-file__icon" style="color: #34d399; border-color: rgba(52, 211, 153, 0.25); background: rgba(16, 185, 129, 0.12);">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="16 18 22 12 16 6" />
-                    <polyline points="8 6 2 12 8 18" />
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                   </svg>
                 </div>
                 <div class="vault-file__info">
-                  <p class="vault-file__name">firmware.zip</p>
-                  <p class="vault-file__note">Integration code</p>
+                  <p class="vault-file__name">Displays &amp; Power</p>
+                  <p class="vault-file__note">40-Pin jumper wires, resistors &amp; OLEDs</p>
                 </div>
-                <span class="vault-file__dl">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
+                <span class="vault-file__arrow" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </span>
-              </div>
+              </a>
+
+              <!-- Category 4: Buzzers & Audio -->
+              <a href="/shop?category=<%= encodeURIComponent('Buzzers & Audio') %>" class="vault-file">
+                <div class="vault-file__icon" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.25); background: rgba(245, 158, 11, 0.12);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                  </svg>
+                </div>
+                <div class="vault-file__info">
+                  <p class="vault-file__name">Buzzers &amp; Audio</p>
+                  <p class="vault-file__note">5V active piezo buzzers &amp; tone modules</p>
+                </div>
+                <span class="vault-file__arrow" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </span>
+              </a>
             </div>
           </div>
         </div>
@@ -507,21 +522,20 @@
             <span class="footer__brand-text">LabKit Market</span>
           </div>
           <p class="footer__desc">
-            Project-ready hardware bundles for engineering students and hobbyists. Every kit ships with circuit
-            diagrams, Packet Tracer topologies, and integration code &mdash; delivered digitally the moment you check
-            out.
+            Individual electronic components and IoT hardware for engineering students and makers. Buy single
+            ESP32 boards, buzzers, sensors, and wiring &mdash; bench-checked with pinout datasheets included.
           </p>
         </div>
 
         <nav class="footer__links">
           <a href="/shop" class="footer__link">Shop</a>
-          <a href="/#how-it-works" class="footer__link">How it works</a>
+          <a href="/about" class="footer__link">About Us</a>
           <a href="/#workbench" class="footer__link">Built for the workbench</a>
         </nav>
       </div>
 
       <div class="footer__bottom">
-        <p>&copy; 2026 LabKit Market &mdash; Prototyping, bundled.</p>
+        <p>&copy; 2026 LabKit Market &mdash; Individual parts for IoT & prototyping.</p>
       </div>
     </div>
   </footer>

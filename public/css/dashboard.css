@@ -158,10 +158,25 @@ img { display: block; max-width: 100%; }
   color: hsl(var(--muted-foreground));
   text-decoration: none;
   transition: color 0.15s ease;
+  position: relative;
+  padding: 0.25rem 0;
 }
-.navbar__link:hover,
-.navbar__link--active {
+.navbar__link:hover {
   color: hsl(var(--foreground));
+}
+.navbar__link--active {
+  color: hsl(var(--primary));
+  font-weight: 600;
+}
+.navbar__link--active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: hsl(var(--primary));
+  border-radius: 9999px;
 }
 
 .navbar__actions {
@@ -940,6 +955,9 @@ img { display: block; max-width: 100%; }
   background: rgba(255, 255, 255, 0.035);
   padding: 0.875rem 1.25rem;
   backdrop-filter: blur(8px);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
   transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
 .vault-file:hover {
@@ -979,16 +997,45 @@ img { display: block; max-width: 100%; }
   margin-top: 0.15rem;
 }
 
-.vault-file__dl {
+.vault-file__dl,
+.vault-file__arrow {
   display: grid;
   place-items: center;
   flex-shrink: 0;
   color: #64748b;
   transition: color 0.15s ease, transform 0.15s ease;
 }
-.vault-file:hover .vault-file__dl {
+.vault-file:hover .vault-file__dl,
+.vault-file:hover .vault-file__arrow {
   color: #ffffff;
-  transform: translateY(1px);
+  transform: translateX(3px);
+}
+
+.vault-part__add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.vault-part__add:hover {
+  background: #2dd4bf;
+  border-color: #2dd4bf;
+  color: #0b1320;
+  transform: scale(1.04);
+  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.25);
+}
+.vault-part__price {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: -0.01em;
 }
 
 /* ══════════════════════════════════════════════════════════

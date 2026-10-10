@@ -112,6 +112,11 @@
     // Only internal same-origin links
     if (link.origin !== window.location.origin) return;
 
+    if (link.classList.contains("navbar__link")) {
+      document.querySelectorAll(".navbar__link").forEach((l) => l.classList.remove("navbar__link--active"));
+      link.classList.add("navbar__link--active");
+    }
+
     // Ignore clicking link to current exact URL
     if (
       link.pathname === window.location.pathname &&
