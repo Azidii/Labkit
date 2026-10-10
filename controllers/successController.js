@@ -4,6 +4,8 @@ exports.renderSuccess = (req, res) => {
   const currentUser = (req.session && req.session.user) || res.locals.currentUser || null;
   res.render("success", {
     type,
+    orderId: req.query.order || null,
+    orderTotal: req.query.total || null,
     currentUser
   });
 };

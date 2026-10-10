@@ -22,6 +22,9 @@ exports.renderLogin = (req, res) => {
  */
 exports.processLogin = async (req, res) => {
   const isJson = req.is("json") || req.headers.accept?.includes("application/json");
+  const requestedReturnTo = req.body.returnTo || req.query.returnTo;
+  const returnTo = typeof requestedReturnTo === "string" && requestedReturnTo.startsWith("/") &&
+    !requestedReturnTo.startsWith("//") ? requestedReturnTo : null;
 
   try {
     const rawIdentifier = (req.body.email || req.body.username || req.body.identifier || "").trim();
@@ -32,6 +35,33 @@ exports.processLogin = async (req, res) => {
       return isJson
         ? res.status(400).json({ success: false, error: msg })
         : res.status(400).render("login", { error: msg, success: null });
+    }
+
+    // Temporary UI-only admin account. Remove this block after testing the admin console.
+    if (
+      process.env.NODE_ENV !== "production" &&
+      rawIdentifier.toLowerCase() === "admin" &&
+      password === "admin123"
+    ) {
+      req.session.user = {
+        id: "temporary-admin",
+        firstName: "Temporary",
+        lastName: "Admin",
+        username: "admin",
+        email: "admin@test.local",
+        role: "admin",
+        avatar: ""
+      };
+
+      if (isJson) {
+        return res.json({
+          success: true,
+          redirect: returnTo || "/admin",
+          user: req.session.user
+        });
+      }
+
+      return res.redirect(returnTo || "/admin");
     }
 
     const cleanId = rawIdentifier;
@@ -109,6 +139,12 @@ exports.processLogin = async (req, res) => {
     if (isJson) {
       return res.json({
         success: true,
+        redirect: returnTo || "/success?type=login",
+        user: req.session.user
+      });
+    }
+
+    res.redirect(returnTo || "/success?type=login");
         redirect: redirectUrl,
         user: {
           id: user._id,

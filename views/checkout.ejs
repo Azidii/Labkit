@@ -32,6 +32,9 @@
         <a href="/" class="navbar__link">Home</a>
         <a href="/shop" class="navbar__link">Shop</a>
         <a href="/about" class="navbar__link">About Us</a>
+        <% if (locals.currentUser && locals.currentUser.role === 'admin') { %>
+        <a href="/admin" class="navbar__link">Admin</a>
+        <% } %>
       </nav>
 
       <div class="navbar__actions">
@@ -111,7 +114,7 @@
 
       <div class="checkout-grid">
         <div class="checkout-form-column">
-          <form id="checkoutForm" onsubmit="event.preventDefault(); alert('Order placed successfully! Check your email for instant access to your digital vault.'); localStorage.removeItem('circuitCart'); window.location.href='/';">
+          <form id="checkoutForm">
             
             <section class="checkout-section">
               <h2 class="checkout-section-title">Contact & shipping</h2>
@@ -246,6 +249,21 @@
     </div>
   </main>
 
+  <div class="payment-success-backdrop" id="paymentSuccessBackdrop" aria-hidden="true"></div>
+  <section class="payment-toast" id="paymentToast" role="status" aria-live="polite" aria-hidden="true">
+    <div class="payment-toast__icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m5 12 4 4L19 6"/>
+      </svg>
+    </div>
+    <div class="payment-toast__content">
+      <h2>Payment Successful!</h2>
+      <p>Your receipt or invoice will be sent to your email shortly.</p>
+      <p class="payment-toast__order" id="paymentToastOrder"></p>
+      <a href="/" class="payment-toast__button">Go back to home page</a>
+    </div>
+  </section>
+
   <div class="cart-drawer-backdrop" id="cartBackdrop"></div>
   <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
     <div class="cart-drawer__header">
@@ -359,6 +377,22 @@
       document.getElementById("shippingAmount").textContent = `$${shipping.toFixed(2)}`;
       document.getElementById("totalAmount").textContent = `$${total.toFixed(2)}`;
       document.getElementById("payBtnAmount").textContent = `$${total.toFixed(2)}`;
+
+      const checkoutForm = document.getElementById("checkoutForm");
+      checkoutForm?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const orderId = `LK-${Date.now().toString(36).toUpperCase()}`;
+        localStorage.removeItem("circuitCart");
+        const paymentToast = document.getElementById("paymentToast");
+        const paymentToastOrder = document.getElementById("paymentToastOrder");
+        if (paymentToast && paymentToastOrder) {
+          paymentToastOrder.textContent = `Order ${orderId}`;
+          paymentToast.classList.add("is-visible");
+          document.getElementById("paymentSuccessBackdrop")?.classList.add("is-visible");
+          document.querySelector(".checkout-page")?.setAttribute("inert", "");
+          paymentToast.setAttribute("aria-hidden", "false");
+        }
+      });
 
       const avatarBtn = document.getElementById("avatarBtn");
       const dropdownWrapper = avatarBtn?.closest(".profile-dropdown-wrapper");

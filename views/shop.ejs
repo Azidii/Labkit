@@ -42,6 +42,8 @@
         <a href="/" class="navbar__link">Home</a>
         <a href="/shop" class="navbar__link navbar__link--active">Shop</a>
         <a href="/about" class="navbar__link">About Us</a>
+        <% if (locals.currentUser && locals.currentUser.role === 'admin') { %>
+        <a href="/admin" class="navbar__link">Admin</a>
         <% if (locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) { %>
         <a href="/admin/dashboard" class="navbar__link navbar__link--admin">Admin</a>
         <% } %>
@@ -165,8 +167,8 @@
         <div class="sidebar-section">
           <h2 class="sidebar-heading">DOMAIN</h2>
           <div class="filter-group">
-            <% const cats=["All", "Microcontrollers" , "Single-Board Computers" , "Sensors & Modules"
-              , "Buzzers & Audio" , "Motors & Actuators" , "Displays & Power" ]; %>
+            <% const cats=["All", "IoT Kits", "Microcontrollers", "Single-Board Computers", "Sensors & Modules"
+              , "Buzzers & Audio", "Motors & Actuators", "Displays & Power"]; %>
               <% cats.forEach(c=> { %>
                 <button type="button" class="filter-pill <%= activeCategory === c ? 'is-active' : '' %>"
                   onclick="setFilter('category', '<%= c %>')">
@@ -267,7 +269,7 @@
                     <div class="product-card__footer">
                       <span class="product-card__price">$<%= p.price.toFixed(2) %></span>
                       <button type="button" class="product-card__add-btn"
-                        onclick="addToCart('<%= p.id %>', '<%= p.name %>', <%= p.price %>, '<%= p.image_url %>')"
+                        onclick="addToCart(<%- JSON.stringify(String(p.id)) %>, <%- JSON.stringify(p.name) %>, <%= p.price %>, <%- JSON.stringify(p.image_url) %>, <%= p.maxPurchaseQuantity || 10 %>)"
                         aria-label="Add to cart">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

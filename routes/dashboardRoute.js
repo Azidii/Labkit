@@ -14,6 +14,16 @@ router.post("/settings/change-password", dashboardController.changePassword);
 router.get("/about", (req, res) => res.render("about"));
 router.get("/how-it-works", (req, res) => res.render("about"));
 
+router.get("/how-it-works", (req, res) => {
+  res.render("about");
+});
+
+router.get("/settings", (req, res) => {
+  res.render("settings");
+});
+
+// Admin shortcut & Logout
+router.get("/admin", dashboardController.redirectAdmin);
 // Logout
 router.get("/logout", dashboardController.logout);
 

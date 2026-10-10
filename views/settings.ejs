@@ -40,6 +40,8 @@
         <a href="/" class="navbar__link">Home</a>
         <a href="/shop" class="navbar__link">Shop</a>
         <a href="/about" class="navbar__link">About Us</a>
+        <% if (locals.currentUser && locals.currentUser.role === 'admin') { %>
+        <a href="/admin" class="navbar__link">Admin</a>
         <% if (locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) { %>
         <a href="/admin/dashboard" class="navbar__link navbar__link--admin">Admin</a>
         <% } %>
@@ -127,6 +129,9 @@
         </svg>
         <h1 class="settings-title">Settings</h1>
       </div>
+      <% if (locals.currentUser && locals.currentUser.role === 'admin') { %>
+        <a href="/admin" class="btn-signout" style="display: inline-flex; margin: 0 0 1rem;">Manage shop bundles</a>
+      <% } %>
 
 
       <div class="settings-card">

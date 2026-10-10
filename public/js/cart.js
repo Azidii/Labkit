@@ -12,18 +12,34 @@ function saveCart(cart) {
   renderCart();
 }
 
-function addToCart(id, name, price, img) {
+function isAuthenticated() {
+  return document.documentElement.dataset.auth === "true";
+}
+
+function requireAuthentication() {
+  if (isAuthenticated()) return true;
+
+  const returnTo = `${window.location.pathname}${window.location.search}`;
+  window.location.href = `/login?error=${encodeURIComponent("Please log in or create an account before adding items to your cart.")}&returnTo=${encodeURIComponent(returnTo)}`;
+  return false;
+}
+
+function addToCart(id, name, price, img, maxPurchaseQuantity) {
+  if (!requireAuthentication()) return;
+
   const cart = getCart();
   const existing = cart.find((item) => String(item.id) === String(id));
   if (existing) {
-    existing.qty += 1;
+    const limit = Number(existing.maxPurchaseQuantity || maxPurchaseQuantity || 10);
+    if (existing.qty < limit) existing.qty += 1;
   } else {
     cart.push({
       id: String(id),
       name,
       price: Number(price),
       qty: 1,
-      img: img || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600"
+      img: img || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
+      maxPurchaseQuantity: Number(maxPurchaseQuantity) || 10
     });
   }
   saveCart(cart);
@@ -31,10 +47,13 @@ function addToCart(id, name, price, img) {
 }
 
 function updateCartQty(id, delta) {
+  if (!requireAuthentication()) return;
+
   let cart = getCart();
   const item = cart.find((i) => String(i.id) === String(id));
   if (!item) return;
-  item.qty += delta;
+  const limit = Number(item.maxPurchaseQuantity) || 10;
+  item.qty = Math.min(limit, item.qty + delta);
   if (item.qty <= 0) {
     cart = cart.filter((i) => String(i.id) !== String(id));
   }
@@ -42,6 +61,8 @@ function updateCartQty(id, delta) {
 }
 
 function removeCartItem(id) {
+  if (!requireAuthentication()) return;
+
   let cart = getCart();
   cart = cart.filter((i) => String(i.id) !== String(id));
   saveCart(cart);
@@ -218,5 +239,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeCart();
+  });
+
+  document.addEventListener("click", (event) => {
+    const checkoutLink = event.target.closest("#checkoutBtn");
+    if (checkoutLink && !requireAuthentication()) {
+      event.preventDefault();
+    }
   });
 });

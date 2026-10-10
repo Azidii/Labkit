@@ -167,13 +167,67 @@ const parts = [
     review_count: 310,
     in_stock: true,
   },
+  {
+    id: "13",
+    slug: "esp32-weather-station-iot-kit",
+    name: "ESP32 Weather Station IoT Kit",
+    tagline: "Complete bundle with ESP32, DHT11 temp/humidity, OLED display & breadboard",
+    price: 34.50,
+    compare_at_price: 39.99,
+    category: "IoT Kits",
+    difficulty: "Beginner",
+    image_url: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
+    rating: 4.9,
+    review_count: 148,
+    in_stock: true,
+  },
+  {
+    id: "14",
+    slug: "smart-radar-ultrasonic-iot-kit",
+    name: "Ultrasonic Radar & Distance Sensing IoT Kit",
+    tagline: "HC-SR04 sonar module, SG90 micro servo, ESP8266 & Packet Tracer topology",
+    price: 24.99,
+    compare_at_price: 29.50,
+    category: "IoT Kits",
+    difficulty: "Beginner",
+    image_url: "https://images.unsplash.com/photo-1553406830-ef2513450d76?w=600",
+    rating: 4.8,
+    review_count: 96,
+    in_stock: true,
+  },
+  {
+    id: "15",
+    slug: "acoustic-alarm-piezo-iot-kit",
+    name: "Acoustic Alarm & Sound Triggered IoT Kit",
+    tagline: "KY-038 microphone sensor, 5V active buzzer, ESP32 and telemetry scripts",
+    price: 21.00,
+    compare_at_price: 25.00,
+    category: "IoT Kits",
+    difficulty: "Intermediate",
+    image_url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600",
+    rating: 4.9,
+    review_count: 82,
+    in_stock: true,
+  },
 ];
 
 // GET /shop - Display shop catalog with filters
-exports.renderShop = (req, res) => {
+exports.renderShop = async (req, res) => {
   const { category, difficulty, sort, q } = req.query;
 
   let filtered = [...parts];
+  try {
+    const databaseKits = await Kit.find({ in_stock: true, stock_quantity: { $gt: 0 } }).lean();
+    const customProducts = databaseKits.map((kit) => ({
+      ...kit,
+      id: String(kit._id),
+      review_count: kit.review_count || 0,
+      maxPurchaseQuantity: kit.maxPurchaseQuantity || 10
+    }));
+    filtered = filtered.concat(customProducts);
+  } catch (error) {
+    console.error("Shop custom bundle load error:", error);
+  }
 
   if (category && category !== "All") {
     filtered = filtered.filter(
@@ -215,3 +269,4 @@ exports.renderShop = (req, res) => {
     loading: false
   });
 };
+const Kit = require("../models/kitsSchema");

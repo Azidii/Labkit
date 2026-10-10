@@ -100,6 +100,7 @@ app.use('/how-it-works', aboutRoute);
 app.use('/login', loginRoute);
 app.use('/register', registerRoute);
 app.use('/success', successAuthRoute);
+app.use('/admin', adminRoute);
 app.use('/resetpass', resetpassRoute);
 app.use('/shop', shopRoute);
 app.use('/checkout', checkoutRoute);
