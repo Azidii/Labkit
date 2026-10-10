@@ -253,7 +253,7 @@
                     <div class="product-card__footer">
                       <span class="product-card__price">$<%= p.price.toFixed(2) %></span>
                       <button type="button" class="product-card__add-btn"
-                        onclick="addToCart('<%= p.id %>', '<%= p.name %>', <%= p.price %>, '<%= p.image_url %>')"
+                        onclick="addToCart(<%- JSON.stringify(String(p.id)) %>, <%- JSON.stringify(p.name) %>, <%= p.price %>, <%- JSON.stringify(p.image_url) %>, <%= p.maxPurchaseQuantity || 10 %>)"
                         aria-label="Add to cart">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
