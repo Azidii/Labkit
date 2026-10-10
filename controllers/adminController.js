@@ -1,17 +1,6 @@
 const Kit = require("../models/kitsSchema");
 const User = require("../models/userSchema");
-
-function requireAdmin(req, res, next) {
-  if (!req.session || !req.session.user) {
-    return res.redirect("/login?error=" + encodeURIComponent("Please sign in as an administrator."));
-  }
-
-  if (req.session.user.role !== "admin") {
-    return res.status(403).send("Administrator access required.");
-  }
-
-  next();
-}
+const { requireAdmin } = require("../utils/authMiddleware");
 
 function parseComponents(rawComponents) {
   if (!rawComponents || !rawComponents.trim()) return [];
@@ -29,19 +18,21 @@ function parseComponents(rawComponents) {
 exports.requireAdmin = requireAdmin;
 
 exports.renderAdmin = async (req, res) => {
+  const currentUser = req.session?.user || res.locals.currentUser || req.user || {};
   try {
     const kits = await Kit.find().sort({ createdAt: -1 }).lean();
     const users = await User.find({}, "firstName lastName username email role createdAt")
       .sort({ createdAt: -1 })
       .lean();
-    res.render("admin", { kits, users, error: null, formData: {} });
+    res.render("admin", { kits, users, error: null, formData: {}, currentUser });
   } catch (error) {
     console.error("Admin shop load error:", error);
     res.status(500).render("admin", {
       kits: [],
       users: [],
       error: "Unable to load shop bundles right now.",
-      formData: {}
+      formData: {},
+      currentUser
     });
   }
 };
@@ -84,6 +75,7 @@ exports.createKit = async (req, res) => {
     const numericPrice = Number(price);
     const numericStock = Number(stock_quantity);
     const numericLimit = Number(maxPurchaseQuantity);
+    const currentUser = req.session?.user || res.locals.currentUser || req.user || {};
 
     if (!cleanName || !cleanTagline || !Number.isFinite(numericPrice) || numericPrice < 0 ||
         !Number.isInteger(numericStock) || numericStock < 0 ||
@@ -93,7 +85,8 @@ exports.createKit = async (req, res) => {
         kits,
         users: await User.find({}, "firstName lastName username email role createdAt").lean(),
         error: "Enter a name, tagline, valid price, stock quantity, and purchase limit.",
-        formData
+        formData,
+        currentUser
       });
     }
 
@@ -106,7 +99,8 @@ exports.createKit = async (req, res) => {
         kits,
         users: await User.find({}, "firstName lastName username email role createdAt").lean(),
         error: "Each component must use Name | Quantity | Specification format.",
-        formData
+        formData,
+        currentUser
       });
     }
 
@@ -134,6 +128,7 @@ exports.createKit = async (req, res) => {
     res.redirect("/admin?created=1");
   } catch (error) {
     console.error("Admin shop bundle creation error:", error);
+    const currentUser = req.session?.user || res.locals.currentUser || req.user || {};
     const kits = await Kit.find().sort({ createdAt: -1 }).lean().catch((loadError) => {
       console.error("Admin shop reload error:", loadError);
       return [];
@@ -142,7 +137,8 @@ exports.createKit = async (req, res) => {
       kits,
       users: await User.find({}, "firstName lastName username email role createdAt").lean(),
       error: "Unable to create this bundle. Check that its name is unique.",
-      formData
+      formData,
+      currentUser
     });
   }
 };

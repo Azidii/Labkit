@@ -35,11 +35,11 @@
         </button>
         <div class="profile-dropdown-wrapper">
           <button class="navbar__avatar-btn" id="avatarBtn" aria-label="User menu" aria-expanded="false">
-            <span class="navbar__avatar"><%= (currentUser.firstName || "A").charAt(0).toUpperCase() %></span>
+            <span class="navbar__avatar"><%= ((locals.currentUser && locals.currentUser.firstName) || "A").charAt(0).toUpperCase() %></span>
             <svg class="navbar__avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="profile-dropdown" id="profileDropdown">
-            <div class="profile-dropdown__header"><p class="profile-dropdown__name"><%= currentUser.firstName %> <%= currentUser.lastName %></p><p class="profile-dropdown__email"><%= currentUser.email %></p></div>
+            <div class="profile-dropdown__header"><p class="profile-dropdown__name"><%= (locals.currentUser && locals.currentUser.firstName) || "Admin" %> <%= (locals.currentUser && locals.currentUser.lastName) || "" %></p><p class="profile-dropdown__email"><%= (locals.currentUser && locals.currentUser.email) || "" %></p></div>
             <div class="profile-dropdown__divider"></div>
             <a href="/settings" class="profile-dropdown__item"><span>⚙</span><span>Settings</span></a>
             <a href="/logout" class="profile-dropdown__item"><span>↪</span><span>Sign out</span></a>
@@ -133,12 +133,13 @@
         <% users.forEach(user => { %>
           <div class="account-row">
             <div><strong><%= user.firstName %> <%= user.lastName %></strong><span><%= user.email %> · @<%= user.username %> · <%= user.role %></span></div>
-            <% if (String(user._id) !== String(currentUser.id)) { %><form method="post" action="/admin/accounts/<%= user._id %>/delete"><button class="remove-button" type="submit">Remove</button></form><% } else { %><span class="you-label">You</span><% } %>
+            <% const currentUserId = currentUser ? String(currentUser.id || currentUser._id || '') : ''; %>
+            <% if (String(user._id) !== currentUserId) { %><form method="post" action="/admin/accounts/<%= user._id %>/delete"><button class="remove-button" type="submit">Remove</button></form><% } else { %><span class="you-label">You</span><% } %>
           </div>
         <% }) %>
       </section>
       <section class="admin-card password-card">
-        <div class="section-heading"><div class="section-heading__title"><span class="section-icon">⚿</span><div><h2>Change your password</h2><p>Changes the password for <%= currentUser.email %>.</p></div></div></div>
+        <div class="section-heading"><div class="section-heading__title"><span class="section-icon">⚿</span><div><h2>Change your password</h2><p>Changes the password for <%= (currentUser && currentUser.email) || 'your account' %>.</p></div></div></div>
         <form class="password-form" id="adminPasswordForm">
           <input name="currentPassword" type="password" placeholder="Current password" required />
           <input name="newPassword" type="password" placeholder="New password" required />
