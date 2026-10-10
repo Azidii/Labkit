@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-auth="<%= locals.currentUser ? 'true' : 'false' %>">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>How It Works — LabKit Market</title>
+    <title>About Us — LabKit Market</title>
     <meta name="description"
-        content="LabKit Market is built around digital delivery for hardware. Pick a complete kit, check out, and your schematics, topologies, and code unlock instantly — before the box even arrives." />
+        content="LabKit Market provides individual electronic parts for IoT and computer engineering projects. ESP32 microcontrollers, buzzers, microphone sensors, and wiring sold as single units with no minimum order." />
     <link rel="stylesheet" href="/css/about.css" />
     <link rel="stylesheet" href="/css/cart.css" />
     <script src="/js/theme.js"></script>
@@ -64,9 +64,14 @@
                     <span class="navbar__cart-badge" id="cartBadge" style="display: none;">0</span>
                 </button>
 
+                <% if (locals.currentUser) { %>
                 <div class="profile-dropdown-wrapper">
                     <button class="navbar__avatar-btn" id="avatarBtn" aria-label="User menu" aria-expanded="false">
-                        <span class="navbar__avatar">A</span>
+                        <% if (locals.currentUser.avatar) { %>
+                          <img src="<%= locals.currentUser.avatar %>" alt="User avatar" class="navbar__avatar" style="object-fit: cover; border-radius: 9999px;" />
+                        <% } else { %>
+                          <span class="navbar__avatar"><%= locals.currentUser.firstName ? locals.currentUser.firstName.charAt(0).toUpperCase() : 'U' %></span>
+                        <% } %>
                         <svg class="navbar__avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="6 9 12 15 18 9" />
@@ -75,8 +80,8 @@
 
                     <div class="profile-dropdown" id="profileDropdown">
                         <div class="profile-dropdown__header">
-                            <p class="profile-dropdown__name">Alain Bibaoco</p>
-                            <p class="profile-dropdown__email">bibaocoalain@gmail.com</p>
+                            <p class="profile-dropdown__name"><%= locals.currentUser.firstName %> <%= locals.currentUser.lastName %></p>
+                            <p class="profile-dropdown__email"><%= locals.currentUser.email %></p>
                         </div>
                         <div class="profile-dropdown__divider"></div>
                         <a href="/settings" class="profile-dropdown__item">
@@ -88,7 +93,7 @@
                             </svg>
                             <span>Settings</span>
                         </a>
-                        <a href="/login" class="profile-dropdown__item">
+                        <a href="/logout" class="profile-dropdown__item" onclick="localStorage.removeItem('userEmail'); localStorage.removeItem('userName'); localStorage.removeItem('theme'); document.documentElement.classList.remove('dark');">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -99,6 +104,9 @@
                         </a>
                     </div>
                 </div>
+                <% } else { %>
+                <a href="/login" class="navbar__login-btn">Login</a>
+                <% } %>
             </div>
         </div>
     </header>
@@ -111,37 +119,38 @@
                 <span class="hero-badge">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
-                        <path
-                            d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
-                        <path d="M12 22V12" />
-                        <polyline points="3.29 7 12 12 20.71 7" />
-                        <line x1="12" y1="22" x2="12" y2="12" />
+                        <rect width="16" height="16" x="4" y="4" rx="2" />
+                        <rect width="6" height="6" x="9" y="9" />
+                        <path d="M15 2v2" /><path d="M15 20v2" />
+                        <path d="M2 15h2" /><path d="M2 9h2" />
+                        <path d="M20 15h2" /><path d="M20 9h2" />
+                        <path d="M9 2v2" /><path d="M9 20v2" />
                     </svg>
-                    How it works
+                    IoT & Computer Hardware · Sold Individually
                 </span>
 
                 <h1 class="about-hero__title">
-                    From browse to build in four steps.
+                    Every part your project needs — single units, zero bundle waste.
                 </h1>
 
                 <p class="about-hero__desc">
-                    LabKit Market is built around digital delivery for hardware. Pick a complete kit, check out, and
-                    your
-                    schematics, topologies, and code unlock instantly &mdash; before the box even arrives.
+                    We believe engineering students and makers shouldn't be forced to buy bloated starter kits packed
+                    with components they will never use. LabKit Market delivers individual microcontrollers, sensors,
+                    buzzers, and wiring — bench-checked before shipping, with no minimum orders.
                 </p>
 
                 <div class="about-hero__metrics">
                     <div class="metric-pill">
                         <span class="metric-pill__dot"></span>
-                        <span>Zero-wait instant digital unlock</span>
+                        <span>Single units · Zero minimum order</span>
                     </div>
                     <div class="metric-pill">
                         <span class="metric-pill__dot"></span>
-                        <span>Bench-tested hardware components</span>
+                        <span>100% Bench-checked before shipping</span>
                     </div>
                     <div class="metric-pill">
                         <span class="metric-pill__dot"></span>
-                        <span>Packet Tracer IoT network ready</span>
+                        <span>Pinout diagrams & datasheets included</span>
                     </div>
                 </div>
             </div>
@@ -151,10 +160,9 @@
         <section class="steps-section">
             <div class="container">
                 <div class="steps-header">
-                    <span class="steps-header__badge">Workflow Overview</span>
-                    <h2 class="steps-header__title">How our hardware delivery works</h2>
-                    <p class="steps-header__desc">No wondering if parts are compatible or waiting idle for datasheets.
-                        Here is the full process.</p>
+                    <span class="steps-header__badge">How It Works</span>
+                    <h2 class="steps-header__title">From parts list to working breadboard in four steps</h2>
+                    <p class="steps-header__desc">No forced bundles. No guessing if modules will work together. Here is how we support your engineering build.</p>
                 </div>
 
                 <div class="timeline-list">
@@ -165,16 +173,14 @@
                         <span class="timeline-bubble">01</span>
                         <div class="timeline-card">
                             <span class="timeline-tag">Step 01 · Selection</span>
-                            <h2 class="timeline-title">Pick a bundle</h2>
+                            <h2 class="timeline-title">Pick your individual parts</h2>
                             <p class="timeline-text">
-                                Every listing is a complete, project-ready kit &mdash; ESP8266 + DHT11, ultrasonic
-                                stations, 7400-series
-                                logic breadboards. No loose parts, no guessing what else you need.
+                                Order single units of ESP32 dev boards, piezo buzzers, microphone sound modules, ultrasonic sensors, or 40-pin jumper wires. Select exact quantities for your schematic with zero filler.
                             </p>
                             <div class="timeline-meta">
-                                <span class="meta-chip">Complete BOM</span>
-                                <span class="meta-chip">Tested pairings</span>
-                                <span class="meta-chip">Single-unit or kits</span>
+                                <span class="meta-chip">Zero bundle bloat</span>
+                                <span class="meta-chip">Single-unit pricing</span>
+                                <span class="meta-chip">Exact quantities</span>
                             </div>
                         </div>
                     </div>
@@ -183,17 +189,15 @@
                     <div class="timeline-item">
                         <span class="timeline-bubble">02</span>
                         <div class="timeline-card">
-                            <span class="timeline-tag">Step 02 · Checkout</span>
-                            <h2 class="timeline-title">Check out securely</h2>
+                            <span class="timeline-tag">Step 02 · Verification</span>
+                            <h2 class="timeline-title">Review pinouts & voltage specs</h2>
                             <p class="timeline-text">
-                                Add bundles to your cart and complete checkout. Payment is processed instantly and your
-                                order is
-                                confirmed without delay.
+                                Check 3.3V vs 5V logic compatibility, GPIO pin mappings, and sensor operating limits upfront. We provide clear pinout references for every module so you wire up without guessing.
                             </p>
                             <div class="timeline-meta">
-                                <span class="meta-chip">Instant confirmation</span>
-                                <span class="meta-chip">Encrypted checkout</span>
-                                <span class="meta-chip">Email delivery</span>
+                                <span class="meta-chip">Clear pinouts</span>
+                                <span class="meta-chip">Operating voltages</span>
+                                <span class="meta-chip">Logic level specs</span>
                             </div>
                         </div>
                     </div>
@@ -202,17 +206,15 @@
                     <div class="timeline-item">
                         <span class="timeline-bubble">03</span>
                         <div class="timeline-card">
-                            <span class="timeline-tag">Step 03 · Instant Vault</span>
-                            <h2 class="timeline-title">Unlock your vault</h2>
+                            <span class="timeline-tag">Step 03 · Quality Check</span>
+                            <h2 class="timeline-title">Tested on the laboratory bench</h2>
                             <p class="timeline-text">
-                                The moment your order clears, your private vault opens with the circuit diagram, Packet
-                                Tracer topology,
-                                and integration code for every kit you bought.
+                                Every microcontroller, buzzer, and sensor is powered and verified on our test bench before packaging into anti-static protective bags. Zero duds, zero dead-on-arrival surprises.
                             </p>
                             <div class="timeline-meta">
-                                <span class="meta-chip">Schematic PDF</span>
-                                <span class="meta-chip">.PKT Topology</span>
-                                <span class="meta-chip">Firmware .ZIP</span>
+                                <span class="meta-chip">Bench-verified</span>
+                                <span class="meta-chip">Anti-static packaging</span>
+                                <span class="meta-chip">24h dispatch</span>
                             </div>
                         </div>
                     </div>
@@ -222,16 +224,14 @@
                         <span class="timeline-bubble">04</span>
                         <div class="timeline-card">
                             <span class="timeline-tag">Step 04 · Rapid Prototyping</span>
-                            <h2 class="timeline-title">Start building</h2>
+                            <h2 class="timeline-title">Wire up and build with confidence</h2>
                             <p class="timeline-text">
-                                Download the schematics, open the topology in Packet Tracer, and flash the firmware
-                                &mdash; all while your
-                                hardware ships safely to your workbench.
+                                Plug components directly into your breadboard or custom PCB. Perfect for IoT telemetry, sound triggers, home automation projects, and university computer engineering lab exercises.
                             </p>
                             <div class="timeline-meta">
-                                <span class="meta-chip">Zero idle bench time</span>
-                                <span class="meta-chip">Simulate first</span>
-                                <span class="meta-chip">Wire with confidence</span>
+                                <span class="meta-chip">Breadboard ready</span>
+                                <span class="meta-chip">Maker tested</span>
+                                <span class="meta-chip">Reliable operation</span>
                             </div>
                         </div>
                     </div>
@@ -239,7 +239,7 @@
             </div>
         </section>
 
-        <!-- ── WHAT EVERY BUNDLE INCLUDES (3 DIGITAL ASSETS) ── -->
+        <!-- ── WHAT WE SUPPLY (INDIVIDUAL HARDWARE CATEGORIES) ── -->
         <section class="bundle-assets-section">
             <div class="container">
                 <div class="bundle-box">
@@ -249,125 +249,110 @@
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect width="16" height="16" x="4" y="4" rx="2" />
                                 <rect width="6" height="6" x="9" y="9" />
-                                <path d="M15 2v2" />
-                                <path d="M15 20v2" />
-                                <path d="M2 15h2" />
-                                <path d="M2 9h2" />
-                                <path d="M20 15h2" />
-                                <path d="M20 9h2" />
-                                <path d="M9 2v2" />
-                                <path d="M9 20v2" />
+                                <path d="M15 2v2" /><path d="M15 20v2" />
+                                <path d="M2 15h2" /><path d="M2 9h2" />
+                                <path d="M20 15h2" /><path d="M20 9h2" />
+                                <path d="M9 2v2" /><path d="M9 20v2" />
                             </svg>
                         </span>
-                        <h2 class="bundle-box__title">What every bundle includes</h2>
+                        <h2 class="bundle-box__title">Hardware built for IoT & computer projects</h2>
                     </div>
                     <p class="bundle-box__desc">
-                        Three digital assets ship with every kit &mdash; unlocked the moment your order clears.
+                        Tested single-unit components for student lab benches and maker workstations. Buy only what you need.
                     </p>
 
                     <div class="assets-grid">
-                        <!-- Asset 1: Circuit diagram -->
+                        <!-- Card 1: Microcontrollers -->
                         <div class="asset-card">
                             <div class="asset-card__icon-wrap">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect width="18" height="18" x="3" y="3" rx="2" />
-                                    <path d="M11 9h4a2 2 0 0 0 2-2V5" />
-                                    <circle cx="9" cy="9" r="2" />
-                                    <path d="M7 21v-4a2 2 0 0 1 2-2h4" />
-                                    <circle cx="15" cy="15" r="2" />
+                                    <rect width="16" height="16" x="4" y="4" rx="2" />
+                                    <rect width="6" height="6" x="9" y="9" />
+                                    <path d="M15 2v2" /><path d="M15 20v2" />
+                                    <path d="M2 15h2" /><path d="M2 9h2" />
+                                    <path d="M20 15h2" /><path d="M20 9h2" />
+                                    <path d="M9 2v2" /><path d="M9 20v2" />
                                 </svg>
                             </div>
-                            <h3 class="asset-card__title">Circuit diagram</h3>
-                            <span class="asset-card__file">circuit-diagram.pdf</span>
+                            <h3 class="asset-card__title">Microcontrollers & Boards</h3>
+                            <span class="asset-card__file">ESP32 · Arduino · RP2040</span>
                             <p class="asset-card__text">
-                                A clean, annotated schematic &mdash; print it, pin it, and breadboard along with it.
+                                Dual-core Wi-Fi & Bluetooth boards with full GPIO headers ready for sensor inputs, motor drivers, and cloud IoT telemetry.
                             </p>
                             <div class="asset-card__footer">
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                    <polyline points="20 6 9 17 4 12" />
                                 </svg>
-                                <span>Unlocked instantly at checkout</span>
+                                <span>Tested clock & Wi-Fi radios</span>
                             </div>
                         </div>
 
-                        <!-- Asset 2: Packet Tracer topology -->
+                        <!-- Card 2: Buzzers & Audio -->
                         <div class="asset-card">
                             <div class="asset-card__icon-wrap">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="16" y="16" width="6" height="6" rx="1" />
-                                    <rect x="2" y="16" width="6" height="6" rx="1" />
-                                    <rect x="9" y="2" width="6" height="6" rx="1" />
-                                    <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />
-                                    <path d="M12 12V8" />
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
                                 </svg>
                             </div>
-                            <h3 class="asset-card__title">Packet Tracer topology</h3>
-                            <span class="asset-card__file">topology.pkt</span>
+                            <h3 class="asset-card__title">Buzzers & Audio Output</h3>
+                            <span class="asset-card__file">Active & Passive Buzzers</span>
                             <p class="asset-card__text">
-                                The network model behind every IoT bundle, ready to open and simulate.
+                                5V active and passive piezo buzzers for audible alarms, system tone generators, and acoustic feedback indicators.
                             </p>
                             <div class="asset-card__footer">
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                    <polyline points="20 6 9 17 4 12" />
                                 </svg>
-                                <span>Unlocked instantly at checkout</span>
+                                <span>Verified audible frequency</span>
                             </div>
                         </div>
 
-                        <!-- Asset 3: Integration code -->
+                        <!-- Card 3: Sensors & Modules -->
                         <div class="asset-card">
                             <div class="asset-card__icon-wrap">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4" />
-                                    <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-                                    <path d="m5 12-3 3 3 3" />
-                                    <path d="m9 18 3-3-3-3" />
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                                    <line x1="12" y1="19" x2="12" y2="22" />
                                 </svg>
                             </div>
-                            <h3 class="asset-card__title">Integration code</h3>
-                            <span class="asset-card__file">firmware.zip</span>
+                            <h3 class="asset-card__title">Sensors & Input Modules</h3>
+                            <span class="asset-card__file">Microphone · Ultrasonic · DHT11</span>
                             <p class="asset-card__text">
-                                Commented firmware and host scripts, version-matched to the hardware in the box.
+                                High-sensitivity sound detection modules, ultrasonic distance sensors, and environmental monitoring probes.
                             </p>
                             <div class="asset-card__footer">
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                    <polyline points="20 6 9 17 4 12" />
                                 </svg>
-                                <span>Unlocked instantly at checkout</span>
+                                <span>Analog & digital outputs</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="bundle-box__action">
                         <a href="/shop" class="btn-primary">
-                            Browse bundles
+                            Browse shop parts
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="5" y1="12" x2="19" y2="12" />
                                 <polyline points="12 5 19 12 12 19" />
                             </svg>
                         </a>
-                        <a href="/" class="btn-outline">
-                            Back to Home
-                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ── 4 PILLARS OF DIGITAL DELIVERY ── -->
+        <!-- ── 4 PILLARS OF OUR HARDWARE PROMISE ── -->
         <section class="pillars-section">
             <div class="container">
                 <div class="pillars-grid">
@@ -375,41 +360,35 @@
                         <div class="pillar-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </div>
+                        <h3 class="pillar-title">Single-unit ordering</h3>
+                        <p class="pillar-text">Buy exactly one buzzer or thirty resistors. Never pay for unwanted parts in bloated bundles.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                <polyline points="9 12 11 14 15 10" />
+                            </svg>
+                        </div>
+                        <h3 class="pillar-title">Bench-checked hardware</h3>
+                        <p class="pillar-text">Every microcontroller, module, and buzzer is tested for continuity and logic before dispatch.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect width="18" height="18" x="3" y="3" rx="2" />
-                                <path d="M11 9h4a2 2 0 0 0 2-2V5" />
-                                <circle cx="9" cy="9" r="2" />
+                                <path d="M7 8h10" /><path d="M7 12h10" /><path d="M7 16h6" />
                             </svg>
                         </div>
-                        <h3 class="pillar-title">Circuit diagrams</h3>
-                        <p class="pillar-text">Clean, annotated schematics for every kit &mdash; ready to print or pin
-                            above your bench.</p>
-                    </div>
-
-                    <div class="pillar-item">
-                        <div class="pillar-icon-box">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="16" y="16" width="6" height="6" rx="1" />
-                                <rect x="2" y="16" width="6" height="6" rx="1" />
-                                <rect x="9" y="2" width="6" height="6" rx="1" />
-                                <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />
-                            </svg>
-                        </div>
-                        <h3 class="pillar-title">Packet Tracer topologies</h3>
-                        <p class="pillar-text">Pre-built .pkt files modeling the network side of each IoT bundle.</p>
-                    </div>
-
-                    <div class="pillar-item">
-                        <div class="pillar-icon-box">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4" />
-                                <path d="m5 12-3 3 3 3" />
-                                <path d="m9 18 3-3-3-3" />
-                            </svg>
-                        </div>
-                        <h3 class="pillar-title">Integration code</h3>
-                        <p class="pillar-text">Commented firmware and host scripts, version-matched to the hardware.</p>
+                        <h3 class="pillar-title">Datasheets & pinouts</h3>
+                        <p class="pillar-text">Complete pin mappings and operating voltage guides for seamless breadboard prototyping.</p>
                     </div>
 
                     <div class="pillar-item">
@@ -419,22 +398,20 @@
                                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                             </svg>
                         </div>
-                        <h3 class="pillar-title">Instant at checkout</h3>
-                        <p class="pillar-text">Digital assets unlock the moment payment clears &mdash; no waiting on the
-                            mail.</p>
+                        <h3 class="pillar-title">Fast 24-hour dispatch</h3>
+                        <p class="pillar-text">In-stock parts ship within 24 hours in anti-static ESD packaging straight to your workbench.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ── INTERACTIVE DIGITAL VAULT PREVIEW ── -->
+        <!-- ── INTERACTIVE COMPONENT PINOUT INSPECTOR ── -->
         <section class="demo-vault-section">
             <div class="container">
                 <div class="steps-header">
-                    <span class="steps-header__badge">Vault Preview</span>
-                    <h2 class="steps-header__title">What your download vault looks like</h2>
-                    <p class="steps-header__desc">Switch tabs below to see real sample assets included with our kits.
-                    </p>
+                    <span class="steps-header__badge">Component Pinouts</span>
+                    <h2 class="steps-header__title">Interactive hardware pinout inspector</h2>
+                    <p class="steps-header__desc">Switch tabs below to view verified pinouts and wiring guides for popular IoT components.</p>
                 </div>
 
                 <div class="demo-vault-card">
@@ -445,67 +422,87 @@
                                 <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                             </svg>
-                            <span>LABKIT VAULT · ORDER #LK-894201 [UNLOCKED]</span>
+                            <span>HARDWARE BENCH · PINOUT & VOLTAGE REFERENCE</span>
                         </div>
 
                         <div class="demo-tabs" role="tablist">
-                            <button class="demo-tab-btn is-active" data-target="tab-schematic">Circuit
-                                Schematic</button>
-                            <button class="demo-tab-btn" data-target="tab-network">Packet Tracer Topology</button>
-                            <button class="demo-tab-btn" data-target="tab-code">Integration Code</button>
+                            <button class="demo-tab-btn is-active" data-target="tab-esp32">ESP32 DevKit</button>
+                            <button class="demo-tab-btn" data-target="tab-buzzer">Active Buzzer</button>
+                            <button class="demo-tab-btn" data-target="tab-mic">Microphone Module</button>
                         </div>
                     </div>
 
                     <div class="demo-vault__content">
-                        <!-- Tab 1: Schematic Preview -->
-                        <div class="vault-tab-pane is-active" id="tab-schematic">
+                        <!-- Tab 1: ESP32 -->
+                        <div class="vault-tab-pane is-active" id="tab-esp32">
                             <div class="schematic-box">
                                 <div class="schematic-nodes">
-                                    <div class="schematic-node">ESP32 DevKit (3.3V)</div>
-                                    <span class="schematic-wire">&harr; GPIO 4 / 5 &harr;</span>
-                                    <div class="schematic-node">DHT11 Temperature Sensor</div>
-                                    <span class="schematic-wire">&harr; GPIO 18 &harr;</span>
-                                    <div class="schematic-node">HC-SR04 Ultrasonic Module</div>
+                                    <div class="schematic-node">3.3V Power Rail</div>
+                                    <span class="schematic-wire">&harr; GPIO 21 / 22 (I2C) &harr;</span>
+                                    <div class="schematic-node">ESP32-WROOM-32D</div>
+                                    <span class="schematic-wire">&harr; GPIO 18 / 19 (SPI) &harr;</span>
+                                    <div class="schematic-node">GND Ground Bus</div>
                                 </div>
-                                <p style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); max-width: 32rem;">
-                                    Vector PDF schematic includes full pin mappings, decoupling capacitor specs, and
-                                    power rail distribution diagrams.
+                                <p style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); max-width: 36rem;">
+                                    Dual-core 240MHz Xtensa LX6 microcontroller with 802.11 b/g/n Wi-Fi, BLE 4.2, and 30 GPIO headers. Operates at 3.3V logic levels.
                                 </p>
                             </div>
-                        </div>
-
-                        <!-- Tab 2: Network Topology -->
-                        <div class="vault-tab-pane" id="tab-network">
-                            <div class="schematic-box">
-                                <div class="schematic-nodes">
-                                    <div class="schematic-node">IoT Edge Node (192.168.1.101)</div>
-                                    <span class="schematic-wire">&mdash; 802.11b/g/n &mdash;</span>
-                                    <div class="schematic-node">Home Gateway AP</div>
-                                    <span class="schematic-wire">&mdash; MQTT / TCP 1883 &mdash;</span>
-                                    <div class="schematic-node">Broker / Cloud Dashboard</div>
-                                </div>
-                                <p style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); max-width: 32rem;">
-                                    Pre-configured Cisco Packet Tracer (<code>.pkt</code>) file simulating packet
-                                    transmission, DHCP leases, and gateway telemetry.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Tab 3: Code Snippet -->
-                        <div class="vault-tab-pane" id="tab-code">
-                            <pre class="code-preview"><code><span class="c-com">// ESP32 Sensor Ingest & MQTT Publisher</span>
+                            <pre class="code-preview" style="margin-top: 1.25rem;"><code><span class="c-com">// ESP32 GPIO Configuration Example</span>
 <span class="c-kw">#include</span> <span class="c-str">&lt;WiFi.h&gt;</span>
-<span class="c-kw">#include</span> <span class="c-str">&lt;PubSubClient.h&gt;</span>
-<span class="c-kw">#include</span> <span class="c-str">"DHTesp.h"</span>
 
-DHTesp dht;
-<span class="c-kw">const int</span> DHT_PIN = 4;
+<span class="c-kw">const int</span> BUZZER_PIN = 12;   <span class="c-com">// GPIO 12 for alert buzzer</span>
+<span class="c-kw">const int</span> SOUND_PIN = 34;    <span class="c-com">// GPIO 34 (ADC1) for mic analog input</span>
 
 <span class="c-fn">void setup</span>() {
   Serial.<span class="c-fn">begin</span>(115200);
-  dht.<span class="c-fn">setup</span>(DHT_PIN, DHTesp::DHT11);
-  WiFi.<span class="c-fn">begin</span>(<span class="c-str">"LabKit_AP"</span>, <span class="c-str">"bench_key_99"</span>);
-  <span class="c-com">// Vault scripts include automatic reconnect & MQTT telemetry loops</span>
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(SOUND_PIN, INPUT);
+  WiFi.<span class="c-fn">begin</span>(<span class="c-str">"LabKit_IoT"</span>, <span class="c-str">"secure_pass"</span>);
+}</code></pre>
+                        </div>
+
+                        <!-- Tab 2: Buzzer -->
+                        <div class="vault-tab-pane" id="tab-buzzer">
+                            <div class="schematic-box">
+                                <div class="schematic-nodes">
+                                    <div class="schematic-node">MCU GPIO (3.3V / 5V)</div>
+                                    <span class="schematic-wire">&mdash; Positive (+) Pin &mdash;</span>
+                                    <div class="schematic-node">5V Active Piezo Buzzer</div>
+                                    <span class="schematic-wire">&mdash; Negative (-) Pin &mdash;</span>
+                                    <div class="schematic-node">Common GND</div>
+                                </div>
+                                <p style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); max-width: 36rem;">
+                                    Built-in internal oscillating circuit produces a continuous 2.3kHz tone as soon as voltage is applied. No external frequency square wave required.
+                                </p>
+                            </div>
+                            <pre class="code-preview" style="margin-top: 1.25rem;"><code><span class="c-com">// Active Buzzer Alarm Trigger</span>
+<span class="c-fn">void soundAlarm</span>(<span class="c-kw">int</span> durationMs) {
+  digitalWrite(BUZZER_PIN, HIGH); <span class="c-com">// Buzzer ON (continuous tone)</span>
+  delay(durationMs);
+  digitalWrite(BUZZER_PIN, LOW);  <span class="c-com">// Buzzer OFF</span>
+}</code></pre>
+                        </div>
+
+                        <!-- Tab 3: Microphone Sensor -->
+                        <div class="vault-tab-pane" id="tab-mic">
+                            <div class="schematic-box">
+                                <div class="schematic-nodes">
+                                    <div class="schematic-node">VCC (3.3V - 5V) / GND</div>
+                                    <span class="schematic-wire">&mdash; Power &mdash;</span>
+                                    <div class="schematic-node">KY-038 Sound Module</div>
+                                    <span class="schematic-wire">&mdash; AO (Analog) & DO (Digital) &mdash;</span>
+                                    <div class="schematic-node">MCU ADC & Interrupt</div>
+                                </div>
+                                <p style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); max-width: 36rem;">
+                                    High-sensitivity electret capsule with on-board LM393 comparator. Features an adjustable trimmer potentiometer to set digital sound trigger thresholds.
+                                </p>
+                            </div>
+                            <pre class="code-preview" style="margin-top: 1.25rem;"><code><span class="c-com">// Acoustic Trigger & Sound Level Detection</span>
+<span class="c-fn">void loop</span>() {
+  <span class="c-kw">int</span> soundLevel = analogRead(SOUND_PIN);
+  <span class="c-kw">if</span> (soundLevel &gt; 2500) {
+    soundAlarm(200); <span class="c-com">// Trigger buzzer on sound threshold</span>
+  }
 }</code></pre>
                         </div>
                     </div>
@@ -519,66 +516,59 @@ DHTesp dht;
                 <div class="steps-header">
                     <span class="steps-header__badge">Common Questions</span>
                     <h2 class="steps-header__title">Frequently asked questions</h2>
-                    <p class="steps-header__desc">Everything you need to know about our digital assets and physical
-                        components.</p>
+                    <p class="steps-header__desc">Everything you need to know about our individual components and shipping.</p>
                 </div>
 
                 <div class="faq-grid">
                     <div class="faq-item">
                         <button class="faq-question">
-                            <span>When do I receive access to the digital files?</span>
+                            <span>Can I buy individual parts without ordering a full bundle?</span>
                             <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9" />
                             </svg>
                         </button>
                         <div class="faq-answer">
-                            The moment your checkout clears, your private download vault unlocks immediately on your
-                            order confirmation page. We also send direct download links to your checkout email so you
-                            can access them anytime.
+                            Yes! That is our entire premise. Every component in our catalog — whether an ESP32 microcontroller, an active buzzer, a microphone module, or jumper wires — is sold as an individual single unit with no minimum order requirements.
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question">
-                            <span>What software do I need to open the files?</span>
+                            <span>Are all components bench-tested before shipping?</span>
                             <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9" />
                             </svg>
                         </button>
                         <div class="faq-answer">
-                            Schematics come as standard vector PDFs compatible with any reader or browser. Network
-                            topologies are formatted for Cisco Packet Tracer (available free for students). Integration
-                            code includes commented C++/Arduino or Python scripts ready for Arduino IDE or VS Code.
+                            Yes. Every microcontroller, sensor, and buzzer is tested on our hardware test bench before being packed into anti-static protective bags. You never have to worry about dead boards or non-functioning buzzers arriving at your bench.
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question">
-                            <span>Are all physical components bench-tested before shipping?</span>
+                            <span>Do components include pinout diagrams and datasheets?</span>
                             <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9" />
                             </svg>
                         </button>
                         <div class="faq-answer">
-                            Yes! Every microcontroller, sensor, and buzzer is tested on our laboratory test bench before
-                            it is packaged. No dud microcontrollers or dead buzzer modules.
+                            Yes. Every part includes clear pin allocations, operating voltage ratings (such as 3.3V vs 5V logic considerations), and recommended wiring notes so you can immediately connect it into your project safely.
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question">
-                            <span>Can I buy individual replacement parts or single items?</span>
+                            <span>What kinds of projects are these parts intended for?</span>
                             <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9" />
                             </svg>
                         </button>
                         <div class="faq-answer">
-                            Absolutely. In our shop, every part is available as an individual single unit with no
-                            minimum order requirements. Buy exactly one buzzer or twenty sensors as needed.
+                            Our components are tailored for IoT (Internet of Things), embedded systems, robotics, home automation, and university computer engineering lab courses. Mix and match exact parts to build anything from wireless sensor nodes to audible alarm systems.
                         </div>
                     </div>
                 </div>
@@ -649,10 +639,8 @@ DHTesp dht;
                         <span class="footer__brand-text">LabKit Market</span>
                     </div>
                     <p class="footer__desc">
-                        Project-ready hardware bundles for engineering students and hobbyists. Every kit ships with
-                        circuit
-                        diagrams, Packet Tracer topologies, and integration code &mdash; delivered digitally the moment
-                        you check out.
+                        Individual electronic components and IoT hardware for engineering students and makers. Buy single
+                        ESP32 boards, buzzers, sensors, and wiring &mdash; bench-checked with pinout datasheets included.
                     </p>
                 </div>
 
@@ -664,7 +652,7 @@ DHTesp dht;
             </div>
 
             <div class="footer__bottom">
-                <p>&copy; 2026 LabKit Market &mdash; Prototyping, bundled.</p>
+                <p>&copy; 2026 LabKit Market &mdash; Individual parts for IoT & prototyping.</p>
             </div>
         </div>
     </footer>

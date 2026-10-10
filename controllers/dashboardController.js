@@ -3,19 +3,6 @@ const User = require("../models/userSchema");
 async function getFeaturedProducts() {
   return [
     {
-      id: "1",
-      slug: "raspberry-pi-4-model-b-4gb",
-      name: "Raspberry Pi 4 Model B (4 GB)",
-      tagline: "Quad-core SBC for full Linux projects",
-      price: 55.0,
-      compare_at_price: null,
-      category: "Single-Board Computers",
-      difficulty: "Single unit",
-      image_url: "https://images.unsplash.com/photo-1629292923887-a803417bd405?w=600",
-      rating: 4.9,
-      review_count: 487
-    },
-    {
       id: "2",
       slug: "esp32-devkit-v1-wroom32",
       name: "ESP32 DevKit V1 (WROOM-32)",
@@ -29,6 +16,58 @@ async function getFeaturedProducts() {
       review_count: 214
     },
     {
+      id: "7",
+      slug: "ky-038-microphone-sound-sensor",
+      name: "KY-038 Microphone Sound Sensor Module",
+      tagline: "High-sensitivity voice & acoustic detection for IoT triggers",
+      price: 2.4,
+      compare_at_price: null,
+      category: "Sensors & Modules",
+      difficulty: "Beginner",
+      image_url: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600",
+      rating: 4.8,
+      review_count: 142
+    },
+    {
+      id: "8",
+      slug: "jumper-wires-40pin-mf",
+      name: "40-Pin Breadboard Jumper Wires (M/F)",
+      tagline: "20cm multi-color ribbon cables for breadboard prototyping",
+      price: 1.95,
+      compare_at_price: null,
+      category: "Sensors & Modules",
+      difficulty: "Beginner",
+      image_url: "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=600",
+      rating: 4.9,
+      review_count: 360
+    },
+    {
+      id: "9",
+      slug: "resistor-pack-100pcs",
+      name: "Metal Film Resistor Assortment (100 pcs)",
+      tagline: "10Ω to 1MΩ 1/4W precision resistors (220Ω, 1kΩ, 10kΩ included)",
+      price: 2.2,
+      compare_at_price: null,
+      category: "Displays & Power",
+      difficulty: "Beginner",
+      image_url: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=600",
+      rating: 4.9,
+      review_count: 420
+    },
+    {
+      id: "10",
+      slug: "active-piezo-buzzer-5v",
+      name: "5V Active Buzzer Module",
+      tagline: "Continuous audible alert & tone notification module",
+      price: 1.2,
+      compare_at_price: null,
+      category: "Buzzers & Audio",
+      difficulty: "Beginner",
+      image_url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600",
+      rating: 4.7,
+      review_count: 195
+    },
+    {
       id: "3",
       slug: "hc-sr04-ultrasonic-sensor",
       name: "HC-SR04 Ultrasonic Sensor",
@@ -40,32 +79,6 @@ async function getFeaturedProducts() {
       image_url: "https://images.unsplash.com/photo-1553406830-ef2513450d76?w=600",
       rating: 4.7,
       review_count: 312
-    },
-    {
-      id: "4",
-      slug: "orange-pi-5-8gb",
-      name: "Orange Pi 5 (8 GB)",
-      tagline: "RK3588S powerhouse for AI & media projects",
-      price: 89.0,
-      compare_at_price: null,
-      category: "Single-Board Computers",
-      difficulty: "Single unit",
-      image_url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600",
-      rating: 4.7,
-      review_count: 156
-    },
-    {
-      id: "5",
-      slug: "piezo-buzzer-12v",
-      name: "Piezo Buzzer 12V",
-      tagline: "Loud 12V active buzzer, one-wire control",
-      price: 1.75,
-      compare_at_price: null,
-      category: "Buzzers & Audio",
-      difficulty: "Beginner",
-      image_url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600",
-      rating: 4.6,
-      review_count: 180
     }
   ];
 }
