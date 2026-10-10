@@ -41,15 +41,18 @@ const registerRoute = require('./routes/registerRoute');
 const resetpassRoute = require('./routes/resetpassRoute');
 const shopRoute = require('./routes/shopRoute');
 const checkoutRoute = require('./routes/checkoutRoute');
+const aboutRoute = require('./routes/aboutRoute');
 const successAuthRoute = require('./routes/successAuthRoute');
 
-app.use('/', dashboardRoute);
+app.use('/about', aboutRoute);
+app.use('/how-it-works', aboutRoute);
 app.use('/login', loginRoute);
 app.use('/register', registerRoute);
 app.use('/success', successAuthRoute);
 app.use('/resetpass', resetpassRoute);
 app.use('/shop', shopRoute);
 app.use('/checkout', checkoutRoute);
+app.use('/', dashboardRoute);
 
 // Convenience aliases for Google OAuth
 app.get('/auth/google', (req, res) => res.redirect('/login/google'));

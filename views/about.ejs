@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How It Works — LabKit Market</title>
+    <meta name="description"
+        content="LabKit Market is built around digital delivery for hardware. Pick a complete kit, check out, and your schematics, topologies, and code unlock instantly — before the box even arrives." />
+    <link rel="stylesheet" href="/css/about.css" />
+    <link rel="stylesheet" href="/css/cart.css" />
+    <script src="/js/theme.js"></script>
+    <script src="/js/page-transitions.js"></script>
+</head>
+
+<body>
+
+    <!-- ── NAVBAR ── -->
+    <header class="navbar">
+        <div class="container navbar__inner">
+            <a href="/" class="navbar__brand">
+                <span class="navbar__logo-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="16" height="16" x="4" y="4" rx="2" />
+                        <rect width="6" height="6" x="9" y="9" />
+                        <path d="M15 2v2" />
+                        <path d="M15 20v2" />
+                        <path d="M2 15h2" />
+                        <path d="M2 9h2" />
+                        <path d="M20 15h2" />
+                        <path d="M20 9h2" />
+                        <path d="M9 2v2" />
+                        <path d="M9 20v2" />
+                    </svg>
+                </span>
+                <span class="navbar__wordmark">LabKit</span>
+                <span class="navbar__sub">/MARKET</span>
+            </a>
+
+            <nav class="navbar__nav">
+                <a href="/" class="navbar__link">Home</a>
+                <a href="/shop" class="navbar__link">Shop</a>
+                <a href="/about" class="navbar__link navbar__link--active">About Us</a>
+            </nav>
+
+            <div class="navbar__actions">
+                <button type="button" class="navbar__icon-btn" aria-label="Search"
+                    onclick="window.location.href='/shop'">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                </button>
+
+                <button type="button" class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
+                    <span class="navbar__cart-badge" id="cartBadge" style="display: none;">0</span>
+                </button>
+
+                <div class="profile-dropdown-wrapper">
+                    <button class="navbar__avatar-btn" id="avatarBtn" aria-label="User menu" aria-expanded="false">
+                        <span class="navbar__avatar">A</span>
+                        <svg class="navbar__avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </button>
+
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-dropdown__header">
+                            <p class="profile-dropdown__name">Alain Bibaoco</p>
+                            <p class="profile-dropdown__email">bibaocoalain@gmail.com</p>
+                        </div>
+                        <div class="profile-dropdown__divider"></div>
+                        <a href="/settings" class="profile-dropdown__item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3" />
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                            </svg>
+                            <span>Settings</span>
+                        </a>
+                        <a href="/login" class="profile-dropdown__item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                            <span>Sign out</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-main">
+        <!-- ── HERO SECTION ── -->
+        <section class="about-hero">
+            <div class="about-hero__pattern"></div>
+            <div class="container about-hero__inner">
+                <span class="hero-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+                        <path d="M12 22V12" />
+                        <polyline points="3.29 7 12 12 20.71 7" />
+                        <line x1="12" y1="22" x2="12" y2="12" />
+                    </svg>
+                    How it works
+                </span>
+
+                <h1 class="about-hero__title">
+                    From browse to build in four steps.
+                </h1>
+
+                <p class="about-hero__desc">
+                    LabKit Market is built around digital delivery for hardware. Pick a complete kit, check out, and
+                    your
+                    schematics, topologies, and code unlock instantly &mdash; before the box even arrives.
+                </p>
+
+                <div class="about-hero__metrics">
+                    <div class="metric-pill">
+                        <span class="metric-pill__dot"></span>
+                        <span>Zero-wait instant digital unlock</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="metric-pill__dot"></span>
+                        <span>Bench-tested hardware components</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="metric-pill__dot"></span>
+                        <span>Packet Tracer IoT network ready</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 4-STEP TIMELINE SECTION ── -->
+        <section class="steps-section">
+            <div class="container">
+                <div class="steps-header">
+                    <span class="steps-header__badge">Workflow Overview</span>
+                    <h2 class="steps-header__title">How our hardware delivery works</h2>
+                    <p class="steps-header__desc">No wondering if parts are compatible or waiting idle for datasheets.
+                        Here is the full process.</p>
+                </div>
+
+                <div class="timeline-list">
+                    <div class="timeline-line" aria-hidden="true"></div>
+
+                    <!-- Step 01 -->
+                    <div class="timeline-item">
+                        <span class="timeline-bubble">01</span>
+                        <div class="timeline-card">
+                            <span class="timeline-tag">Step 01 · Selection</span>
+                            <h2 class="timeline-title">Pick a bundle</h2>
+                            <p class="timeline-text">
+                                Every listing is a complete, project-ready kit &mdash; ESP8266 + DHT11, ultrasonic
+                                stations, 7400-series
+                                logic breadboards. No loose parts, no guessing what else you need.
+                            </p>
+                            <div class="timeline-meta">
+                                <span class="meta-chip">Complete BOM</span>
+                                <span class="meta-chip">Tested pairings</span>
+                                <span class="meta-chip">Single-unit or kits</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 02 -->
+                    <div class="timeline-item">
+                        <span class="timeline-bubble">02</span>
+                        <div class="timeline-card">
+                            <span class="timeline-tag">Step 02 · Checkout</span>
+                            <h2 class="timeline-title">Check out securely</h2>
+                            <p class="timeline-text">
+                                Add bundles to your cart and complete checkout. Payment is processed instantly and your
+                                order is
+                                confirmed without delay.
+                            </p>
+                            <div class="timeline-meta">
+                                <span class="meta-chip">Instant confirmation</span>
+                                <span class="meta-chip">Encrypted checkout</span>
+                                <span class="meta-chip">Email delivery</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 03 -->
+                    <div class="timeline-item">
+                        <span class="timeline-bubble">03</span>
+                        <div class="timeline-card">
+                            <span class="timeline-tag">Step 03 · Instant Vault</span>
+                            <h2 class="timeline-title">Unlock your vault</h2>
+                            <p class="timeline-text">
+                                The moment your order clears, your private vault opens with the circuit diagram, Packet
+                                Tracer topology,
+                                and integration code for every kit you bought.
+                            </p>
+                            <div class="timeline-meta">
+                                <span class="meta-chip">Schematic PDF</span>
+                                <span class="meta-chip">.PKT Topology</span>
+                                <span class="meta-chip">Firmware .ZIP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 04 -->
+                    <div class="timeline-item">
+                        <span class="timeline-bubble">04</span>
+                        <div class="timeline-card">
+                            <span class="timeline-tag">Step 04 · Rapid Prototyping</span>
+                            <h2 class="timeline-title">Start building</h2>
+                            <p class="timeline-text">
+                                Download the schematics, open the topology in Packet Tracer, and flash the firmware
+                                &mdash; all while your
+                                hardware ships safely to your workbench.
+                            </p>
+                            <div class="timeline-meta">
+                                <span class="meta-chip">Zero idle bench time</span>
+                                <span class="meta-chip">Simulate first</span>
+                                <span class="meta-chip">Wire with confidence</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── WHAT EVERY BUNDLE INCLUDES (3 DIGITAL ASSETS) ── -->
+        <section class="bundle-assets-section">
+            <div class="container">
+                <div class="bundle-box">
+                    <div class="bundle-box__header">
+                        <span class="bundle-box__icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="16" height="16" x="4" y="4" rx="2" />
+                                <rect width="6" height="6" x="9" y="9" />
+                                <path d="M15 2v2" />
+                                <path d="M15 20v2" />
+                                <path d="M2 15h2" />
+                                <path d="M2 9h2" />
+                                <path d="M20 15h2" />
+                                <path d="M20 9h2" />
+                                <path d="M9 2v2" />
+                                <path d="M9 20v2" />
+                            </svg>
+                        </span>
+                        <h2 class="bundle-box__title">What every bundle includes</h2>
+                    </div>
+                    <p class="bundle-box__desc">
+                        Three digital assets ship with every kit &mdash; unlocked the moment your order clears.
+                    </p>
+
+                    <div class="assets-grid">
+                        <!-- Asset 1: Circuit diagram -->
+                        <div class="asset-card">
+                            <div class="asset-card__icon-wrap">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="18" height="18" x="3" y="3" rx="2" />
+                                    <path d="M11 9h4a2 2 0 0 0 2-2V5" />
+                                    <circle cx="9" cy="9" r="2" />
+                                    <path d="M7 21v-4a2 2 0 0 1 2-2h4" />
+                                    <circle cx="15" cy="15" r="2" />
+                                </svg>
+                            </div>
+                            <h3 class="asset-card__title">Circuit diagram</h3>
+                            <span class="asset-card__file">circuit-diagram.pdf</span>
+                            <p class="asset-card__text">
+                                A clean, annotated schematic &mdash; print it, pin it, and breadboard along with it.
+                            </p>
+                            <div class="asset-card__footer">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                                <span>Unlocked instantly at checkout</span>
+                            </div>
+                        </div>
+
+                        <!-- Asset 2: Packet Tracer topology -->
+                        <div class="asset-card">
+                            <div class="asset-card__icon-wrap">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="16" y="16" width="6" height="6" rx="1" />
+                                    <rect x="2" y="16" width="6" height="6" rx="1" />
+                                    <rect x="9" y="2" width="6" height="6" rx="1" />
+                                    <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />
+                                    <path d="M12 12V8" />
+                                </svg>
+                            </div>
+                            <h3 class="asset-card__title">Packet Tracer topology</h3>
+                            <span class="asset-card__file">topology.pkt</span>
+                            <p class="asset-card__text">
+                                The network model behind every IoT bundle, ready to open and simulate.
+                            </p>
+                            <div class="asset-card__footer">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                                <span>Unlocked instantly at checkout</span>
+                            </div>
+                        </div>
+
+                        <!-- Asset 3: Integration code -->
+                        <div class="asset-card">
+                            <div class="asset-card__icon-wrap">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4" />
+                                    <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                                    <path d="m5 12-3 3 3 3" />
+                                    <path d="m9 18 3-3-3-3" />
+                                </svg>
+                            </div>
+                            <h3 class="asset-card__title">Integration code</h3>
+                            <span class="asset-card__file">firmware.zip</span>
+                            <p class="asset-card__text">
+                                Commented firmware and host scripts, version-matched to the hardware in the box.
+                            </p>
+                            <div class="asset-card__footer">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                                <span>Unlocked instantly at checkout</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bundle-box__action">
+                        <a href="/shop" class="btn-primary">
+                            Browse bundles
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                                <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                        </a>
+                        <a href="/" class="btn-outline">
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 4 PILLARS OF DIGITAL DELIVERY ── -->
+        <section class="pillars-section">
+            <div class="container">
+                <div class="pillars-grid">
+                    <div class="pillar-item">
+                        <div class="pillar-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="18" height="18" x="3" y="3" rx="2" />
+                                <path d="M11 9h4a2 2 0 0 0 2-2V5" />
+                                <circle cx="9" cy="9" r="2" />
+                            </svg>
+                        </div>
+                        <h3 class="pillar-title">Circuit diagrams</h3>
+                        <p class="pillar-text">Clean, annotated schematics for every kit &mdash; ready to print or pin
+                            above your bench.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="16" y="16" width="6" height="6" rx="1" />
+                                <rect x="2" y="16" width="6" height="6" rx="1" />
+                                <rect x="9" y="2" width="6" height="6" rx="1" />
+                                <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />
+                            </svg>
+                        </div>
+                        <h3 class="pillar-title">Packet Tracer topologies</h3>
+                        <p class="pillar-text">Pre-built .pkt files modeling the network side of each IoT bundle.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4" />
+                                <path d="m5 12-3 3 3 3" />
+                                <path d="m9 18 3-3-3-3" />
+                            </svg>
+                        </div>
+                        <h3 class="pillar-title">Integration code</h3>
+                        <p class="pillar-text">Commented firmware and host scripts, version-matched to the hardware.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                        </div>
+                        <h3 class="pillar-title">Instant at checkout</h3>
+                        <p class="pillar-text">Digital assets unlock the moment payment clears &mdash; no waiting on the
+                            mail.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── INTERACTIVE DIGITAL VAULT PREVIEW ── -->
+        <section class="demo-vault-section">
+            <div class="container">
+                <div class="steps-header">
+                    <span class="steps-header__badge">Vault Preview</span>
+                    <h2 class="steps-header__title">What your download vault looks like</h2>
+                    <p class="steps-header__desc">Switch tabs below to see real sample assets included with our kits.
+                    </p>
+                </div>
+
+                <div class="demo-vault-card">
+                    <div class="demo-vault__topbar">
+                        <div class="demo-vault__badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                            <span>LABKIT VAULT · ORDER #LK-894201 [UNLOCKED]</span>
+                        </div>
+
+                        <div class="demo-tabs" role="tablist">
+                            <button class="demo-tab-btn is-active" data-target="tab-schematic">Circuit
+                                Schematic</button>
+                            <button class="demo-tab-btn" data-target="tab-network">Packet Tracer Topology</button>
+                            <button class="demo-tab-btn" data-target="tab-code">Integration Code</button>
+                        </div>
+                    </div>
+
+                    <div class="demo-vault__content">
+                        <!-- Tab 1: Schematic Preview -->
+                        <div class="vault-tab-pane is-active" id="tab-schematic">
+                            <div class="schematic-box">
+                                <div class="schematic-nodes">
+                                    <div class="schematic-node">ESP32 DevKit (3.3V)</div>
+                                    <span class="schematic-wire">&harr; GPIO 4 / 5 &harr;</span>
+                                    <div class="schematic-node">DHT11 Temperature Sensor</div>
+                                    <span class="schematic-wire">&harr; GPIO 18 &harr;</span>
+                                    <div class="schematic-node">HC-SR04 Ultrasonic Module</div>
+                                </div>
+                                <p style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); max-width: 32rem;">
+                                    Vector PDF schematic includes full pin mappings, decoupling capacitor specs, and
+                                    power rail distribution diagrams.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Network Topology -->
+                        <div class="vault-tab-pane" id="tab-network">
+                            <div class="schematic-box">
+                                <div class="schematic-nodes">
+                                    <div class="schematic-node">IoT Edge Node (192.168.1.101)</div>
+                                    <span class="schematic-wire">&mdash; 802.11b/g/n &mdash;</span>
+                                    <div class="schematic-node">Home Gateway AP</div>
+                                    <span class="schematic-wire">&mdash; MQTT / TCP 1883 &mdash;</span>
+                                    <div class="schematic-node">Broker / Cloud Dashboard</div>
+                                </div>
+                                <p style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); max-width: 32rem;">
+                                    Pre-configured Cisco Packet Tracer (<code>.pkt</code>) file simulating packet
+                                    transmission, DHCP leases, and gateway telemetry.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Tab 3: Code Snippet -->
+                        <div class="vault-tab-pane" id="tab-code">
+                            <pre class="code-preview"><code><span class="c-com">// ESP32 Sensor Ingest & MQTT Publisher</span>
+<span class="c-kw">#include</span> <span class="c-str">&lt;WiFi.h&gt;</span>
+<span class="c-kw">#include</span> <span class="c-str">&lt;PubSubClient.h&gt;</span>
+<span class="c-kw">#include</span> <span class="c-str">"DHTesp.h"</span>
+
+DHTesp dht;
+<span class="c-kw">const int</span> DHT_PIN = 4;
+
+<span class="c-fn">void setup</span>() {
+  Serial.<span class="c-fn">begin</span>(115200);
+  dht.<span class="c-fn">setup</span>(DHT_PIN, DHTesp::DHT11);
+  WiFi.<span class="c-fn">begin</span>(<span class="c-str">"LabKit_AP"</span>, <span class="c-str">"bench_key_99"</span>);
+  <span class="c-com">// Vault scripts include automatic reconnect & MQTT telemetry loops</span>
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── FAQ SECTION ── -->
+        <section class="faq-section">
+            <div class="container">
+                <div class="steps-header">
+                    <span class="steps-header__badge">Common Questions</span>
+                    <h2 class="steps-header__title">Frequently asked questions</h2>
+                    <p class="steps-header__desc">Everything you need to know about our digital assets and physical
+                        components.</p>
+                </div>
+
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>When do I receive access to the digital files?</span>
+                            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            The moment your checkout clears, your private download vault unlocks immediately on your
+                            order confirmation page. We also send direct download links to your checkout email so you
+                            can access them anytime.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What software do I need to open the files?</span>
+                            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Schematics come as standard vector PDFs compatible with any reader or browser. Network
+                            topologies are formatted for Cisco Packet Tracer (available free for students). Integration
+                            code includes commented C++/Arduino or Python scripts ready for Arduino IDE or VS Code.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Are all physical components bench-tested before shipping?</span>
+                            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Yes! Every microcontroller, sensor, and buzzer is tested on our laboratory test bench before
+                            it is packaged. No dud microcontrollers or dead buzzer modules.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Can I buy individual replacement parts or single items?</span>
+                            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Absolutely. In our shop, every part is available as an individual single unit with no
+                            minimum order requirements. Buy exactly one buzzer or twenty sensors as needed.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ── CART DRAWER ── -->
+    <div class="cart-drawer-backdrop" id="cartBackdrop"></div>
+    <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+        <div class="cart-drawer__header">
+            <div class="cart-drawer__title-wrap">
+                <h2 class="cart-drawer__title">Your Cart</h2>
+            </div>
+            <button class="cart-drawer__close" id="closeCartBtn" aria-label="Close cart">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="cart-drawer__body" id="cartDrawerBody"></div>
+
+        <div class="cart-drawer__footer" id="cartDrawerFooter">
+            <div class="cart-drawer__subtotal">
+                <span>Subtotal</span>
+                <strong id="cartSubtotal">$0.00</strong>
+            </div>
+            <div class="cart-drawer__notice">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2" />
+                    <path d="M7 8h10" />
+                    <path d="M7 12h10" />
+                    <path d="M7 16h6" />
+                </svg>
+                <span>Every part ships with datasheets and pinout diagrams.</span>
+            </div>
+            <a href="/checkout" class="btn-checkout" id="checkoutBtn">
+                Checkout · <span id="checkoutTotal">$0.00</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- ── FOOTER ── -->
+    <footer class="footer">
+        <div class="container footer__inner">
+            <div class="footer__top">
+                <div class="footer__brand-block">
+                    <div class="footer__logo">
+                        <span class="navbar__logo-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="16" height="16" x="4" y="4" rx="2" />
+                                <rect width="6" height="6" x="9" y="9" />
+                                <path d="M15 2v2" />
+                                <path d="M15 20v2" />
+                                <path d="M2 15h2" />
+                                <path d="M2 9h2" />
+                                <path d="M20 15h2" />
+                                <path d="M20 9h2" />
+                                <path d="M9 2v2" />
+                                <path d="M9 20v2" />
+                            </svg>
+                        </span>
+                        <span class="footer__brand-text">LabKit Market</span>
+                    </div>
+                    <p class="footer__desc">
+                        Project-ready hardware bundles for engineering students and hobbyists. Every kit ships with
+                        circuit
+                        diagrams, Packet Tracer topologies, and integration code &mdash; delivered digitally the moment
+                        you check out.
+                    </p>
+                </div>
+
+                <nav class="footer__links">
+                    <a href="/shop" class="footer__link">Shop</a>
+                    <a href="/about" class="footer__link">About Us</a>
+                    <a href="/#workbench" class="footer__link">Built for the workbench</a>
+                </nav>
+            </div>
+
+            <div class="footer__bottom">
+                <p>&copy; 2026 LabKit Market &mdash; Prototyping, bundled.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/cart.js"></script>
+    <script src="/js/about.js"></script>
+</body>
+
+</html>
