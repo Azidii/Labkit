@@ -180,6 +180,12 @@ const kitsSchema = new mongoose.Schema(
       min: [0, "Stock cannot be negative"]
     },
 
+    maxPurchaseQuantity: {
+      type: Number,
+      default: 10,
+      min: [1, "Maximum purchase quantity must be at least 1"]
+    },
+
     components: [kitComponentSchema],
 
     digital_assets: {

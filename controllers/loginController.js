@@ -15,6 +15,9 @@ exports.renderLogin = (req, res) => {
 // POST /login - Authenticate user (Supports JSON fetch and form submit)
 exports.login = async (req, res) => {
   const isJson = req.is("json") || req.headers.accept?.includes("application/json");
+  const requestedReturnTo = req.body.returnTo || req.query.returnTo;
+  const returnTo = typeof requestedReturnTo === "string" && requestedReturnTo.startsWith("/") &&
+    !requestedReturnTo.startsWith("//") ? requestedReturnTo : null;
 
   try {
     const rawIdentifier = (req.body.email || req.body.username || req.body.identifier || "").trim();
@@ -79,12 +82,12 @@ exports.login = async (req, res) => {
     if (isJson) {
       return res.json({
         success: true,
-        redirect: "/success?type=login",
+        redirect: returnTo || "/success?type=login",
         user: req.session.user
       });
     }
 
-    res.redirect("/success?type=login");
+    res.redirect(returnTo || "/success?type=login");
   } catch (error) {
     console.error("Login error:", error);
     const msg = "An unexpected error occurred during login. Please try again.";

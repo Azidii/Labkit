@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin shop — LabKit Market</title>
+  <link rel="stylesheet" href="/css/settings.css" />
+  <style>
+    .admin-page { max-width: 980px; margin: 0 auto; padding: 3rem 1.25rem; }
+    .admin-card { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 1rem; padding: 1.5rem; margin-top: 1.5rem; }
+    .admin-card h2 { margin-bottom: 1rem; }
+    .admin-form { display: grid; gap: 1rem; }
+    .admin-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .admin-form label { display: grid; gap: .4rem; font-size: .85rem; font-weight: 600; }
+    .admin-form input, .admin-form select, .admin-form textarea { width: 100%; padding: .7rem; border: 1px solid hsl(var(--border)); border-radius: .45rem; background: hsl(var(--background)); color: hsl(var(--foreground)); font: inherit; }
+    .admin-form textarea { min-height: 7rem; resize: vertical; }
+    .admin-submit { width: fit-content; padding: .7rem 1.1rem; border: 0; border-radius: .45rem; background: hsl(var(--primary)); color: #fff; font-weight: 600; cursor: pointer; }
+    .admin-error { padding: .75rem; border-radius: .45rem; background: #fee2e2; color: #991b1b; }
+    .admin-list { display: grid; gap: .75rem; }
+    .admin-item { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; border-top: 1px solid hsl(var(--border)); }
+    .admin-item p { color: hsl(var(--muted-foreground)); font-size: .85rem; margin-top: .25rem; }
+    @media (max-width: 640px) { .admin-grid { grid-template-columns: 1fr; } .admin-item { flex-direction: column; } }
+  </style>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+  <main class="admin-page">
+    <a href="/settings">← Back to settings</a>
+    <h1>Shop bundle administration</h1>
+    <p>Create a bundle that will be available in the shop and set its maximum quantity per order.</p>
+
+    <section class="admin-card">
+      <h2>Add bundle</h2>
+      <% if (error) { %><div class="admin-error" role="alert"><%= error %></div><% } %>
+      <form class="admin-form" method="post" action="/admin/bundles">
+        <div class="admin-grid">
+          <label>Name <input name="name" required value="<%= formData.name || '' %>" /></label>
+          <label>Tagline <input name="tagline" required value="<%= formData.tagline || '' %>" /></label>
+          <label>Price <input name="price" type="number" min="0" step="0.01" required value="<%= formData.price || '' %>" /></label>
+          <label>Category <input name="category" value="<%= formData.category || 'IoT Kits' %>" /></label>
+          <label>Difficulty
+            <select name="difficulty">
+              <% ['Beginner', 'Intermediate', 'Advanced', 'All levels'].forEach(level => { %>
+                <option value="<%= level %>" <%= formData.difficulty === level ? 'selected' : '' %>><%= level %></option>
+              <% }) %>
+            </select>
+          </label>
+          <label>Stock quantity <input name="stock_quantity" type="number" min="0" step="1" required value="<%= formData.stock_quantity || 25 %>" /></label>
+          <label>Maximum per order <input name="maxPurchaseQuantity" type="number" min="1" step="1" required value="<%= formData.maxPurchaseQuantity || 10 %>" /></label>
+          <label>Image URL <input name="image_url" type="url" value="<%= formData.image_url || '' %>" /></label>
+        </div>
+        <label>Description <textarea name="description"><%= formData.description || '' %></textarea></label>
+        <label>Bundle components <textarea name="components" placeholder="ESP32 board | 1 | WiFi + Bluetooth&#10;DHT11 sensor | 1 | Temperature and humidity"><%= formData.components || '' %></textarea></label>
+        <small>One component per line: <code>Name | Quantity | Specification</code></small>
+        <button class="admin-submit" type="submit">Add to shop</button>
+      </form>
+    </section>
+
+    <section class="admin-card">
+      <h2>Shop bundles</h2>
+      <div class="admin-list">
+        <% if (!kits.length) { %><p>No admin-created bundles yet.</p><% } %>
+        <% kits.forEach(kit => { %>
+          <div class="admin-item">
+            <div><strong><%= kit.name %></strong><p><%= kit.category %> · $<%= kit.price.toFixed(2) %> · <%= kit.stock_quantity %> in stock</p></div>
+            <strong>Limit: <%= kit.maxPurchaseQuantity %> per order</strong>
+          </div>
+        <% }) %>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
