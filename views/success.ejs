@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" data-auth="<%= locals.currentUser ? 'true' : 'false' %>">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof type !== 'undefined' && type === 'register' ? 'Account Created — LabKit Market' : 'Signed In — LabKit Market' %></title>
+  <link rel="stylesheet" href="/css/success.css" />
+  <script src="/js/theme.js"></script>
+  <script src="/js/page-transitions.js"></script>
+  <script src="/js/success.js" defer></script>
+</head>
+<body>
+  <% 
+    const isRegister = typeof type !== 'undefined' && type === 'register';
+    const targetUrl = isRegister ? '/login?success=' + encodeURIComponent('Registration successful! Please log in.') : '/';
+  %>
+  <main class="success-page page-main" data-target="<%= targetUrl %>">
+    <div class="success-container">
+      <div class="success-header">
+        <div class="success-top-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h1 class="success-title"><%= isRegister ? 'Account created' : "You're signed in" %></h1>
+        <p class="success-subtitle"><%= isRegister ? 'Redirecting you to the login page...' : 'Redirecting you back to the store...' %></p>
+      </div>
+
+      <div class="success-card">
+        <div class="success-badge">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+
+        <h2 class="success-card__title">
+          <%= isRegister ? 'Registration successful' : 'Login successful' %>
+        </h2>
+        <p class="success-card__desc">
+          <%= isRegister ? 'Your account has been created. Taking you to log in in a few seconds...' : "You're all signed in. Taking you home in a few seconds..." %>
+        </p>
+
+        <a href="<%= targetUrl %>" class="btn-continue" id="continueBtn">
+          <span><%= isRegister ? 'Continue to log in' : 'Continue now' %></span>
+          <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+
+        <div class="countdown-bar">
+          <div class="countdown-progress"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

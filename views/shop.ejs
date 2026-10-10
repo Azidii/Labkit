@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-auth="<%= locals.currentUser ? 'true' : 'false' %>">
 
 <head>
   <meta charset="UTF-8" />
@@ -62,10 +62,14 @@
           </svg>
           <span class="navbar__cart-badge" id="cartBadge">0</span>
         </button>
-
+        <% if (locals.currentUser) { %>
         <div class="profile-dropdown-wrapper">
           <button class="navbar__avatar-btn" id="avatarBtn" aria-label="User menu" aria-expanded="false">
-            <span class="navbar__avatar">A</span>
+            <% if (locals.currentUser.avatar) { %>
+              <img src="<%= locals.currentUser.avatar %>" alt="User avatar" class="navbar__avatar" style="object-fit: cover; border-radius: 9999px;" />
+            <% } else { %>
+              <span class="navbar__avatar"><%= locals.currentUser.firstName ? locals.currentUser.firstName.charAt(0).toUpperCase() : 'U' %></span>
+            <% } %>
             <svg class="navbar__avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="6 9 12 15 18 9" />
@@ -74,8 +78,8 @@
 
           <div class="profile-dropdown" id="profileDropdown">
             <div class="profile-dropdown__header">
-              <p class="profile-dropdown__name">Alain Bibaoco</p>
-              <p class="profile-dropdown__email">bibaocoalain@gmail.com</p>
+              <p class="profile-dropdown__name"><%= locals.currentUser.firstName %> <%= locals.currentUser.lastName %></p>
+              <p class="profile-dropdown__email"><%= locals.currentUser.email %></p>
             </div>
             <div class="profile-dropdown__divider"></div>
             <a href="/settings" class="profile-dropdown__item">
@@ -87,7 +91,7 @@
               </svg>
               <span>Settings</span>
             </a>
-            <a href="/login" class="profile-dropdown__item">
+            <a href="/logout" class="profile-dropdown__item" onclick="localStorage.removeItem('userEmail'); localStorage.removeItem('userName'); localStorage.removeItem('theme'); document.documentElement.classList.remove('dark');">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -98,6 +102,9 @@
             </a>
           </div>
         </div>
+        <% } else { %>
+        <a href="/login" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.45rem 1rem; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; background: hsl(var(--primary)); color: #ffffff; text-decoration: none; transition: opacity 0.15s ease;">Login</a>
+        <% } %>
       </div>
     </div>
   </header>
