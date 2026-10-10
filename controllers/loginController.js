@@ -30,6 +30,33 @@ exports.login = async (req, res) => {
         : res.status(400).render("login", { error: msg, success: null });
     }
 
+    // Temporary UI-only admin account. Remove this block after testing the admin console.
+    if (
+      process.env.NODE_ENV !== "production" &&
+      rawIdentifier.toLowerCase() === "admin" &&
+      password === "admin123"
+    ) {
+      req.session.user = {
+        id: "temporary-admin",
+        firstName: "Temporary",
+        lastName: "Admin",
+        username: "admin",
+        email: "admin@test.local",
+        role: "admin",
+        avatar: ""
+      };
+
+      if (isJson) {
+        return res.json({
+          success: true,
+          redirect: returnTo || "/admin",
+          user: req.session.user
+        });
+      }
+
+      return res.redirect(returnTo || "/admin");
+    }
+
     const cleanId = rawIdentifier;
     const escapedId = cleanId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const caseInsensitiveRegex = new RegExp(`^${escapedId}$`, "i");

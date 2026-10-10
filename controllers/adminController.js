@@ -1,4 +1,5 @@
 const Kit = require("../models/kitsSchema");
+const User = require("../models/userSchema");
 
 function requireAdmin(req, res, next) {
   if (!req.session || !req.session.user) {
@@ -30,14 +31,33 @@ exports.requireAdmin = requireAdmin;
 exports.renderAdmin = async (req, res) => {
   try {
     const kits = await Kit.find().sort({ createdAt: -1 }).lean();
-    res.render("admin", { kits, error: null, formData: {} });
+    const users = await User.find({}, "firstName lastName username email role createdAt")
+      .sort({ createdAt: -1 })
+      .lean();
+    res.render("admin", { kits, users, error: null, formData: {} });
   } catch (error) {
     console.error("Admin shop load error:", error);
     res.status(500).render("admin", {
       kits: [],
+      users: [],
       error: "Unable to load shop bundles right now.",
       formData: {}
     });
+  }
+};
+
+exports.removeUser = async (req, res) => {
+  const userId = String(req.params.userId || "");
+  if (userId === String(req.session.user.id)) {
+    return res.status(400).send("You cannot remove your own account.");
+  }
+
+  try {
+    await User.findByIdAndDelete(userId);
+    res.redirect("/admin?tab=accounts");
+  } catch (error) {
+    console.error("Admin account removal error:", error);
+    res.status(500).send("Unable to remove this account.");
   }
 };
 
@@ -50,6 +70,7 @@ exports.createKit = async (req, res) => {
       tagline,
       description,
       price,
+      compare_at_price,
       category,
       difficulty,
       image_url,
@@ -70,6 +91,7 @@ exports.createKit = async (req, res) => {
       const kits = await Kit.find().sort({ createdAt: -1 }).lean();
       return res.status(400).render("admin", {
         kits,
+        users: await User.find({}, "firstName lastName username email role createdAt").lean(),
         error: "Enter a name, tagline, valid price, stock quantity, and purchase limit.",
         formData
       });
@@ -82,6 +104,7 @@ exports.createKit = async (req, res) => {
       const kits = await Kit.find().sort({ createdAt: -1 }).lean();
       return res.status(400).render("admin", {
         kits,
+        users: await User.find({}, "firstName lastName username email role createdAt").lean(),
         error: "Each component must use Name | Quantity | Specification format.",
         formData
       });
@@ -98,6 +121,7 @@ exports.createKit = async (req, res) => {
       tagline: cleanTagline,
       description: (description || "").trim(),
       price: numericPrice,
+      compare_at_price: compare_at_price ? Number(compare_at_price) : null,
       category: (category || "IoT Kits").trim(),
       difficulty: difficulty || "Beginner",
       image_url: (image_url || "").trim() || undefined,
@@ -116,6 +140,7 @@ exports.createKit = async (req, res) => {
     });
     res.status(500).render("admin", {
       kits,
+      users: await User.find({}, "firstName lastName username email role createdAt").lean(),
       error: "Unable to create this bundle. Check that its name is unique.",
       formData
     });

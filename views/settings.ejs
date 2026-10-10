@@ -40,6 +40,9 @@
         <a href="/" class="navbar__link">Home</a>
         <a href="/shop" class="navbar__link">Shop</a>
         <a href="/about" class="navbar__link">About Us</a>
+        <% if (locals.currentUser && locals.currentUser.role === 'admin') { %>
+        <a href="/admin" class="navbar__link">Admin</a>
+        <% } %>
       </nav>
 
       <div class="navbar__actions">

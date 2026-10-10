@@ -5,5 +5,6 @@ const adminController = require("../controllers/adminController");
 router.use(adminController.requireAdmin);
 router.get("/", adminController.renderAdmin);
 router.post("/bundles", adminController.createKit);
+router.post("/accounts/:userId/delete", adminController.removeUser);
 
 module.exports = router;
