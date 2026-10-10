@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
+/**
+ * Enumeration: Role
+ * Values: 'customer', 'admin'
+ * Note: 'guest' refers to an unauthenticated visitor, not a persisted database record.
+ */
+const ROLE_ENUM = ["customer", "admin"];
 
 const userSchema = new mongoose.Schema(
   {
@@ -36,8 +42,18 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["customer", "user", "admin"],
-      default: "customer"
+      enum: {
+        values: ROLE_ENUM,
+        message: "{VALUE} is not a valid role. Allowed: customer, admin"
+      },
+      default: "customer",
+      lowercase: true,
+      set: function (val) {
+        if (!val) return "customer";
+        const normalized = String(val).toLowerCase();
+        // Automatically map legacy 'user' to UML standard 'customer'
+        return normalized === "user" ? "customer" : normalized;
+      }
     },
 
     resetPasswordCode: {

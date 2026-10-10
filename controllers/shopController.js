@@ -1,3 +1,5 @@
+const Kit = require("../models/kitsSchema");
+
 const parts = [
   {
     id: "1",
@@ -269,4 +271,3 @@ exports.renderShop = async (req, res) => {
     loading: false
   });
 };
-const Kit = require("../models/kitsSchema");

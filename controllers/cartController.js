@@ -1,25 +1,29 @@
 const Cart = require("../models/cartSchema");
 
+function getAuthUserId(req) {
+  return req.session?.user?.id || req.session?.user?._id || req.user?.userId || null;
+}
+
 // GET /cart - Retrieve user's active cart
 exports.getCart = async (req, res) => {
   try {
-    const userId = req.session && req.session.user ? req.session.user._id : null;
+    const userId = getAuthUserId(req);
     if (!userId) {
-      return res.status(401).json({ success: false, error: "Please sign in to view your cart." });
+      return res.status(401).json({
+        success: false,
+        requireLogin: true,
+        redirect: "/login",
+        error: "Please sign in to view your cart."
+      });
     }
 
-    let cart = await Cart.findOne({ user: userId, status: "active" });
-    if (!cart) {
-      cart = await Cart.create({ user: userId, items: [], status: "active" });
-    }
-
-    const subtotal = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const totalCount = cart.items.reduce((sum, item) => sum + item.qty, 0);
+    const cart = await Cart.getOrCreateForUser(userId);
+    const totalCount = (cart.items || []).reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
 
     return res.status(200).json({
       success: true,
       cart,
-      subtotal,
+      subtotal: cart.subtotal || 0,
       totalCount
     });
   } catch (error) {
@@ -31,48 +35,41 @@ exports.getCart = async (req, res) => {
 // POST /cart/add - Add an item to the cart
 exports.addToCart = async (req, res) => {
   try {
-    const userId = req.session && req.session.user ? req.session.user._id : null;
+    const userId = getAuthUserId(req);
     if (!userId) {
-      return res.status(401).json({ success: false, error: "Please sign in to add items." });
-    }
-
-    const { id, productId, name, price, qty, img } = req.body;
-    const targetId = String(productId || id);
-
-    if (!targetId || !name || price === undefined) {
-      return res.status(400).json({ success: false, error: "Missing required item fields." });
-    }
-
-    let cart = await Cart.findOne({ user: userId, status: "active" });
-    if (!cart) {
-      cart = new Cart({ user: userId, items: [], status: "active" });
-    }
-
-    const quantityToAdd = Math.max(1, Number(qty || 1));
-    const existingIndex = cart.items.findIndex((item) => String(item.productId) === targetId);
-
-    if (existingIndex > -1) {
-      cart.items[existingIndex].qty += quantityToAdd;
-    } else {
-      cart.items.push({
-        productId: targetId,
-        name: String(name).trim(),
-        price: Number(price),
-        qty: quantityToAdd,
-        img: img || ""
+      return res.status(401).json({
+        success: false,
+        requireLogin: true,
+        redirect: "/login",
+        error: "Please sign in to add items to your cart."
       });
     }
 
-    await cart.save();
+    const { id, kitId, itemId, price, unitPrice, quantity, qty } = req.body;
+    const targetKit = kitId || id;
+    const targetItem = itemId || null;
+    const itemPrice = Number(unitPrice !== undefined ? unitPrice : price);
+    const itemQty = Math.max(1, Number(quantity || qty || 1));
 
-    const subtotal = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const totalCount = cart.items.reduce((sum, item) => sum + item.qty, 0);
+    if (!targetKit && !targetItem) {
+      return res.status(400).json({ success: false, error: "Missing required item or kit ID." });
+    }
+
+    const cart = await Cart.getOrCreateForUser(userId);
+    await cart.addItem({
+      kit: targetKit,
+      item: targetItem,
+      quantity: itemQty,
+      unitPrice: itemPrice
+    });
+
+    const totalCount = (cart.items || []).reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
 
     return res.status(200).json({
       success: true,
       message: "Item added to cart.",
       cart,
-      subtotal,
+      subtotal: cart.subtotal,
       totalCount
     });
   } catch (error) {
@@ -84,46 +81,51 @@ exports.addToCart = async (req, res) => {
 // PUT /cart/update - Update item quantity in cart
 exports.updateCartQty = async (req, res) => {
   try {
-    const userId = req.session && req.session.user ? req.session.user._id : null;
+    const userId = getAuthUserId(req);
     if (!userId) {
-      return res.status(401).json({ success: false, error: "Please sign in to update your cart." });
+      return res.status(401).json({
+        success: false,
+        requireLogin: true,
+        redirect: "/login",
+        error: "Please sign in to update your cart."
+      });
     }
 
-    const { id, productId, qty, delta } = req.body;
-    const targetId = String(productId || id);
+    const { id, quantity, delta } = req.body;
+    const targetId = String(id || req.params.id);
 
-    const cart = await Cart.findOne({ user: userId, status: "active" });
+    const cart = await Cart.findOne({ userId });
     if (!cart) {
       return res.status(404).json({ success: false, error: "Cart not found." });
     }
 
-    const itemIndex = cart.items.findIndex(
-      (item) => String(item.productId) === targetId || String(item._id) === targetId
+    const item = cart.items.find(
+      (i) => String(i._id) === targetId || String(i.kit) === targetId || String(i.item) === targetId
     );
 
-    if (itemIndex === -1) {
+    if (!item) {
       return res.status(404).json({ success: false, error: "Item not found in cart." });
     }
 
     if (delta !== undefined) {
-      cart.items[itemIndex].qty += Number(delta);
-    } else if (qty !== undefined) {
-      cart.items[itemIndex].qty = Number(qty);
+      item.quantity = Math.max(0, item.quantity + Number(delta));
+    } else if (quantity !== undefined) {
+      item.quantity = Math.max(0, Number(quantity));
     }
 
-    if (cart.items[itemIndex].qty <= 0) {
-      cart.items.splice(itemIndex, 1);
+    if (item.quantity <= 0) {
+      cart.items = cart.items.filter((i) => String(i._id) !== String(item._id));
     }
 
+    cart.calculateSubtotal();
     await cart.save();
 
-    const subtotal = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const totalCount = cart.items.reduce((sum, item) => sum + item.qty, 0);
+    const totalCount = (cart.items || []).reduce((sum, i) => sum + (Number(i.quantity) || 1), 0);
 
     return res.status(200).json({
       success: true,
       cart,
-      subtotal,
+      subtotal: cart.subtotal,
       totalCount
     });
   } catch (error) {
@@ -135,33 +137,32 @@ exports.updateCartQty = async (req, res) => {
 // DELETE /cart/remove - Remove item from cart
 exports.removeCartItem = async (req, res) => {
   try {
-    const userId = req.session && req.session.user ? req.session.user._id : null;
+    const userId = getAuthUserId(req);
     if (!userId) {
-      return res.status(401).json({ success: false, error: "Please sign in to modify your cart." });
+      return res.status(401).json({
+        success: false,
+        requireLogin: true,
+        redirect: "/login",
+        error: "Please sign in to modify your cart."
+      });
     }
 
-    const { id, productId } = req.body;
-    const targetId = String(productId || id || req.params.id);
+    const { id } = req.body;
+    const targetId = String(id || req.params.id);
 
-    const cart = await Cart.findOne({ user: userId, status: "active" });
+    const cart = await Cart.findOne({ userId });
     if (!cart) {
       return res.status(404).json({ success: false, error: "Cart not found." });
     }
 
-    cart.items = cart.items.filter(
-      (item) => String(item.productId) !== targetId && String(item._id) !== targetId
-    );
-
-    await cart.save();
-
-    const subtotal = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const totalCount = cart.items.reduce((sum, item) => sum + item.qty, 0);
+    await cart.removeItem(targetId);
+    const totalCount = (cart.items || []).reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
 
     return res.status(200).json({
       success: true,
       message: "Item removed from cart.",
       cart,
-      subtotal,
+      subtotal: cart.subtotal,
       totalCount
     });
   } catch (error) {
@@ -173,21 +174,25 @@ exports.removeCartItem = async (req, res) => {
 // POST /cart/clear - Clear all items from cart
 exports.clearCart = async (req, res) => {
   try {
-    const userId = req.session && req.session.user ? req.session.user._id : null;
+    const userId = getAuthUserId(req);
     if (!userId) {
-      return res.status(401).json({ success: false, error: "Please sign in." });
+      return res.status(401).json({
+        success: false,
+        requireLogin: true,
+        redirect: "/login",
+        error: "Please sign in."
+      });
     }
 
-    const cart = await Cart.findOne({ user: userId, status: "active" });
+    const cart = await Cart.findOne({ userId });
     if (cart) {
-      cart.items = [];
-      await cart.save();
+      await cart.clearCart();
     }
 
     return res.status(200).json({
       success: true,
       message: "Cart cleared.",
-      cart: cart || { items: [] },
+      cart: cart || { items: [], subtotal: 0 },
       subtotal: 0,
       totalCount: 0
     });

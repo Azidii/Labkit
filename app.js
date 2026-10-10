@@ -94,6 +94,7 @@ const checkoutRoute = require('./routes/checkoutRoute');
 const aboutRoute = require('./routes/aboutRoute');
 const successAuthRoute = require('./routes/successAuthRoute');
 const adminRoute = require('./routes/adminRoute');
+const cartRoute = require('./routes/cartRoute');
 
 app.use('/about', aboutRoute);
 app.use('/how-it-works', aboutRoute);
@@ -101,10 +102,11 @@ app.use('/login', loginRoute);
 app.use('/register', registerRoute);
 app.use('/success', successAuthRoute);
 app.use('/admin', adminRoute);
+app.use('/admin-dashboard', (req, res) => res.redirect('/admin'));
+app.use('/cart', cartRoute);
 app.use('/resetpass', resetpassRoute);
 app.use('/shop', shopRoute);
 app.use('/checkout', checkoutRoute);
-app.use('/admin', adminRoute);
 app.use('/', dashboardRoute);
 
 // Convenience aliases for Google OAuth

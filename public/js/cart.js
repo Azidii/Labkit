@@ -1,4 +1,7 @@
 function getCart() {
+  if (!isAuthenticated()) {
+    return [];
+  }
   try {
     const raw = localStorage.getItem("circuitCart");
     return raw ? JSON.parse(raw) : [];
@@ -8,24 +11,34 @@ function getCart() {
 }
 
 function saveCart(cart) {
+  if (!isAuthenticated()) {
+    try {
+      localStorage.removeItem("circuitCart");
+    } catch (e) {}
+    return;
+  }
   localStorage.setItem("circuitCart", JSON.stringify(cart));
   renderCart();
 }
 
 function isAuthenticated() {
-  return document.documentElement.dataset.auth === "true";
+  const attr = document.documentElement.getAttribute("data-auth");
+  return attr === "true";
 }
 
 function requireAuthentication() {
   if (isAuthenticated()) return true;
 
   const returnTo = `${window.location.pathname}${window.location.search}`;
-  window.location.href = `/login?error=${encodeURIComponent("Please log in or create an account before adding items to your cart.")}&returnTo=${encodeURIComponent(returnTo)}`;
+  window.location.href = `/login?error=${encodeURIComponent("Please log in to add items to your cart.")}&returnTo=${encodeURIComponent(returnTo)}`;
   return false;
 }
 
 function addToCart(id, name, price, img, maxPurchaseQuantity) {
-  if (!requireAuthentication()) return;
+  if (!isAuthenticated()) {
+    requireAuthentication();
+    return;
+  }
 
   const cart = getCart();
   const existing = cart.find((item) => String(item.id) === String(id));
@@ -47,7 +60,10 @@ function addToCart(id, name, price, img, maxPurchaseQuantity) {
 }
 
 function updateCartQty(id, delta) {
-  if (!requireAuthentication()) return;
+  if (!isAuthenticated()) {
+    requireAuthentication();
+    return;
+  }
 
   let cart = getCart();
   const item = cart.find((i) => String(i.id) === String(id));
@@ -61,7 +77,10 @@ function updateCartQty(id, delta) {
 }
 
 function removeCartItem(id) {
-  if (!requireAuthentication()) return;
+  if (!isAuthenticated()) {
+    requireAuthentication();
+    return;
+  }
 
   let cart = getCart();
   cart = cart.filter((i) => String(i.id) !== String(id));
@@ -69,6 +88,10 @@ function removeCartItem(id) {
 }
 
 function openCart() {
+  if (!isAuthenticated()) {
+    requireAuthentication();
+    return;
+  }
   ensureCartDrawerDom();
   document.getElementById("cartDrawer")?.classList.add("is-open");
   document.getElementById("cartBackdrop")?.classList.add("is-open");
@@ -98,7 +121,7 @@ function ensureCartDrawerDom() {
           <path d="M3 6h18"/>
           <path d="M16 10a4 4 0 0 1-8 0"/>
         </svg>
-        <h2>Your Bundles</h2>
+        <h2>Your Cart</h2>
       </div>
       <button type="button" class="cart-drawer__close" id="closeCartBtn" aria-label="Close cart">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -136,6 +159,17 @@ function ensureCartDrawerDom() {
 }
 
 function renderCart() {
+  if (!isAuthenticated()) {
+    try {
+      localStorage.removeItem("circuitCart");
+    } catch (e) {}
+    document.querySelectorAll("#cartBadge, .navbar__cart-badge").forEach((badge) => {
+      badge.textContent = "0";
+      badge.style.display = "none";
+    });
+    return;
+  }
+
   ensureCartDrawerDom();
 
   const cart = getCart();
@@ -181,8 +215,8 @@ function renderCart() {
     bodyEl.innerHTML = `
       <div class="cart-items" id="cartItemsList">
         ${cart
-        .map(
-          (item) => `
+          .map(
+            (item) => `
           <div class="cart-item-card" data-id="${item.id}">
             <img src="${item.img}" alt="${item.name}" class="cart-item-card__img" />
             <div class="cart-item-card__content">
@@ -209,12 +243,60 @@ function renderCart() {
             </div>
           </div>
         `
-        )
-        .join("")}
+          )
+          .join("")}
       </div>
     `;
   }
 }
+
+// Global capture-phase click listener: guarantees guests are immediately intercepted and redirected to login
+document.addEventListener(
+  "click",
+  (event) => {
+    const addBtn = event.target.closest(".product-card__add-btn, .js-add-to-cart, [data-add-to-cart]");
+    if (addBtn) {
+      if (!isAuthenticated()) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        requireAuthentication();
+        return false;
+      }
+      // If authenticated and button has dataset values, trigger addToCart
+      const { id, name, price, img, max } = addBtn.dataset;
+      if (id && name && price) {
+        event.preventDefault();
+        addToCart(id, name, Number(price), img, Number(max) || 10);
+      }
+    }
+
+    const openCartTrigger = event.target.closest("#openCartBtn, .navbar__cart, [data-open-cart]");
+    if (openCartTrigger) {
+      if (!isAuthenticated()) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        requireAuthentication();
+        return false;
+      }
+      event.preventDefault();
+      openCart();
+    }
+
+    const checkoutBtn = event.target.closest("#checkoutBtn");
+    if (checkoutBtn) {
+      if (!isAuthenticated()) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        requireAuthentication();
+        return false;
+      }
+    }
+  },
+  true // true = capture phase
+);
 
 window.addToCart = addToCart;
 window.updateCartQty = updateCartQty;
@@ -222,29 +304,26 @@ window.removeCartItem = removeCartItem;
 window.openCart = openCart;
 window.closeCart = closeCart;
 window.getCart = getCart;
+window.isAuthenticated = isAuthenticated;
+window.requireAuthentication = requireAuthentication;
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderCart();
-
-  document.addEventListener("click", (e) => {
-    const trigger = e.target.closest("#openCartBtn, .navbar__cart, [data-open-cart]");
-    if (trigger) {
-      e.preventDefault();
-      openCart();
-    }
-  });
+  if (!isAuthenticated()) {
+    try {
+      localStorage.removeItem("circuitCart");
+    } catch (e) {}
+    document.querySelectorAll("#cartBadge, .navbar__cart-badge").forEach((badge) => {
+      badge.textContent = "0";
+      badge.style.display = "none";
+    });
+  } else {
+    renderCart();
+  }
 
   document.getElementById("closeCartBtn")?.addEventListener("click", closeCart);
   document.getElementById("cartBackdrop")?.addEventListener("click", closeCart);
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeCart();
-  });
-
-  document.addEventListener("click", (event) => {
-    const checkoutLink = event.target.closest("#checkoutBtn");
-    if (checkoutLink && !requireAuthentication()) {
-      event.preventDefault();
-    }
   });
 });

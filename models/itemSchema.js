@@ -41,4 +41,27 @@ const itemSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+/**
+ * Instance Method: Check if item has enough stock
+ * @param {number} quantity
+ * @returns {boolean}
+ */
+itemSchema.methods.hasStock = function (quantity = 1) {
+  return (this.stockQuantity || 0) >= (Number(quantity) || 1);
+};
+
+/**
+ * Instance Method: Deduct stock quantity
+ * @param {number} quantity
+ * @returns {Promise<Item>}
+ */
+itemSchema.methods.reduceStock = async function (quantity = 1) {
+  const qty = Math.max(1, Number(quantity) || 1);
+  if (!this.hasStock(qty)) {
+    throw new Error(`Insufficient stock for item: ${this.name}. Available: ${this.stockQuantity}`);
+  }
+  this.stockQuantity -= qty;
+  return this.save();
+};
+
 module.exports = mongoose.model("Item", itemSchema);

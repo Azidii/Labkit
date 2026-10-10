@@ -53,15 +53,32 @@ exports.processLogin = async (req, res) => {
         avatar: ""
       };
 
+      const payload = {
+        userId: "temporary-admin",
+        role: "admin"
+      };
+
+      const token = jwt.sign(payload, process.env.JWT_SECRET || "labkit-jwt-secret-key-2026", {
+        expiresIn: "1d"
+      });
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 24 * 60 * 60 * 1000
+      });
+
+      const targetUrl = returnTo || "/admin";
+
       if (isJson) {
         return res.json({
           success: true,
-          redirect: returnTo || "/admin",
+          redirect: targetUrl,
           user: req.session.user
         });
       }
 
-      return res.redirect(returnTo || "/admin");
+      return res.redirect(targetUrl);
     }
 
     const cleanId = rawIdentifier;
@@ -133,18 +150,12 @@ exports.processLogin = async (req, res) => {
       };
     }
 
-    // Route logic: If the role is "admin", redirect to /admin/dashboard. Otherwise, redirect to /shop.
-    const redirectUrl = user.role === "admin" ? "/admin/dashboard" : "/shop";
+    // Route logic: If the role is "admin", redirect to /admin. Otherwise, redirect to returnTo or /shop.
+    const redirectUrl = user.role === "admin" ? "/admin" : (returnTo || "/shop");
 
     if (isJson) {
       return res.json({
         success: true,
-        redirect: returnTo || "/success?type=login",
-        user: req.session.user
-      });
-    }
-
-    res.redirect(returnTo || "/success?type=login");
         redirect: redirectUrl,
         user: {
           id: user._id,
