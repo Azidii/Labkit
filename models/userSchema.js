@@ -1,17 +1,13 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
+
 const userSchema = new mongoose.Schema(
   {
-    firstName: {
+    username: {
       type: String,
-      required: [true, "First name is required"],
-      trim: true
-    },
-
-    lastName: {
-      type: String,
-      required: [true, "Last name is required"],
+      required: [true, "Username is required"],
+      unique: true,
       trim: true
     },
 
@@ -23,18 +19,25 @@ const userSchema = new mongoose.Schema(
       trim: true
     },
 
-    username: {
-      type: String,
-      required: [true, "Username is required"],
-      unique: true,
-      trim: true
-    },
-
     passwordHash: {
       type: String,
       required: function () {
         return !this.googleId;
-      }
+      },
+      default: null
+    },
+
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: null
+    },
+
+    role: {
+      type: String,
+      enum: ["customer", "user", "admin"],
+      default: "customer"
     },
 
     resetPasswordCode: {
@@ -47,27 +50,30 @@ const userSchema = new mongoose.Schema(
       default: null
     },
 
-    googleId: {
+    // Optional legacy helper fields for existing controllers/views
+    firstName: {
       type: String,
-      unique: true,
-      sparse: true
+      trim: true,
+      default: ""
+    },
+
+    lastName: {
+      type: String,
+      trim: true,
+      default: ""
     },
 
     avatar: {
       type: String,
       default: ""
-    },
-
-    role: {
-      type: String,
-      enum: ["admin", "user", "proctor"],
-      default: "user"
     }
   },
-  { timestamps: true }
+  {
+    timestamps: true // provides createdAt : Date, updatedAt : Date
+  }
 );
 
-// Compare password helper
+// Method: +comparePassword(password : String) : Boolean
 userSchema.methods.comparePassword = async function (candidatePassword) {
   if (!this.passwordHash) return false;
   return bcrypt.compare(candidatePassword, this.passwordHash);

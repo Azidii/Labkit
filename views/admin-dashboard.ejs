@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-auth="<%= locals.currentUser ? 'true' : 'false' %>">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — LabKit Market</title>
+  <link rel="stylesheet" href="/css/settings.css" />
+  <link rel="stylesheet" href="/css/cart.css" />
+  <script src="/js/theme.js"></script>
+  <script src="/js/page-transitions.js"></script>
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a href="/" class="navbar__brand">
+        <span class="navbar__logo-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect width="16" height="16" x="4" y="4" rx="2" />
+            <rect width="6" height="6" x="9" y="9" />
+            <path d="M15 2v2" />
+            <path d="M15 20v2" />
+            <path d="M2 15h2" />
+            <path d="M2 9h2" />
+            <path d="M20 15h2" />
+            <path d="M20 9h2" />
+            <path d="M9 2v2" />
+            <path d="M9 20v2" />
+          </svg>
+        </span>
+        <span class="navbar__wordmark">LabKit</span>
+        <span class="navbar__sub">/ADMIN</span>
+      </a>
+
+      <nav class="navbar__nav">
+        <a href="/" class="navbar__link">Home</a>
+        <a href="/shop" class="navbar__link">Shop</a>
+        <a href="/about" class="navbar__link">About Us</a>
+        <a href="/admin/dashboard" class="navbar__link navbar__link--active" style="color: #818cf8; font-weight: 600;">Admin</a>
+      </nav>
+
+      <div class="navbar__actions">
+        <% if (locals.currentUser) { %>
+        <div class="profile-dropdown-wrapper">
+          <button class="navbar__avatar-btn" id="avatarBtn" aria-label="User menu" aria-expanded="false">
+            <% if (locals.currentUser.avatar) { %>
+              <img src="<%= locals.currentUser.avatar %>" alt="User avatar" class="navbar__avatar" style="object-fit: cover; border-radius: 9999px;" />
+            <% } else { %>
+              <span class="navbar__avatar"><%= locals.currentUser.firstName ? locals.currentUser.firstName.charAt(0).toUpperCase() : 'A' %></span>
+            <% } %>
+            <svg class="navbar__avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-dropdown__header">
+              <p class="profile-dropdown__name"><%= locals.currentUser.firstName || 'Admin' %> <%= locals.currentUser.lastName || '' %></p>
+              <p class="profile-dropdown__email"><%= locals.currentUser.email || '' %></p>
+            </div>
+            <div class="profile-dropdown__divider"></div>
+            <a href="/admin/dashboard" class="profile-dropdown__item profile-dropdown__item--admin">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>Admin Dashboard</span>
+            </a>
+            <a href="/settings" class="profile-dropdown__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+              <span>Settings</span>
+            </a>
+            <a href="/logout" class="profile-dropdown__item" onclick="localStorage.removeItem('userEmail'); localStorage.removeItem('userName');">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              <span>Sign out</span>
+            </a>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-container">
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-header__title">
+          Admin Portal
+          <span class="admin-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Admin Role Verified
+          </span>
+        </h1>
+        <p style="color: var(--text-muted, #a1a1aa); margin-top: 6px;">Manage store inventory, catalog components, and access controls.</p>
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <a href="/shop" class="btn-admin btn-admin--secondary">View Shop</a>
+        <a href="/settings" class="btn-admin btn-admin--primary">Account Settings</a>
+      </div>
+    </div>
+
+    <div class="admin-grid">
+      <div class="admin-card">
+        <span class="admin-card__label">Total Parts Catalog</span>
+        <span class="admin-card__value">64</span>
+        <span class="admin-card__sub">IoT, MCUs, Sensors &amp; Buzzers</span>
+      </div>
+      <div class="admin-card">
+        <span class="admin-card__label">Security Guard</span>
+        <span class="admin-card__value">Active</span>
+        <span class="admin-card__sub">JWT Bearer Cookie Verified</span>
+      </div>
+      <div class="admin-card">
+        <span class="admin-card__label">Access Level</span>
+        <span class="admin-card__value">Full Admin</span>
+        <span class="admin-card__sub">403 Restricted Access Protected</span>
+      </div>
+    </div>
+
+    <div class="admin-panel">
+      <h2 class="admin-panel__title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 16v-4" />
+          <path d="M12 8h.01" />
+        </svg>
+        Authenticated Session &amp; Token Claims
+      </h2>
+      <table class="admin-info-table">
+        <tr>
+          <th>User ID</th>
+          <td><%= (locals.user && locals.user.userId) || (locals.currentUser && (locals.currentUser.id || locals.currentUser._id)) || 'N/A' %></td>
+        </tr>
+        <tr>
+          <th>Assigned Role</th>
+          <td><span style="color: #818cf8; font-weight: bold;"><%= locals.userRole || 'admin' %></span></td>
+        </tr>
+        <tr>
+          <th>Authentication Method</th>
+          <td>JWT Token (httpOnly Cookie: <code>token</code>)</td>
+        </tr>
+        <tr>
+          <th>Token Expiration</th>
+          <td>24 Hours (1 Day Rolling)</td>
+        </tr>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const avatarBtn = document.getElementById("avatarBtn");
+    const profileDropdown = document.getElementById("profileDropdown");
+    if (avatarBtn && profileDropdown) {
+      avatarBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = profileDropdown.classList.toggle("show");
+        avatarBtn.setAttribute("aria-expanded", isOpen);
+      });
+      document.addEventListener("click", (e) => {
+        if (!profileDropdown.contains(e.target) && !avatarBtn.contains(e.target)) {
+          profileDropdown.classList.remove("show");
+          avatarBtn.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

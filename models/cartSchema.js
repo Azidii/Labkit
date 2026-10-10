@@ -1,56 +1,28 @@
 const mongoose = require("mongoose");
-
-const cartItemSchema = new mongoose.Schema(
-  {
-    productId: {
-      type: String,
-      required: [true, "Product ID is required"],
-      trim: true
-    },
-
-    name: {
-      type: String,
-      required: [true, "Product name is required"],
-      trim: true
-    },
-
-    price: {
-      type: Number,
-      required: [true, "Price is required"],
-      min: [0, "Price cannot be negative"]
-    },
-
-    qty: {
-      type: Number,
-      required: [true, "Quantity is required"],
-      min: [1, "Quantity must be at least 1"],
-      default: 1
-    },
-
-    img: {
-      type: String,
-      default: ""
-    }
-  },
-  { _id: true }
-);
+const CartItem = require("./cartItemSchema");
 
 const cartSchema = new mongoose.Schema(
   {
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, "User is required"],
+      default: null,
       index: true
     },
 
-    items: [cartItemSchema],
-
-    status: {
+    sessionId: {
       type: String,
-      enum: ["active", "completed", "abandoned"],
-      default: "active"
-    }
+      default: null,
+      index: true
+    },
+
+    subtotal: {
+      type: Number,
+      default: 0,
+      min: [0, "Subtotal cannot be negative"]
+    },
+
+    items: [CartItem.schema]
   },
   { timestamps: true }
 );
