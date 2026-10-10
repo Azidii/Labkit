@@ -76,6 +76,14 @@ router.get("/", async (req, res) => {
   res.render("dashboard", { featured, loading: false });
 });
 
+router.get("/about", (req, res) => {
+  res.render("about");
+});
+
+router.get("/how-it-works", (req, res) => {
+  res.render("about");
+});
+
 router.get("/settings", (req, res) => {
   res.render("settings");
 });

@@ -158,10 +158,25 @@ img { display: block; max-width: 100%; }
   color: hsl(var(--muted-foreground));
   text-decoration: none;
   transition: color 0.15s ease;
+  position: relative;
+  padding: 0.25rem 0;
 }
-.navbar__link:hover,
-.navbar__link--active {
+.navbar__link:hover {
   color: hsl(var(--foreground));
+}
+.navbar__link--active {
+  color: hsl(var(--primary));
+  font-weight: 600;
+}
+.navbar__link--active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: hsl(var(--primary));
+  border-radius: 9999px;
 }
 
 .navbar__actions {

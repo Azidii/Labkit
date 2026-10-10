@@ -22,13 +22,16 @@ const registerRoute = require('./routes/registerRoute');
 const resetpassRoute = require('./routes/resetpassRoute');
 const shopRoute = require('./routes/shopRoute');
 const checkoutRoute = require('./routes/checkoutRoute');
+const aboutRoute = require('./routes/aboutRoute');
 
-app.use('/', dashboardRoute);
+app.use('/about', aboutRoute);
+app.use('/how-it-works', aboutRoute);
 app.use('/login', loginRoute);
 app.use('/register', registerRoute);
 app.use('/resetpass', resetpassRoute);
 app.use('/shop', shopRoute);
 app.use('/checkout', checkoutRoute);
+app.use('/', dashboardRoute);
 
 app.listen(PORT, () => {
   console.log(`Labkit server running at http://localhost:${PORT}`);
