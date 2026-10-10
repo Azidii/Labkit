@@ -42,6 +42,9 @@
                 <a href="/" class="navbar__link">Home</a>
                 <a href="/shop" class="navbar__link">Shop</a>
                 <a href="/about" class="navbar__link navbar__link--active">About Us</a>
+                <% if (locals.userRole === 'admin') { %>
+                <a href="/admin/dashboard" class="navbar__link navbar__link--admin">Admin</a>
+                <% } %>
             </nav>
 
             <div class="navbar__actions">
@@ -84,6 +87,18 @@
                             <p class="profile-dropdown__email"><%= locals.currentUser.email %></p>
                         </div>
                         <div class="profile-dropdown__divider"></div>
+                        <% if (locals.userRole === 'admin') { %>
+                        <a href="/admin/dashboard" class="profile-dropdown__item profile-dropdown__item--admin">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            <span>Admin Dashboard</span>
+                        </a>
+                        <% } %>
                         <a href="/settings" class="profile-dropdown__item">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

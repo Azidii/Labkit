@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 const connectDB = require('./database/mongo-dbconnect');
 
 // Connect Database
@@ -17,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Express Session configuration
 app.use(session({
@@ -29,9 +32,28 @@ app.use(session({
   }
 }));
 
+// Global middleware: check token cookie, decode, and attach req.user and res.locals.userRole
+app.use((req, res, next) => {
+  res.locals.userRole = null;
+  const token = req.cookies?.token;
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded;
+      res.locals.userRole = decoded.role;
+    } catch (err) {
+      // Quietly ignore invalid token
+    }
+  }
+  next();
+});
+
 // Make currentUser available to all EJS templates
 app.use((req, res, next) => {
-  res.locals.currentUser = req.session && req.session.user ? req.session.user : null;
+  res.locals.currentUser = (req.session && req.session.user) ? req.session.user : (req.user || null);
+  if (!res.locals.userRole && res.locals.currentUser?.role) {
+    res.locals.userRole = res.locals.currentUser.role;
+  }
   next();
 });
 
@@ -43,6 +65,7 @@ const shopRoute = require('./routes/shopRoute');
 const checkoutRoute = require('./routes/checkoutRoute');
 const aboutRoute = require('./routes/aboutRoute');
 const successAuthRoute = require('./routes/successAuthRoute');
+const adminRoute = require('./routes/adminRoute');
 
 app.use('/about', aboutRoute);
 app.use('/how-it-works', aboutRoute);
@@ -52,6 +75,7 @@ app.use('/success', successAuthRoute);
 app.use('/resetpass', resetpassRoute);
 app.use('/shop', shopRoute);
 app.use('/checkout', checkoutRoute);
+app.use('/admin', adminRoute);
 app.use('/', dashboardRoute);
 
 // Convenience aliases for Google OAuth

@@ -1,5 +1,7 @@
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const User = require("../models/userSchema");
+
 
 // GET /login - Render login page
 exports.renderLogin = (req, res) => {
@@ -12,8 +14,13 @@ exports.renderLogin = (req, res) => {
   });
 };
 
-// POST /login - Authenticate user (Supports JSON fetch and form submit)
-exports.login = async (req, res) => {
+/**
+ * processLogin:
+ * Authenticate the user, create a JWT payload containing userId and role,
+ * sign it with process.env.JWT_SECRET (1-day expiration), and set it in an httpOnly cookie.
+ * Route logic: If the role is "admin", redirect to /admin/dashboard. Otherwise, redirect to /shop.
+ */
+exports.processLogin = async (req, res) => {
   const isJson = req.is("json") || req.headers.accept?.includes("application/json");
 
   try {
@@ -65,35 +72,68 @@ exports.login = async (req, res) => {
         : res.status(401).render("login", { error: msg, success: null });
     }
 
-    // Establish user session
-    req.session.user = {
-      id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      username: user.username,
-      email: user.email,
-      role: user.role,
-      avatar: user.avatar || ""
+    // Create JWT payload containing userId and role
+    const payload = {
+      userId: user._id,
+      role: user.role
     };
+
+    // Sign it with process.env.JWT_SECRET (1-day expiration)
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "1d"
+    });
+
+    // Set it in an httpOnly cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000 // 1 day
+    });
+
+    // Establish user session
+    if (req.session) {
+      req.session.user = {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar || ""
+      };
+    }
+
+    // Route logic: If the role is "admin", redirect to /admin/dashboard. Otherwise, redirect to /shop.
+    const redirectUrl = user.role === "admin" ? "/admin/dashboard" : "/shop";
 
     if (isJson) {
       return res.json({
         success: true,
-        redirect: "/success?type=login",
-        user: req.session.user
+        redirect: redirectUrl,
+        user: {
+          id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          email: user.email,
+          role: user.role
+        }
       });
     }
 
-    res.redirect("/success?type=login");
+    return res.redirect(redirectUrl);
   } catch (error) {
     console.error("Login error:", error);
     const msg = "An unexpected error occurred during login. Please try again.";
     if (isJson) {
       return res.status(500).json({ success: false, error: msg });
     }
-    res.status(500).render("login", { error: msg, success: null });
+    return res.status(500).render("login", { error: msg, success: null });
   }
 };
+
+// Alias login to processLogin for full backwards compatibility
+exports.login = exports.processLogin;
 
 // GET /login/google - Start Google OAuth flow
 exports.startGoogleAuth = (req, res) => {
@@ -210,7 +250,7 @@ exports.handleGoogleCallback = async (req, res) => {
         username,
         googleId: profile.sub,
         avatar: profile.picture || "",
-        role: "user"
+        role: "customer"
       });
     } else {
       let modified = false;
@@ -227,18 +267,37 @@ exports.handleGoogleCallback = async (req, res) => {
       }
     }
 
-    // Save session
-    req.session.user = {
-      id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      username: user.username,
-      email: user.email,
-      role: user.role,
-      avatar: user.avatar || ""
+    // Create and set JWT token cookie
+    const payload = {
+      userId: user._id,
+      role: user.role
     };
 
-    res.redirect("/success?type=google");
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "1d"
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000
+    });
+
+    // Save session
+    if (req.session) {
+      req.session.user = {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar || ""
+      };
+    }
+
+    const redirectUrl = user.role === "admin" ? "/admin/dashboard" : "/shop";
+    res.redirect(redirectUrl);
   } catch (err) {
     console.error("Google OAuth Error:", err);
     res.redirect(
@@ -247,8 +306,12 @@ exports.handleGoogleCallback = async (req, res) => {
   }
 };
 
-// GET /login/logout - Sign out user
+/**
+ * Logout controller:
+ * Clears the token cookie and redirects to /login.
+ */
 exports.logout = (req, res) => {
+  res.clearCookie("token");
   if (req.session) {
     req.session.destroy((err) => {
       if (err) console.error("Session destroy error:", err);

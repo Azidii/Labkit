@@ -10,27 +10,11 @@ router.get("/settings", dashboardController.renderSettings);
 router.post("/settings/username", dashboardController.updateUsername);
 router.post("/settings/change-password", dashboardController.changePassword);
 
-router.get("/about", (req, res) => {
-  res.render("about");
-});
+// About & How It Works aliases
+router.get("/about", (req, res) => res.render("about"));
+router.get("/how-it-works", (req, res) => res.render("about"));
 
-router.get("/how-it-works", (req, res) => {
-  res.render("about");
-});
-
-router.get("/settings", (req, res) => {
-  res.render("settings");
-});
-
-router.get("/admin", (req, res) => {
-  res.redirect("/settings");
-});
-
-router.get("/logout", (req, res) => {
-  res.redirect("/login");
-});
-// Admin shortcut & Logout
-router.get("/admin", dashboardController.redirectAdmin);
+// Logout
 router.get("/logout", dashboardController.logout);
 
 module.exports = router;

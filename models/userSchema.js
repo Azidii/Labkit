@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-/**
- * Enumeration: Role
- * Values: 'customer', 'admin'
- */
-const ROLE_ENUM = ["customer", "admin", "user"];
 
 const userSchema = new mongoose.Schema(
   {
@@ -41,12 +36,8 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: {
-        values: ROLE_ENUM,
-        message: "{VALUE} is not a valid role. Allowed: customer, admin"
-      },
-      default: "customer",
-      lowercase: true
+      enum: ["customer", "admin"],
+      default: "customer"
     },
 
     resetPasswordCode: {

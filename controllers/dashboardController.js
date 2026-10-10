@@ -221,6 +221,7 @@ exports.redirectAdmin = (req, res) => {
 
 // GET /logout - Sign out user and destroy session
 exports.logout = (req, res) => {
+  res.clearCookie("token");
   if (req.session) {
     req.session.destroy((err) => {
       if (err) console.error("Error destroying session:", err);

@@ -4,7 +4,7 @@ const loginController = require("../controllers/loginController");
 
 // Login page & credentials authentication
 router.get("/", loginController.renderLogin);
-router.post("/", loginController.login);
+router.post("/", loginController.processLogin);
 
 // Google OAuth authentication
 router.get("/google", loginController.startGoogleAuth);
