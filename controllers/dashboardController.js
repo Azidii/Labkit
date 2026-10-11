@@ -1,101 +1,70 @@
 const User = require("../models/userSchema");
+const Item = require("../models/itemSchema");
+const Kit = require("../models/kitsSchema");
 
 async function getFeaturedProducts() {
-  const featured = [
-    {
-      id: "2",
-      slug: "esp32-devkit-v1-wroom32",
-      name: "ESP32 DevKit V1 (WROOM-32)",
-      tagline: "Dual-core WiFi + Bluetooth dev board",
-      price: 12.5,
-      compare_at_price: null,
-      category: "Microcontrollers",
-      difficulty: "Intermediate",
-      image_url: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
-      rating: 4.8,
-      review_count: 214
-    },
-    {
-      id: "7",
-      slug: "ky-038-microphone-sound-sensor",
-      name: "KY-038 Microphone Sound Sensor Module",
-      tagline: "High-sensitivity voice & acoustic detection for IoT triggers",
-      price: 2.4,
-      compare_at_price: null,
-      category: "Sensors & Modules",
-      difficulty: "Beginner",
-      image_url: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600",
-      rating: 4.8,
-      review_count: 142
-    },
-    {
-      id: "8",
-      slug: "jumper-wires-40pin-mf",
-      name: "40-Pin Breadboard Jumper Wires (M/F)",
-      tagline: "20cm multi-color ribbon cables for breadboard prototyping",
-      price: 1.95,
-      compare_at_price: null,
-      category: "Sensors & Modules",
-      difficulty: "Beginner",
-      image_url: "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=600",
-      rating: 4.9,
-      review_count: 360
-    },
-    {
-      id: "9",
-      slug: "resistor-pack-100pcs",
-      name: "Metal Film Resistor Assortment (100 pcs)",
-      tagline: "10Ω to 1MΩ 1/4W precision resistors (220Ω, 1kΩ, 10kΩ included)",
-      price: 2.2,
-      compare_at_price: null,
-      category: "Displays & Power",
-      difficulty: "Beginner",
-      image_url: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=600",
-      rating: 4.9,
-      review_count: 420
-    },
-    {
-      id: "10",
-      slug: "active-piezo-buzzer-5v",
-      name: "5V Active Buzzer Module",
-      tagline: "Continuous audible alert & tone notification module",
-      price: 1.2,
-      compare_at_price: null,
-      category: "Buzzers & Audio",
-      difficulty: "Beginner",
-      image_url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600",
-      rating: 4.7,
-      review_count: 195
-    },
-    {
-      id: "3",
-      slug: "hc-sr04-ultrasonic-sensor",
-      name: "HC-SR04 Ultrasonic Sensor",
-      tagline: "2–400 cm distance sensing, 4-pin module",
-      price: 3.25,
-      compare_at_price: null,
-      category: "Sensors & Modules",
-      difficulty: "Beginner",
-      image_url: "https://images.unsplash.com/photo-1553406830-ef2513450d76?w=600",
-      rating: 4.7,
-      review_count: 312
+  try {
+    const databaseItems = await Item.find({
+      $or: [
+        { stockQuantity: { $gt: 0 } },
+        { stock_quantity: { $gt: 0 } },
+        { in_stock: true }
+      ]
+    })
+      .sort({ createdAt: -1 })
+      .limit(6)
+      .lean();
+
+    const featuredItems = databaseItems.map((item) => ({
+      ...item,
+      id: String(item._id),
+      slug: item.slug || String(item._id),
+      name: item.name,
+      tagline: item.tagline || (item.description ? item.description.slice(0, 80) : ""),
+      description: item.description,
+      price: Number(item.price) || 0,
+      compare_at_price: item.compare_at_price ? Number(item.compare_at_price) : null,
+      category: item.category || "Sensors & Modules",
+      difficulty: item.difficulty || "Beginner",
+      image_url: item.imageUrl || item.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
+      rating: item.rating || 5.0,
+      review_count: item.review_count || 0,
+      in_stock: item.stockQuantity !== undefined ? item.stockQuantity > 0 : true,
+      maxPurchaseQuantity: item.maxPurchaseQuantity || 10
+    }));
+
+    if (featuredItems.length < 6) {
+      const databaseKits = await Kit.find({ in_stock: true, stock_quantity: { $gt: 0 } })
+        .sort({ createdAt: -1 })
+        .limit(6 - featuredItems.length)
+        .lean();
+
+      const featuredKits = databaseKits.map((kit) => ({
+        ...kit,
+        id: String(kit._id),
+        slug: kit.slug || String(kit._id),
+        name: kit.name,
+        tagline: kit.tagline || (kit.description ? kit.description.slice(0, 80) : ""),
+        image_url: kit.image_url || kit.imageUrl || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
+        rating: kit.rating || 5.0,
+        review_count: kit.review_count || 0,
+        maxPurchaseQuantity: kit.maxPurchaseQuantity || 10
+      }));
+
+      return featuredItems.concat(featuredKits);
     }
-  ];
-  const prices = {
-    "esp32-devkit-v1-wroom32": 350,
-    "ky-038-microphone-sound-sensor": 65,
-    "jumper-wires-40pin-mf": 45,
-    "resistor-pack-100pcs": 85,
-    "active-piezo-buzzer-5v": 20,
-    "hc-sr04-ultrasonic-sensor": 85
-  };
-  return featured.map((product) => ({ ...product, price: prices[product.slug] || product.price }));
+
+    return featuredItems;
+  } catch (err) {
+    console.error("Dashboard getFeaturedProducts error:", err);
+    return [];
+  }
 }
 
 // GET / - Dashboard home
 exports.renderDashboard = async (req, res) => {
   const featured = await getFeaturedProducts();
-  const currentUser = (req.session && req.session.user) || res.locals.currentUser || null;
+  const currentUser = (req.session && req.session.user) || (res.locals && res.locals.currentUser) || null;
   res.render("dashboard", { featured, loading: false, currentUser });
 };
 
