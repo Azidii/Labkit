@@ -623,14 +623,14 @@
         "Davao de Oro (formerly Compostela Valley)": "Davao de Oro"
       };
 
-      const loadLocalities = () => {
-        if (!localityDataPromise) {
-          localityDataPromise = fetch("/data/philippine-localities.json").then((response) => {
-            if (!response.ok) throw new Error(`PSGC request failed with status ${response.status}`);
-            return response.json();
-          });
-        }
-        return localityDataPromise;
+      const loadLocalities = (provinceName) => {
+        const url = provinceName
+          ? `/checkout/localities?province=${encodeURIComponent(provinceName)}`
+          : `/checkout/localities`;
+        return fetch(url).then((response) => {
+          if (!response.ok) throw new Error(`PSGC request failed with status ${response.status}`);
+          return response.json();
+        });
       };
 
       const setCityOptions = (provinceName, localities) => {
@@ -683,12 +683,11 @@
         if (!provinceName) return;
 
         try {
-          const localities = await loadLocalities();
+          const localities = await loadLocalities(provinceName);
           if (requestId !== localityRequestId) return;
-          const canonicalProvinceName = provinceAliases[provinceName] || provinceName;
           const provinceLocalities = localities
-            .filter((item) => item.province.trim().toLowerCase() === canonicalProvinceName.trim().toLowerCase())
-            .map((item) => ({ name: item.locality.trim() }))
+            .map((item) => ({ name: (item.name || item.locality || "").trim() }))
+            .filter((item) => item.name)
             .filter((item, index, items) => items.findIndex((candidate) => candidate.name.toLowerCase() === item.name.toLowerCase()) === index)
             .sort((a, b) => a.name.localeCompare(b.name));
           setCityOptions(provinceName, provinceLocalities);

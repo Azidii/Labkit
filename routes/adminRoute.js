@@ -4,6 +4,9 @@ const adminController = require("../controllers/adminController");
 const { requireAdmin } = require("../utils/authMiddleware");
 const { handleItemImageUpload } = require("../utils/uploadMiddleware");
 
+// Server-side Philippine localities endpoint (admin methods)
+router.get("/localities", adminController.getLocalities);
+
 // All admin routes are protected by JWT token and session verification
 router.use(requireAdmin);
 

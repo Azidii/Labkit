@@ -1,7 +1,30 @@
+const path = require("path");
+const fs = require("fs");
 const Item = require("../models/itemSchema");
 const Kit = require("../models/kitsSchema");
 const User = require("../models/userSchema");
 const { requireAdmin } = require("../utils/authMiddleware");
+
+// In-memory cache for server-side Philippine localities
+let philippineLocalitiesCache = null;
+
+function getPhilippineLocalitiesData() {
+  if (!philippineLocalitiesCache) {
+    try {
+      const dataPath = path.join(__dirname, "../data/philippine-localities.json");
+      if (fs.existsSync(dataPath)) {
+        const raw = fs.readFileSync(dataPath, "utf8");
+        philippineLocalitiesCache = JSON.parse(raw);
+      } else {
+        philippineLocalitiesCache = [];
+      }
+    } catch (err) {
+      console.error("Failed to load philippine-localities.json:", err.message);
+      philippineLocalitiesCache = [];
+    }
+  }
+  return philippineLocalitiesCache;
+}
 
 function parseComponents(rawComponents) {
   if (!rawComponents || !rawComponents.trim()) return [];
@@ -395,5 +418,46 @@ exports.updateItem = async (req, res) => {
 };
 
 exports.updateKit = exports.updateItem;
+
+/**
+ * Server-side method to retrieve Philippine localities
+ * Supports filtering by province (?province=Cebu) to keep client payloads lightweight
+ */
+exports.getLocalities = (req, res) => {
+  const localities = getPhilippineLocalitiesData();
+  const rawProvince = (req.query.province || "").trim();
+
+  if (!rawProvince) {
+    return res.json(localities);
+  }
+
+  const provinceAliases = {
+    "samar (formerly western samar)": "samar",
+    "cotabato (formerly north cotabato)": "cotabato",
+    "davao de oro (formerly compostela valley)": "davao de oro"
+  };
+
+  const normalizedQuery = rawProvince.toLowerCase();
+  const canonical = provinceAliases[normalizedQuery] || normalizedQuery;
+
+  const filtered = localities
+    .filter((item) => {
+      const p = (item.province || "").trim().toLowerCase();
+      return p === normalizedQuery || p === canonical;
+    })
+    .map((item) => ({
+      province: item.province.trim(),
+      locality: item.locality.trim(),
+      name: item.locality.trim()
+    }))
+    .filter((item, index, items) => items.findIndex((cand) => cand.name.toLowerCase() === item.name.toLowerCase()) === index)
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  return res.json(filtered);
+};
+
+exports.getPhilippineLocalities = exports.getLocalities;
+exports.getPhilippineLocalitiesData = getPhilippineLocalitiesData;
+
 
 
