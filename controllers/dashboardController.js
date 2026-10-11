@@ -1,7 +1,7 @@
 const User = require("../models/userSchema");
 
 async function getFeaturedProducts() {
-  return [
+  const featured = [
     {
       id: "2",
       slug: "esp32-devkit-v1-wroom32",
@@ -81,6 +81,15 @@ async function getFeaturedProducts() {
       review_count: 312
     }
   ];
+  const prices = {
+    "esp32-devkit-v1-wroom32": 350,
+    "ky-038-microphone-sound-sensor": 65,
+    "jumper-wires-40pin-mf": 45,
+    "resistor-pack-100pcs": 85,
+    "active-piezo-buzzer-5v": 20,
+    "hc-sr04-ultrasonic-sensor": 85
+  };
+  return featured.map((product) => ({ ...product, price: prices[product.slug] || product.price }));
 }
 
 // GET / - Dashboard home

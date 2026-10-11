@@ -8,7 +8,9 @@
   <meta name="description"
     content="A marketplace for engineering students and hobbyists. Individual electronic parts sold as single units — buzzers, sensors, boards, motors and more." />
   <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/navbar.css" />
   <link rel="stylesheet" href="/css/cart.css" />
+  <link rel="stylesheet" href="/css/navbar-search.css" />
   <script src="/js/theme.js"></script>
   <script src="/js/page-transitions.js"></script>
 </head>
@@ -47,13 +49,18 @@
       </nav>
 
       <div class="navbar__actions">
-        <button type="button" class="navbar__icon-btn" aria-label="Search">
+        <div class="navbar-search">
+        <button type="button" class="navbar__icon-btn navbar-search__toggle" aria-label="Search" aria-expanded="false">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
         </button>
+        <form class="navbar-search__form" action="/shop" method="get" role="search">
+          <input class="navbar-search__input" name="q" type="search" placeholder="Search products..." aria-label="Search products" />
+        </form>
+        </div>
 
         <button type="button" class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -284,7 +291,7 @@
                         </span>
                       </div>
                       <div class="product-card__footer">
-                        <span class="product-card__price">$<%= p.price.toFixed(2) %></span>
+                        <span class="product-card__price">₱<%= p.price.toFixed(2) %></span>
                         <button type="button" class="product-card__add-btn js-add-to-cart"
                           data-id="<%= p.id %>"
                           data-name="<%= (p.name || '').replace(/["']/g, '') %>"
@@ -521,7 +528,7 @@
     <div class="cart-drawer__footer" id="cartDrawerFooter">
       <div class="cart-drawer__subtotal">
         <span>Subtotal</span>
-        <strong id="cartSubtotal">$0.00</strong>
+        <strong id="cartSubtotal">₱0.00</strong>
       </div>
       <div class="cart-drawer__notice">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
@@ -534,7 +541,7 @@
         <span>Every part ships with datasheets and pinout diagrams.</span>
       </div>
       <a href="/checkout" class="btn-checkout" id="checkoutBtn">
-        Checkout · <span id="checkoutTotal">$0.00</span>
+        Checkout · <span id="checkoutTotal">₱0.00</span>
       </a>
     </div>
   </aside>
@@ -582,6 +589,7 @@
   </footer>
 
   <script src="/js/cart.js"></script>
+  <script src="/js/navbar-search.js"></script>
   <script src="/js/dashboard.js"></script>
 </body>
 
