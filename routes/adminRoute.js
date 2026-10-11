@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/adminController");
 const { requireAdmin } = require("../utils/authMiddleware");
+const { handleItemImageUpload } = require("../utils/uploadMiddleware");
 
 // All admin routes are protected by JWT token and session verification
 router.use(requireAdmin);
@@ -10,7 +11,14 @@ router.use(requireAdmin);
 router.get("/", adminController.renderAdmin);
 router.get("/dashboard", adminController.renderAdmin);
 router.get("/admin-dashboard", (req, res) => res.redirect("/admin"));
-router.post("/bundles", adminController.createKit);
+router.post("/items", handleItemImageUpload, adminController.createItem);
+router.post("/items/:itemId/edit", handleItemImageUpload, adminController.updateItem);
+router.post("/items/:itemId/delete", adminController.removeItem);
+router.post("/bundles", handleItemImageUpload, adminController.createItem);
+router.post("/bundles/:bundleId/edit", handleItemImageUpload, adminController.updateItem);
+router.post("/bundles/:bundleId/delete", adminController.removeBundle);
 router.post("/accounts/:userId/delete", adminController.removeUser);
 
 module.exports = router;
+
+
