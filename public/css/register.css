@@ -261,6 +261,13 @@ a {
   color: hsl(var(--muted-foreground));
 }
 
+.copyright-footer {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+
 .auth-link {
   color: hsl(var(--foreground));
   font-weight: 600;
@@ -349,4 +356,3 @@ a {
   color: hsl(142 70% 65%);
   border-color: hsl(142 76% 36% / 0.35);
 }
-
