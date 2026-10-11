@@ -97,6 +97,10 @@ const successAuthRoute = require('./routes/successAuthRoute');
 const adminRoute = require('./routes/adminRoute');
 const cartRoute = require('./routes/cartRoute');
 
+const adminController = require('./controllers/adminController');
+app.get('/api/localities', adminController.getLocalities);
+app.get('/data/philippine-localities.json', adminController.getLocalities);
+
 app.use('/about', aboutRoute);
 app.use('/how-it-works', aboutRoute);
 app.use('/login', loginRoute);
