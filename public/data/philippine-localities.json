@@ -1,0 +1,6570 @@
+[
+    {
+        "province":  "Abra",
+        "locality":  "Bangued"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Boliney"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Bucay"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Bucloc"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Daguioman"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Danglas"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Dolores"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "La Paz"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Lacub"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Lagangilang"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Lagayan"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Langiden"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Licuan-Baay"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Luba"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Malibcong"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Manabo"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Peñarrubia"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Pidigan"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Pilar"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Sallapadan"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "San Isidro"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "San Juan"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "San Quintin"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Tayum"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Tineg"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Tubo"
+    },
+    {
+        "province":  "Abra",
+        "locality":  "Villaviciosa"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Buenavista"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Butuan"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Cabadbaran"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Carmen"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Jabonga"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Kitcharao"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Las Nieves"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Magallanes"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Nasipit"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Remedios T. Romualdez"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Santiago"
+    },
+    {
+        "province":  "Agusan del Norte",
+        "locality":  "Tubay"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Bayugan"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Bunawan"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Esperanza"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "La Paz"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Loreto"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Prosperidad"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Rosario"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "San Francisco"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "San Luis"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Santa Josefa"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Sibagat"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Talacogon"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Trento"
+    },
+    {
+        "province":  "Agusan del Sur",
+        "locality":  "Veruela"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Altavas"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Balete"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Banga"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Batan"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Buruanga"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Ibajay"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Kalibo"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Lezo"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Libacao"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Madalag"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Makato"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Malay"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Malinao"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Nabas"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "New Washington"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Numancia"
+    },
+    {
+        "province":  "Aklan",
+        "locality":  "Tangalan"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Bacacay"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Camalig"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Daraga"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Guinobatan"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Jovellar"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Legazpi"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Libon"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Ligao"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Malilipot"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Malinao"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Manito"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Oas"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Pio Duran"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Polangui"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Rapu-Rapu"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Santo Domingo"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Tabaco"
+    },
+    {
+        "province":  "Albay",
+        "locality":  "Tiwi"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Anini-y"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Barbaza"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Belison"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Bugasong"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Caluya"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Culasi"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Hamtic"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Laua-an"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Libertad"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Pandan"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Patnongon"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "San Jose de Buenavista"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "San Remigio"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Sebaste"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Sibalom"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Tibiao"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Tobias Fornier"
+    },
+    {
+        "province":  "Antique",
+        "locality":  "Valderrama"
+    },
+    {
+        "province":  "Apayao",
+        "locality":  "Calanasan"
+    },
+    {
+        "province":  "Apayao",
+        "locality":  "Conner"
+    },
+    {
+        "province":  "Apayao",
+        "locality":  "Flora"
+    },
+    {
+        "province":  "Apayao",
+        "locality":  "Kabugao"
+    },
+    {
+        "province":  "Apayao",
+        "locality":  "Luna"
+    },
+    {
+        "province":  "Apayao",
+        "locality":  "Pudtol"
+    },
+    {
+        "province":  "Apayao",
+        "locality":  "Santa Marcela"
+    },
+    {
+        "province":  "Aurora",
+        "locality":  "Baler"
+    },
+    {
+        "province":  "Aurora",
+        "locality":  "Casiguran"
+    },
+    {
+        "province":  "Aurora",
+        "locality":  "Dilasag"
+    },
+    {
+        "province":  "Aurora",
+        "locality":  "Dinalungan"
+    },
+    {
+        "province":  "Aurora",
+        "locality":  "Dingalan"
+    },
+    {
+        "province":  "Aurora",
+        "locality":  "Dipaculao"
+    },
+    {
+        "province":  "Aurora",
+        "locality":  "Maria Aurora"
+    },
+    {
+        "province":  "Aurora",
+        "locality":  "San Luis"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Akbar"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Al-Barka"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Hadji Mohammad Ajul"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Hadji Muhtamad"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Isabela City"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Lamitan"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Lantawan"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Maluso"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Sumisip"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Tabuan-Lasa"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Tipo-Tipo"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Tuburan"
+    },
+    {
+        "province":  "Basilan",
+        "locality":  "Ungkaya Pukan"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Abucay"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Bagac"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Balanga"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Dinalupihan"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Hermosa"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Limay"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Mariveles"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Morong"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Orani"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Orion"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Pilar"
+    },
+    {
+        "province":  "Bataan",
+        "locality":  "Samal"
+    },
+    {
+        "province":  "Batanes",
+        "locality":  "Basco"
+    },
+    {
+        "province":  "Batanes",
+        "locality":  "Itbayat"
+    },
+    {
+        "province":  "Batanes",
+        "locality":  "Ivana"
+    },
+    {
+        "province":  "Batanes",
+        "locality":  "Mahatao"
+    },
+    {
+        "province":  "Batanes",
+        "locality":  "Sabtang"
+    },
+    {
+        "province":  "Batanes",
+        "locality":  "Uyugan"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Agoncillo"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Alitagtag"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Balayan"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Balete"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Batangas City"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Bauan"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Calaca"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Calatagan"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Cuenca"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Ibaan"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Laurel"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Lemery"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Lian"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Lipa"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Lobo"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Mabini"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Malvar"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Mataasnakahoy"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Nasugbu"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Padre Garcia"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Rosario"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "San Jose"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "San Juan"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "San Luis"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "San Nicolas"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "San Pascual"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Santa Teresita"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Santo Tomas"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Taal"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Talisay"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Tanauan"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Taysan"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Tingloy"
+    },
+    {
+        "province":  "Batangas",
+        "locality":  "Tuy"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Atok"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Baguio"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Bakun"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Bokod"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Buguias"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Itogon"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Kabayan"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Kapangan"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Kibungan"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "La Trinidad"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Mankayan"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Sablan"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Tuba"
+    },
+    {
+        "province":  "Benguet",
+        "locality":  "Tublay"
+    },
+    {
+        "province":  "Biliran",
+        "locality":  "Almeria"
+    },
+    {
+        "province":  "Biliran",
+        "locality":  "Biliran"
+    },
+    {
+        "province":  "Biliran",
+        "locality":  "Cabucgayan"
+    },
+    {
+        "province":  "Biliran",
+        "locality":  "Caibiran"
+    },
+    {
+        "province":  "Biliran",
+        "locality":  "Culaba"
+    },
+    {
+        "province":  "Biliran",
+        "locality":  "Kawayan"
+    },
+    {
+        "province":  "Biliran",
+        "locality":  "Maripipi"
+    },
+    {
+        "province":  "Biliran",
+        "locality":  "Naval"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Alburquerque"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Alicia"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Anda"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Antequera"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Baclayon"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Balilihan"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Batuan"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Bien Unido"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Bilar"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Buenavista"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Calape"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Candijay"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Carmen"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Catigbian"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Clarin"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Corella"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Cortes"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Dagohoy"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Danao"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Dauis"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Dimiao"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Duero"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Garcia Hernandez"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Getafe"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Guindulman"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Inabanga"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Jagna"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Lila"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Loay"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Loboc"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Loon"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Mabini"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Maribojoc"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Panglao"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Pilar"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "President Carlos P. Garcia"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Sagbayan"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "San Isidro"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "San Miguel"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Sevilla"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Sierra Bullones"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Sikatuna"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Tagbilaran"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Talibon"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Trinidad"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Tubigon"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Ubay"
+    },
+    {
+        "province":  "Bohol",
+        "locality":  "Valencia"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Baungon"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Cabanglasan"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Damulog"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Dangcagan"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Don Carlos"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Impasugong"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Kadingilan"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Kalilangan"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Kibawe"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Kitaotao"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Lantapan"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Libona"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Malaybalay"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Malitbog"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Manolo Fortich"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Maramag"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Pangantucan"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Quezon"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "San Fernando"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Sumilao"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Talakag"
+    },
+    {
+        "province":  "Bukidnon",
+        "locality":  "Valencia"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Angat"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Balagtas"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Baliwag"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Bocaue"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Bulakan"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Bustos"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Calumpit"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Doña Remedios Trinidad"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Guiguinto"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Hagonoy"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Malolos"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Marilao"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Meycauayan"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Norzagaray"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Obando"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Pandi"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Paombong"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Plaridel"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Pulilan"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "San Ildefonso"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "San Jose del Monte"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "San Miguel"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "San Rafael"
+    },
+    {
+        "province":  "Bulacan",
+        "locality":  "Santa Maria"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Abulug"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Alcala"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Allacapan"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Amulung"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Aparri"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Baggao"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Ballesteros"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Buguey"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Calayan"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Camalaniugan"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Claveria"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Enrile"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Gattaran"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Gonzaga"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Iguig"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Lal-lo"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Lasam"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Pamplona"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Peñablanca"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Piat"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Rizal"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Sanchez-Mira"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Santa Ana"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Santa Praxedes"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Santa Teresita"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Santo Niño"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Solana"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Tuao"
+    },
+    {
+        "province":  "Cagayan",
+        "locality":  "Tuguegarao"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Basud"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Capalonga"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Daet"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Jose Panganiban"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Labo"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Mercedes"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Paracale"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "San Lorenzo Ruiz"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "San Vicente"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Santa Elena"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Talisay"
+    },
+    {
+        "province":  "Camarines Norte",
+        "locality":  "Vinzons"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Baao"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Balatan"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Bato"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Bombon"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Buhi"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Bula"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Cabusao"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Calabanga"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Camaligan"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Canaman"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Caramoan"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Del Gallego"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Gainza"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Garchitorena"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Goa"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Iriga"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Lagonoy"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Libmanan"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Lupi"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Magarao"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Milaor"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Minalabac"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Nabua"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Naga"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Ocampo"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Pamplona"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Pasacao"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Pili"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Presentacion"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Ragay"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Sagñay"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "San Fernando"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "San Jose"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Sipocot"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Siruma"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Tigaon"
+    },
+    {
+        "province":  "Camarines Sur",
+        "locality":  "Tinambac"
+    },
+    {
+        "province":  "Camiguin",
+        "locality":  "Catarman"
+    },
+    {
+        "province":  "Camiguin",
+        "locality":  "Guinsiliban"
+    },
+    {
+        "province":  "Camiguin",
+        "locality":  "Mahinog"
+    },
+    {
+        "province":  "Camiguin",
+        "locality":  "Mambajao"
+    },
+    {
+        "province":  "Camiguin",
+        "locality":  "Sagay"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Cuartero"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Dao"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Dumalag"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Dumarao"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Ivisan"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Jamindan"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Ma-ayon"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Mambusao"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Panay"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Panitan"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Pilar"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Pontevedra"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "President Roxas"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Roxas City"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Sapian"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Sigma"
+    },
+    {
+        "province":  "Capiz",
+        "locality":  "Tapaz"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "Bagamanoc"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "Baras"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "Bato"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "Caramoran"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "Gigmoto"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "Pandan"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "Panganiban"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "San Andres"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "San Miguel"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "Viga"
+    },
+    {
+        "province":  "Catanduanes",
+        "locality":  "Virac"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Alfonso"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Amadeo"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Bacoor"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Carmona"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Cavite City"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Dasmariñas"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "General Emilio Aguinaldo"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "General Mariano Alvarez"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "General Trias"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Imus"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Indang"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Kawit"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Magallanes"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Maragondon"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Mendez"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Naic"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Noveleta"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Rosario"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Silang"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Tagaytay"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Tanza"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Ternate"
+    },
+    {
+        "province":  "Cavite",
+        "locality":  "Trece Martires"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Alcantara"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Alcoy"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Alegria"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Aloguinsan"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Argao"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Asturias"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Badian"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Balamban"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Bantayan"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Barili"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Bogo"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Boljoon"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Borbon"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Carcar"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Carmen"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Catmon"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Cebu City"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Compostela"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Consolacion"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Cordova"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Daanbantayan"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Dalaguete"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Danao"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Dumanjug"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Ginatilan"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Lapu-Lapu"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Liloan"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Madridejos"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Malabuyoc"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Mandaue"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Medellin"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Minglanilla"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Moalboal"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Naga"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Oslob"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Pilar"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Pinamungajan"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Poro"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Ronda"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Samboan"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "San Fernando"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "San Francisco"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "San Remigio"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Santa Fe"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Santander"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Sibonga"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Sogod"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Tabogon"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Tabuelan"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Talisay"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Toledo"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Tuburan"
+    },
+    {
+        "province":  "Cebu",
+        "locality":  "Tudela"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Alamada"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Aleosan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Antipas"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Arakan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Banisilan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Carmen"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Kabacan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Kadayangan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Kapalawan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Kidapawan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Libungan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Ligawasan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "M\u0027lang"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Magpet"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Makilala"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Malidegao"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Matalam"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Midsayap"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Nabalawag"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Old Kaabakan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Pahamuddin"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Pigcawayan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Pikit"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "President Roxas"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Tugunan"
+    },
+    {
+        "province":  "Cotabato",
+        "locality":  "Tulunan"
+    },
+    {
+        "province":  "Davao Occidental",
+        "locality":  "Don Marcelino"
+    },
+    {
+        "province":  "Davao Occidental",
+        "locality":  "Jose Abad Santos"
+    },
+    {
+        "province":  "Davao Occidental",
+        "locality":  "Malita"
+    },
+    {
+        "province":  "Davao Occidental",
+        "locality":  "Santa Maria"
+    },
+    {
+        "province":  "Davao Occidental",
+        "locality":  "Sarangani"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Baganga"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Banaybanay"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Boston"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Caraga"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Cateel"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Governor Generoso"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Lupon"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Manay"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Mati"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "San Isidro"
+    },
+    {
+        "province":  "Davao Oriental",
+        "locality":  "Tarragona"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Compostela"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Laak"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Mabini"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Maco"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Maragusan"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Mawab"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Monkayo"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Montevista"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Nabunturan"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "New Bataan"
+    },
+    {
+        "province":  "Davao de Oro",
+        "locality":  "Pantukan"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Asuncion"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Braulio E. Dujali"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Carmen"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Kapalong"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "New Corella"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Panabo"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Samal"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Santo Tomas"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Sawata"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Tagum"
+    },
+    {
+        "province":  "Davao del Norte",
+        "locality":  "Talaingod"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Bansalan"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Davao City"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Digos"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Hagonoy"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Kiblawan"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Magsaysay"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Malalag"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Matanao"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Padada"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Santa Cruz"
+    },
+    {
+        "province":  "Davao del Sur",
+        "locality":  "Sulop"
+    },
+    {
+        "province":  "Dinagat Islands",
+        "locality":  "Basilisa"
+    },
+    {
+        "province":  "Dinagat Islands",
+        "locality":  "Cagdianao"
+    },
+    {
+        "province":  "Dinagat Islands",
+        "locality":  "Dinagat"
+    },
+    {
+        "province":  "Dinagat Islands",
+        "locality":  "Libjo"
+    },
+    {
+        "province":  "Dinagat Islands",
+        "locality":  "Loreto"
+    },
+    {
+        "province":  "Dinagat Islands",
+        "locality":  "San Jose"
+    },
+    {
+        "province":  "Dinagat Islands",
+        "locality":  "Tubajon"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Arteche"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Balangiga"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Balangkayan"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Borongan"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Can-avid"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Dolores"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "General MacArthur"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Giporlos"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Guiuan"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Hernani"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Jipapad"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Lawaan"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Llorente"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Maslog"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Maydolong"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Mercedes"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Oras"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Quinapondan"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Salcedo"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "San Julian"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "San Policarpo"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Sulat"
+    },
+    {
+        "province":  "Eastern Samar",
+        "locality":  "Taft"
+    },
+    {
+        "province":  "Guimaras",
+        "locality":  "Buenavista"
+    },
+    {
+        "province":  "Guimaras",
+        "locality":  "Jordan"
+    },
+    {
+        "province":  "Guimaras",
+        "locality":  "Nueva Valencia"
+    },
+    {
+        "province":  "Guimaras",
+        "locality":  "San Lorenzo"
+    },
+    {
+        "province":  "Guimaras",
+        "locality":  "Sibunag"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Aguinaldo"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Alfonso Lista"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Asipulo"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Banaue"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Hingyon"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Hungduan"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Kiangan"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Lagawe"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Lamut"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Mayoyao"
+    },
+    {
+        "province":  "Ifugao",
+        "locality":  "Tinoc"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Adams"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Bacarra"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Badoc"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Bangui"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Banna"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Batac"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Burgos"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Carasi"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Currimao"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Dingras"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Dumalneg"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Laoag"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Marcos"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Nueva Era"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Pagudpud"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Paoay"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Pasuquin"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Piddig"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Pinili"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "San Nicolas"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Sarrat"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Solsona"
+    },
+    {
+        "province":  "Ilocos Norte",
+        "locality":  "Vintar"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Alilem"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Banayoyo"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Bantay"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Burgos"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Cabugao"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Candon"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Caoayan"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Cervantes"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Galimuyod"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Gregorio del Pilar"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Lidlidda"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Magsingal"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Nagbukel"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Narvacan"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Quirino"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Salcedo"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "San Emilio"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "San Esteban"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "San Ildefonso"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "San Juan"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "San Vicente"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Santa"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Santa Catalina"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Santa Cruz"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Santa Lucia"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Santa Maria"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Santiago"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Santo Domingo"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Sigay"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Sinait"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Sugpon"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Suyo"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Tagudin"
+    },
+    {
+        "province":  "Ilocos Sur",
+        "locality":  "Vigan"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Ajuy"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Alimodian"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Anilao"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Badiangan"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Balasan"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Banate"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Barotac Nuevo"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Barotac Viejo"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Batad"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Bingawan"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Cabatuan"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Calinog"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Carles"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Concepcion"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Dingle"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Dueñas"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Dumangas"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Estancia"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Guimbal"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Igbaras"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Iloilo City"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Janiuay"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Lambunao"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Leganes"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Lemery"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Leon"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Maasin"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Miagao"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Mina"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "New Lucena"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Oton"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Passi"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Pavia"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Pototan"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "San Dionisio"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "San Enrique"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "San Joaquin"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "San Miguel"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "San Rafael"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Santa Barbara"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Sara"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Tigbauan"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Tubungan"
+    },
+    {
+        "province":  "Iloilo",
+        "locality":  "Zarraga"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Alicia"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Angadanan"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Aurora"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Benito Soliven"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Burgos"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Cabagan"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Cabatuan"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Cauayan"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Cordon"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Delfin Albano"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Dinapigue"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Divilacan"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Echague"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Gamu"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Ilagan"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Jones"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Luna"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Maconacon"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Mallig"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Naguilian"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Palanan"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Quezon"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Quirino"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Ramon"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Reina Mercedes"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Roxas"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "San Agustin"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "San Guillermo"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "San Isidro"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "San Manuel"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "San Mariano"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "San Mateo"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "San Pablo"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Santa Maria"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Santiago"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Santo Tomas"
+    },
+    {
+        "province":  "Isabela",
+        "locality":  "Tumauini"
+    },
+    {
+        "province":  "Kalinga",
+        "locality":  "Balbalan"
+    },
+    {
+        "province":  "Kalinga",
+        "locality":  "Lubuagan"
+    },
+    {
+        "province":  "Kalinga",
+        "locality":  "Pasil"
+    },
+    {
+        "province":  "Kalinga",
+        "locality":  "Pinukpuk"
+    },
+    {
+        "province":  "Kalinga",
+        "locality":  "Rizal"
+    },
+    {
+        "province":  "Kalinga",
+        "locality":  "Tabuk"
+    },
+    {
+        "province":  "Kalinga",
+        "locality":  "Tanudan"
+    },
+    {
+        "province":  "Kalinga",
+        "locality":  "Tinglayan"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Agoo"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Aringay"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Bacnotan"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Bagulin"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Balaoan"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Bangar"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Bauang"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Burgos"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Caba"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Luna"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Naguilian"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Pugo"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Rosario"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "San Fernando"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "San Gabriel"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "San Juan"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Santo Tomas"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Santol"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Sudipen"
+    },
+    {
+        "province":  "La Union",
+        "locality":  "Tubao"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Alaminos"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Bay"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Biñan"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Cabuyao"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Calamba"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Calauan"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Cavinti"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Famy"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Kalayaan"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Liliw"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Los Baños"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Luisiana"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Lumban"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Mabitac"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Magdalena"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Majayjay"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Nagcarlan"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Paete"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Pagsanjan"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Pakil"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Pangil"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Pila"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Rizal"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "San Pablo"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "San Pedro"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Santa Cruz"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Santa Maria"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Santa Rosa"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Siniloan"
+    },
+    {
+        "province":  "Laguna",
+        "locality":  "Victoria"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Bacolod"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Balo-i"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Baroy"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Iligan"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Kapatagan"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Kauswagan"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Kolambugan"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Lala"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Linamon"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Magsaysay"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Maigo"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Matungao"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Munai"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Nunungan"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Pantao Ragat"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Pantar"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Poona Piagapo"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Salvador"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Sapad"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Sultan Naga Dimaporo"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Tagoloan"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Tangcal"
+    },
+    {
+        "province":  "Lanao del Norte",
+        "locality":  "Tubod"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Amai Manabilang"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Bacolod-Kalawi"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Balabagan"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Balindong"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Bayang"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Binidayan"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Buadiposo-Buntong"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Bubong"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Butig"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Calanogas"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Ditsaan-Ramain"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Ganassi"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Kapai"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Kapatagan"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Lumba-Bayabao"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Lumbaca-Unayan"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Lumbatan"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Lumbayanague"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Madalum"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Madamba"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Maguing"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Malabang"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Marantao"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Marawi"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Marogong"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Masiu"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Mulondo"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Pagayawan"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Piagapo"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Picong"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Poona Bayabao"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Pualas"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Saguiaran"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Sultan Dumalondong"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Tagoloan II"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Tamparan"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Taraka"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Tubaran"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Tugaya"
+    },
+    {
+        "province":  "Lanao del Sur",
+        "locality":  "Wao"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Abuyog"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Alangalang"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Albuera"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Babatngon"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Barugo"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Bato"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Baybay"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Burauen"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Calubian"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Capoocan"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Carigara"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Dagami"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Dulag"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Hilongos"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Hindang"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Inopacan"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Isabel"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Jaro"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Javier"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Julita"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Kananga"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "La Paz"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Leyte"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "MacArthur"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Mahaplag"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Matag-ob"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Matalom"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Mayorga"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Merida"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Ormoc"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Palo"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Palompon"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Pastrana"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "San Isidro"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "San Miguel"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Santa Fe"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Tabango"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Tabontabon"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Tacloban"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Tanauan"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Tolosa"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Tunga"
+    },
+    {
+        "province":  "Leyte",
+        "locality":  "Villaba"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Barira"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Buldon"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Cotabato City"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Datu Blah T. Sinsuat"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Datu Odin Sinsuat"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Kabuntalan"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Matanog"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Northern Kabuntalan"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Parang"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Sultan Kudarat"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Sultan Mastura"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Talitay"
+    },
+    {
+        "province":  "Maguindanao del Norte",
+        "locality":  "Upi"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Ampatuan"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Buluan"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Datu Abdullah Sangki"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Datu Anggal Midtimbang"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Datu Hoffer Ampatuan"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Datu Montawal"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Datu Paglas"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Datu Piang"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Datu Salibo"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Datu Saudi Ampatuan"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Datu Unsay"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "General Salipada K. Pendatun"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Guindulungan"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Mamasapano"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Mangudadatu"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Pagalungan"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Paglat"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Pandag"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Rajah Buayan"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Shariff Aguak"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Shariff Saydona Mustapha"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "South Upi"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Sultan sa Barongis"
+    },
+    {
+        "province":  "Maguindanao del Sur",
+        "locality":  "Talayan"
+    },
+    {
+        "province":  "Marinduque",
+        "locality":  "Boac"
+    },
+    {
+        "province":  "Marinduque",
+        "locality":  "Buenavista"
+    },
+    {
+        "province":  "Marinduque",
+        "locality":  "Gasan"
+    },
+    {
+        "province":  "Marinduque",
+        "locality":  "Mogpog"
+    },
+    {
+        "province":  "Marinduque",
+        "locality":  "Santa Cruz"
+    },
+    {
+        "province":  "Marinduque",
+        "locality":  "Torrijos"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Aroroy"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Baleno"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Balud"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Batuan"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Cataingan"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Cawayan"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Claveria"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Dimasalang"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Esperanza"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Mandaon"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Masbate City"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Milagros"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Mobo"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Monreal"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Palanas"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Pio V. Corpus"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Placer"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "San Fernando"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "San Jacinto"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "San Pascual"
+    },
+    {
+        "province":  "Masbate",
+        "locality":  "Uson"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Caloocan"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Las Piñas"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Makati"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Malabon"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Mandaluyong"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Manila"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Marikina"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Muntinlupa"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Navotas"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Parañaque"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Pasay"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Pasig"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Pateros"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Quezon City"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "San Juan"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Taguig"
+    },
+    {
+        "province":  "Metro Manila (NCR)",
+        "locality":  "Valenzuela"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Aloran"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Baliangao"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Bonifacio"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Calamba"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Clarin"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Concepcion"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Don Victoriano"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Jimenez"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Lopez Jaena"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Oroquieta"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Ozamiz"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Panaon"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Plaridel"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Sapang Dalaga"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Sinacaban"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Tangub"
+    },
+    {
+        "province":  "Misamis Occidental",
+        "locality":  "Tudela"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Alubijid"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Balingasag"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Balingoan"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Binuangan"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Cagayan de Oro"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Claveria"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "El Salvador"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Gingoog"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Gitagum"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Initao"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Jasaan"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Kinoguitan"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Lagonglong"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Laguindingan"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Libertad"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Lugait"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Magsaysay"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Manticao"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Medina"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Naawan"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Opol"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Salay"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Sugbongcogon"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Tagoloan"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Talisayan"
+    },
+    {
+        "province":  "Misamis Oriental",
+        "locality":  "Villanueva"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Barlig"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Bauko"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Besao"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Bontoc"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Natonin"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Paracelis"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Sabangan"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Sadanga"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Sagada"
+    },
+    {
+        "province":  "Mountain Province",
+        "locality":  "Tadian"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Bacolod"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Bago"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Binalbagan"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Cadiz"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Calatrava"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Candoni"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Cauayan"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Don Salvador Benedicto"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Enrique B. Magalona"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Escalante"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Himamaylan"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Hinigaran"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Hinoba-an"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Ilog"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Isabela"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Kabankalan"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "La Carlota"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "La Castellana"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Manapla"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Moises Padilla"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Murcia"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Pontevedra"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Pulupandan"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Sagay"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "San Carlos"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "San Enrique"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Silay"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Sipalay"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Talisay"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Toboso"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Valladolid"
+    },
+    {
+        "province":  "Negros Occidental",
+        "locality":  "Victorias"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Amlan"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Ayungon"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Bacong"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Bais"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Basay"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Bayawan"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Bindoy"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Canlaon"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Dauin"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Dumaguete"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Guihulngan"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Jimalalud"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "La Libertad"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Mabinay"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Manjuyod"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Pamplona"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "San Jose"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Santa Catalina"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Siaton"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Sibulan"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Tanjay"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Tayasan"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Valencia"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Vallehermoso"
+    },
+    {
+        "province":  "Negros Oriental",
+        "locality":  "Zamboanguita"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Allen"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Biri"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Bobon"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Capul"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Catarman"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Catubig"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Gamay"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Laoang"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Lapinig"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Las Navas"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Lavezares"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Lope de Vega"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Mapanas"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Mondragon"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Palapag"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Pambujan"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Rosario"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "San Antonio"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "San Isidro"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "San Jose"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "San Roque"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "San Vicente"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Silvino Lobos"
+    },
+    {
+        "province":  "Northern Samar",
+        "locality":  "Victoria"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Aliaga"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Bongabon"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Cabanatuan"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Cabiao"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Carranglan"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Cuyapo"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Gabaldon"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Gapan"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "General Mamerto Natividad"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "General Tinio"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Guimba"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Jaen"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Laur"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Licab"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Llanera"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Lupao"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Muñoz"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Nampicuan"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Palayan"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Pantabangan"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Peñaranda"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Quezon"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Rizal"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "San Antonio"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "San Isidro"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "San Jose"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "San Leonardo"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Santa Rosa"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Santo Domingo"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Talavera"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Talugtug"
+    },
+    {
+        "province":  "Nueva Ecija",
+        "locality":  "Zaragoza"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Alfonso Castañeda"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Ambaguio"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Aritao"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Bagabag"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Bambang"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Bayombong"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Diadi"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Dupax del Norte"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Dupax del Sur"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Kasibu"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Kayapa"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Quezon"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Santa Fe"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Solano"
+    },
+    {
+        "province":  "Nueva Vizcaya",
+        "locality":  "Villaverde"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Abra de Ilog"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Calintaan"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Looc"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Lubang"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Magsaysay"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Mamburao"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Paluan"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Rizal"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Sablayan"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "San Jose"
+    },
+    {
+        "province":  "Occidental Mindoro",
+        "locality":  "Santa Cruz"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Baco"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Bansud"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Bongabong"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Bulalacao"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Calapan"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Gloria"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Mansalay"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Naujan"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Pinamalayan"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Pola"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Puerto Galera"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Roxas"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "San Teodoro"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Socorro"
+    },
+    {
+        "province":  "Oriental Mindoro",
+        "locality":  "Victoria"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Aborlan"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Agutaya"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Araceli"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Balabac"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Bataraza"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Brooke\u0027s Point"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Busuanga"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Cagayancillo"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Coron"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Culion"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Cuyo"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Dumaran"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "El Nido"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Kalayaan"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Linapacan"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Magsaysay"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Narra"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Puerto Princesa"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Quezon"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Rizal"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Roxas"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "San Vicente"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Sofronio Española"
+    },
+    {
+        "province":  "Palawan",
+        "locality":  "Taytay"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Angeles"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Apalit"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Arayat"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Bacolor"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Candaba"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Floridablanca"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Guagua"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Lubao"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Mabalacat"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Macabebe"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Magalang"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Masantol"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Mexico"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Minalin"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Porac"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "San Fernando"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "San Luis"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "San Simon"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Santa Ana"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Santa Rita"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Santo Tomas"
+    },
+    {
+        "province":  "Pampanga",
+        "locality":  "Sasmuan"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Agno"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Aguilar"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Alaminos"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Alcala"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Anda"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Asingan"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Balungao"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Bani"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Basista"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Bautista"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Bayambang"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Binalonan"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Binmaley"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Bolinao"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Bugallon"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Burgos"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Calasiao"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Dagupan"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Dasol"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Infanta"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Labrador"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Laoac"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Lingayen"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Mabini"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Malasiqui"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Manaoag"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Mangaldan"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Mangatarem"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Mapandan"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Natividad"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Pozorrubio"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Rosales"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "San Carlos"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "San Fabian"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "San Jacinto"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "San Manuel"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "San Nicolas"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "San Quintin"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Santa Barbara"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Santa Maria"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Santo Tomas"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Sison"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Sual"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Tayug"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Umingan"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Urbiztondo"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Urdaneta"
+    },
+    {
+        "province":  "Pangasinan",
+        "locality":  "Villasis"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Agdangan"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Alabat"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Atimonan"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Buenavista"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Burdeos"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Calauag"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Candelaria"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Catanauan"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Dolores"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "General Luna"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "General Nakar"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Guinayangan"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Gumaca"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Infanta"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Jomalig"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Lopez"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Lucban"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Lucena"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Macalelon"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Mauban"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Mulanay"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Padre Burgos"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Pagbilao"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Panukulan"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Patnanungan"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Perez"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Pitogo"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Plaridel"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Polillo"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Quezon"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Real"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Sampaloc"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "San Andres"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "San Antonio"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "San Francisco"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "San Narciso"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Sariaya"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Tagkawayan"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Tayabas"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Tiaong"
+    },
+    {
+        "province":  "Quezon",
+        "locality":  "Unisan"
+    },
+    {
+        "province":  "Quirino",
+        "locality":  "Aglipay"
+    },
+    {
+        "province":  "Quirino",
+        "locality":  "Cabarroguis"
+    },
+    {
+        "province":  "Quirino",
+        "locality":  "Diffun"
+    },
+    {
+        "province":  "Quirino",
+        "locality":  "Maddela"
+    },
+    {
+        "province":  "Quirino",
+        "locality":  "Nagtipunan"
+    },
+    {
+        "province":  "Quirino",
+        "locality":  "Saguday"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Angono"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Antipolo"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Baras"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Binangonan"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Cainta"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Cardona"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Jalajala"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Morong"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Pililla"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Rodriguez"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "San Mateo"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Tanay"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Taytay"
+    },
+    {
+        "province":  "Rizal",
+        "locality":  "Teresa"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Alcantara"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Banton"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Cajidiocan"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Calatrava"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Concepcion"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Corcuera"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Ferrol"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Looc"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Magdiwang"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Odiongan"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Romblon"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "San Agustin"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "San Andres"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "San Fernando"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "San Jose"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Santa Fe"
+    },
+    {
+        "province":  "Romblon",
+        "locality":  "Santa Maria"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Almagro"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Basey"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Calbayog"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Calbiga"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Catbalogan"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Daram"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Gandara"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Hinabangan"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Jiabong"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Marabut"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Matuguinao"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Motiong"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Pagsanghan"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Paranas"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Pinabacdao"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "San Jorge"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "San Jose de Buan"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "San Sebastian"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Santa Margarita"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Santa Rita"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Santo Niño"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Tagapul-an"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Talalora"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Tarangnan"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Villareal"
+    },
+    {
+        "province":  "Samar",
+        "locality":  "Zumarraga"
+    },
+    {
+        "province":  "Sarangani",
+        "locality":  "Alabel"
+    },
+    {
+        "province":  "Sarangani",
+        "locality":  "Glan"
+    },
+    {
+        "province":  "Sarangani",
+        "locality":  "Kiamba"
+    },
+    {
+        "province":  "Sarangani",
+        "locality":  "Maasim"
+    },
+    {
+        "province":  "Sarangani",
+        "locality":  "Maitum"
+    },
+    {
+        "province":  "Sarangani",
+        "locality":  "Malapatan"
+    },
+    {
+        "province":  "Sarangani",
+        "locality":  "Malungon"
+    },
+    {
+        "province":  "Siquijor",
+        "locality":  "Enrique Villanueva"
+    },
+    {
+        "province":  "Siquijor",
+        "locality":  "Larena"
+    },
+    {
+        "province":  "Siquijor",
+        "locality":  "Lazi"
+    },
+    {
+        "province":  "Siquijor",
+        "locality":  "Maria"
+    },
+    {
+        "province":  "Siquijor",
+        "locality":  "San Juan"
+    },
+    {
+        "province":  "Siquijor",
+        "locality":  "Siquijor"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Barcelona"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Bulan"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Bulusan"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Casiguran"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Castilla"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Donsol"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Gubat"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Irosin"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Juban"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Magallanes"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Matnog"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Pilar"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Prieto Diaz"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Santa Magdalena"
+    },
+    {
+        "province":  "Sorsogon",
+        "locality":  "Sorsogon City"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Banga"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "General Santos"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Koronadal"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Lake Sebu"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Norala"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Polomolok"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Santo Niño"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Surallah"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "T\u0027Boli"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Tampakan"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Tantangan"
+    },
+    {
+        "province":  "South Cotabato",
+        "locality":  "Tupi"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Anahawan"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Bontoc"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Hinunangan"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Hinundayan"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Libagon"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Liloan"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Limasawa"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Maasin"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Macrohon"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Malitbog"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Padre Burgos"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Pintuyan"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Saint Bernard"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "San Francisco"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "San Juan"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "San Ricardo"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Silago"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Sogod"
+    },
+    {
+        "province":  "Southern Leyte",
+        "locality":  "Tomas Oppus"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Bagumbayan"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Columbio"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Esperanza"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Isulan"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Kalamansig"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Lambayong"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Lebak"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Lutayan"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Palimbang"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "President Quirino"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Senator Ninoy Aquino"
+    },
+    {
+        "province":  "Sultan Kudarat",
+        "locality":  "Tacurong"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Banguingui"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Hadji Panglima Tahil"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Indanan"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Jolo"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Kalingalan Caluang"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Lugus"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Luuk"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Maimbung"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Omar"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Panamao"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Pandami"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Panglima Estino"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Pangutaran"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Parang"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Pata"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Patikul"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Siasi"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Talipao"
+    },
+    {
+        "province":  "Sulu",
+        "locality":  "Tapul"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Alegria"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Bacuag"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Burgos"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Claver"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Dapa"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Del Carmen"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "General Luna"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Gigaquit"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Mainit"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Malimono"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Pilar"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Placer"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "San Benito"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "San Francisco"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "San Isidro"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Santa Monica"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Sison"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Socorro"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Surigao City"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Tagana-an"
+    },
+    {
+        "province":  "Surigao del Norte",
+        "locality":  "Tubod"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Barobo"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Bayabas"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Bislig"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Cagwait"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Cantilan"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Carmen"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Carrascal"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Cortes"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Hinatuan"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Lanuza"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Lianga"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Lingig"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Madrid"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Marihatag"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "San Agustin"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "San Miguel"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Tagbina"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Tago"
+    },
+    {
+        "province":  "Surigao del Sur",
+        "locality":  "Tandag"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Anao"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Bamban"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Camiling"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Capas"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Concepcion"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Gerona"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "La Paz"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Mayantoc"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Moncada"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Paniqui"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Pura"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Ramos"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "San Clemente"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "San Jose"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "San Manuel"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Santa Ignacia"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Tarlac City"
+    },
+    {
+        "province":  "Tarlac",
+        "locality":  "Victoria"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Bongao"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Languyan"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Mapun"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Panglima Sugala"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Sapa-Sapa"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Sibutu"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Simunul"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Sitangkai"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "South Ubian"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Tandubas"
+    },
+    {
+        "province":  "Tawi-Tawi",
+        "locality":  "Turtle Islands"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Botolan"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Cabangan"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Candelaria"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Castillejos"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Iba"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Masinloc"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Olongapo"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Palauig"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "San Antonio"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "San Felipe"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "San Marcelino"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "San Narciso"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Santa Cruz"
+    },
+    {
+        "province":  "Zambales",
+        "locality":  "Subic"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Alicia"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Buug"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Diplahan"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Imelda"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Ipil"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Kabasalan"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Mabuhay"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Malangas"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Naga"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Olutanga"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Payao"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Roseller Lim"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Siay"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Talusan"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Titay"
+    },
+    {
+        "province":  "Zamboanga Sibugay",
+        "locality":  "Tungawan"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Baliguian"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Dapitan"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Dipolog"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Godod"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Gutalac"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Jose Dalman"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Kalawit"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Katipunan"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "La Libertad"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Labason"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Leon B. Postigo"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Liloy"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Manukan"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Mutia"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Piñan"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Polanco"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Rizal"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Roxas"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Salug"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Sergio Osmeña"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Siayan"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Sibuco"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Sibutad"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Sindangan"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Siocon"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Sirawai"
+    },
+    {
+        "province":  "Zamboanga del Norte",
+        "locality":  "Tampilisan"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Aurora"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Bayog"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Dimataling"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Dinas"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Dumalinao"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Dumingag"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Guipos"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Josefina"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Kumalarang"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Labangan"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Lakewood"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Lapuyan"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Mahayag"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Margosatubig"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Midsalip"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Molave"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Pagadian"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Pitogo"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Ramon Magsaysay"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "San Miguel"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "San Pablo"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Sominot"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Tabina"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Tambulig"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Tigbao"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Tukuran"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Vincenzo A. Sagun"
+    },
+    {
+        "province":  "Zamboanga del Sur",
+        "locality":  "Zamboanga City"
+    }
+]

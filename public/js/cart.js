@@ -18,6 +18,38 @@ function getCart() {
   }
 }
 
+function getSelectedCartIds(cart = getCart()) {
+  const availableIds = new Set(cart.map((item) => String(item.id)));
+  try {
+    const raw = localStorage.getItem("circuitCartSelected");
+    if (!raw) return new Set(availableIds);
+    const storedIds = JSON.parse(raw);
+    if (!Array.isArray(storedIds)) return new Set(availableIds);
+    return new Set(storedIds.map(String).filter((id) => availableIds.has(id)));
+  } catch (error) {
+    console.error("Unable to load selected cart items:", error);
+    return new Set(availableIds);
+  }
+}
+
+function saveSelectedCartIds(selectedIds) {
+  localStorage.setItem("circuitCartSelected", JSON.stringify([...selectedIds]));
+}
+
+function toggleCartItemSelection(id, checked) {
+  const selectedIds = getSelectedCartIds();
+  if (checked) selectedIds.add(String(id));
+  else selectedIds.delete(String(id));
+  saveSelectedCartIds(selectedIds);
+  renderCart();
+}
+
+function getSelectedCart() {
+  const cart = getCart();
+  const selectedIds = getSelectedCartIds(cart);
+  return cart.filter((item) => selectedIds.has(String(item.id)));
+}
+
 function saveCart(cart) {
   if (!isAuthenticated()) {
     try {
@@ -54,6 +86,8 @@ function addToCart(id, name, price, img, maxPurchaseQuantity) {
     const limit = Number(existing.maxPurchaseQuantity || maxPurchaseQuantity || 10);
     if (existing.qty < limit) existing.qty += 1;
   } else {
+    getSelectedCartIds(cart).add(String(id));
+    saveSelectedCartIds(getSelectedCartIds(cart));
     cart.push({
       id: String(id),
       name,
@@ -80,6 +114,9 @@ function updateCartQty(id, delta) {
   item.qty = Math.min(limit, item.qty + delta);
   if (item.qty <= 0) {
     cart = cart.filter((i) => String(i.id) !== String(id));
+    const selectedIds = getSelectedCartIds(cart);
+    selectedIds.delete(String(id));
+    saveSelectedCartIds(selectedIds);
   }
   saveCart(cart);
 }
@@ -92,6 +129,9 @@ function removeCartItem(id) {
 
   let cart = getCart();
   cart = cart.filter((i) => String(i.id) !== String(id));
+  const selectedIds = getSelectedCartIds(cart);
+  selectedIds.delete(String(id));
+  saveSelectedCartIds(selectedIds);
   saveCart(cart);
 }
 
@@ -181,8 +221,9 @@ function renderCart() {
   ensureCartDrawerDom();
 
   const cart = getCart();
+  const selectedCart = getSelectedCart();
   const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const subtotal = selectedCart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   document.querySelectorAll("#cartBadge, .navbar__cart-badge").forEach((badge) => {
     badge.textContent = String(totalCount);
@@ -196,6 +237,11 @@ function renderCart() {
 
   if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
   if (checkoutTotalEl) checkoutTotalEl.textContent = formatCurrency(subtotal);
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  if (checkoutBtn) {
+    checkoutBtn.classList.toggle("is-disabled", selectedCart.length === 0);
+    checkoutBtn.setAttribute("aria-disabled", String(selectedCart.length === 0));
+  }
 
   if (!bodyEl) return;
 
@@ -226,7 +272,12 @@ function renderCart() {
           .map(
             (item) => `
           <div class="cart-item-card" data-id="${item.id}">
-            <img src="${item.img}" alt="${item.name}" class="cart-item-card__img" />
+              <label class="cart-item-select" title="Select item for checkout">
+                <input type="checkbox" ${getSelectedCartIds(cart).has(String(item.id)) ? "checked" : ""}
+                  onchange="toggleCartItemSelection('${item.id}', this.checked)" aria-label="Select ${item.name} for checkout" />
+                <span aria-hidden="true"></span>
+              </label>
+              <img src="${item.img}" alt="${item.name}" class="cart-item-card__img" />
             <div class="cart-item-card__content">
               <div class="cart-item-card__top">
                 <h4 class="cart-item-card__title">${item.name}</h4>
@@ -294,6 +345,12 @@ document.addEventListener(
 
     const checkoutBtn = event.target.closest("#checkoutBtn");
     if (checkoutBtn) {
+      if (getSelectedCart().length === 0) {
+        event.preventDefault();
+        event.stopPropagation();
+        checkoutBtn.classList.add("is-disabled");
+        return false;
+      }
       if (!isAuthenticated()) {
         event.preventDefault();
         event.stopPropagation();
@@ -309,11 +366,15 @@ document.addEventListener(
 window.addToCart = addToCart;
 window.updateCartQty = updateCartQty;
 window.removeCartItem = removeCartItem;
+window.toggleCartItemSelection = toggleCartItemSelection;
 window.openCart = openCart;
 window.closeCart = closeCart;
 window.getCart = getCart;
 window.isAuthenticated = isAuthenticated;
 window.requireAuthentication = requireAuthentication;
+window.getSelectedCart = getSelectedCart;
+window.getSelectedCartIds = getSelectedCartIds;
+window.saveSelectedCartIds = saveSelectedCartIds;
 
 document.addEventListener("DOMContentLoaded", () => {
   if (!isAuthenticated()) {
