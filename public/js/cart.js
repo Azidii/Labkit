@@ -1,3 +1,11 @@
+function formatCurrency(amount) {
+  return new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP",
+    minimumFractionDigits: 2
+  }).format(Number(amount) || 0);
+}
+
 function getCart() {
   if (!isAuthenticated()) {
     return [];
@@ -134,7 +142,7 @@ function ensureCartDrawerDom() {
     <div class="cart-drawer__footer" id="cartDrawerFooter">
       <div class="cart-drawer__subtotal">
         <span>Subtotal</span>
-        <strong id="cartSubtotal">$0.00</strong>
+        <strong id="cartSubtotal">₱0.00</strong>
       </div>
       <div class="cart-drawer__notice">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -146,7 +154,7 @@ function ensureCartDrawerDom() {
         <span>Every bundle unlocks instant digital assets at checkout.</span>
       </div>
       <a href="/checkout" class="btn-checkout" id="checkoutBtn">
-        Checkout · <span id="checkoutTotal">$0.00</span>
+        Checkout · <span id="checkoutTotal">₱0.00</span>
       </a>
     </div>
   `;
@@ -186,8 +194,8 @@ function renderCart() {
   const subtotalEl = document.getElementById("cartSubtotal");
   const checkoutTotalEl = document.getElementById("checkoutTotal");
 
-  if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-  if (checkoutTotalEl) checkoutTotalEl.textContent = `$${subtotal.toFixed(2)}`;
+  if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
+  if (checkoutTotalEl) checkoutTotalEl.textContent = formatCurrency(subtotal);
 
   if (!bodyEl) return;
 
@@ -222,7 +230,7 @@ function renderCart() {
             <div class="cart-item-card__content">
               <div class="cart-item-card__top">
                 <h4 class="cart-item-card__title">${item.name}</h4>
-                <div class="cart-item-card__price">$${Number(item.price).toFixed(2)}</div>
+                <div class="cart-item-card__price">${formatCurrency(item.price)}</div>
               </div>
               <div class="cart-item-card__bottom">
                 <div class="cart-qty-control">

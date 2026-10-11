@@ -289,7 +289,7 @@
                       </span>
                     </div>
                     <div class="product-card__footer">
-                      <span class="product-card__price">$<%= p.price.toFixed(2) %></span>
+                      <span class="product-card__price">₱<%= p.price.toFixed(2) %></span>
                       <button type="button" class="product-card__add-btn js-add-to-cart"
                         data-id="<%= p.id %>"
                         data-name="<%= (p.name || '').replace(/["']/g, '') %>"
@@ -340,7 +340,7 @@
     <div class="cart-drawer__footer" id="cartDrawerFooter">
       <div class="cart-drawer__subtotal">
         <span>Subtotal</span>
-        <strong id="cartSubtotal">$0.00</strong>
+        <strong id="cartSubtotal">₱0.00</strong>
       </div>
       <div class="cart-drawer__notice">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
@@ -353,7 +353,7 @@
         <span>Every part ships with datasheets and pinout diagrams.</span>
       </div>
       <a href="/checkout" class="btn-checkout" id="checkoutBtn">
-        Checkout · <span id="checkoutTotal">$0.00</span>
+        Checkout · <span id="checkoutTotal">₱0.00</span>
       </a>
     </div>
   </aside>

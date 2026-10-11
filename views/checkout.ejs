@@ -198,15 +198,15 @@
             <div class="order-summary-totals">
               <div class="summary-line">
                 <span>Subtotal</span>
-                <span id="subtotalAmount">$24.00</span>
+                <span id="subtotalAmount">₱24.00</span>
               </div>
               <div class="summary-line">
                 <span>Shipping</span>
-                <span id="shippingAmount">$6.50</span>
+                <span id="shippingAmount">₱6.50</span>
               </div>
               <div class="summary-line summary-line--total">
                 <span>Total</span>
-                <span id="totalAmount">$30.50</span>
+                <span id="totalAmount">₱30.50</span>
               </div>
             </div>
 
@@ -250,7 +250,7 @@
             </div>
 
             <button type="submit" form="checkoutForm" class="btn-pay-order" id="payBtn">
-              Pay <span id="payBtnAmount">$30.50</span>
+              Pay <span id="payBtnAmount">₱30.50</span>
             </button>
           </div>
         </aside>
@@ -295,7 +295,7 @@
     <div class="cart-drawer__footer" id="cartDrawerFooter">
       <div class="cart-drawer__subtotal">
         <span>Subtotal</span>
-        <strong id="cartSubtotal">$0.00</strong>
+        <strong id="cartSubtotal">₱0.00</strong>
       </div>
       <div class="cart-drawer__notice">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -307,7 +307,7 @@
         <span>Every part ships with datasheets and pinout diagrams.</span>
       </div>
       <a href="/checkout" class="btn-checkout" id="checkoutBtn">
-        Checkout · <span id="checkoutTotal">$0.00</span>
+        Checkout · <span id="checkoutTotal">₱0.00</span>
       </a>
     </div>
   </aside>
@@ -357,7 +357,7 @@
         {
           id: "3",
           name: "7400-Series Logic Gate Breadboard Starter",
-          price: 24.00,
+          price: 1404.00,
           qty: 1,
           img: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600"
         }
@@ -365,8 +365,11 @@
 
       const checkoutItems = savedCart.length > 0 ? savedCart : fallbackCart;
 
+      const formatCurrency = (amount) => new Intl.NumberFormat("en-PH", {
+        style: "currency", currency: "PHP", minimumFractionDigits: 2
+      }).format(Number(amount) || 0);
       const subtotal = checkoutItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const shipping = 6.50;
+      const shipping = 380.25;
       const total = subtotal + shipping;
 
       const itemsListEl = document.getElementById("summaryItemsList");
@@ -378,15 +381,15 @@
               <h4 class="order-summary-item__name">${item.name}</h4>
               <span class="order-summary-item__qty">Qty ${item.qty}</span>
             </div>
-            <span class="order-summary-item__price">$${(item.price * item.qty).toFixed(2)}</span>
+            <span class="order-summary-item__price">${formatCurrency(item.price * item.qty)}</span>
           </div>
         `).join("");
       }
 
-      document.getElementById("subtotalAmount").textContent = `$${subtotal.toFixed(2)}`;
-      document.getElementById("shippingAmount").textContent = `$${shipping.toFixed(2)}`;
-      document.getElementById("totalAmount").textContent = `$${total.toFixed(2)}`;
-      document.getElementById("payBtnAmount").textContent = `$${total.toFixed(2)}`;
+      document.getElementById("subtotalAmount").textContent = formatCurrency(subtotal);
+      document.getElementById("shippingAmount").textContent = formatCurrency(shipping);
+      document.getElementById("totalAmount").textContent = formatCurrency(total);
+      document.getElementById("payBtnAmount").textContent = formatCurrency(total);
 
       const checkoutForm = document.getElementById("checkoutForm");
       checkoutForm?.addEventListener("submit", (event) => {

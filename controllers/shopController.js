@@ -353,6 +353,42 @@ const parts = [
   },
 ];
 
+const philippineRetailPrices = {
+  "raspberry-pi-4-model-b-4gb": [10450, null],
+  "esp32-devkit-v1-wroom32": [350, null],
+  "hc-sr04-ultrasonic-sensor": [85, null],
+  "orange-pi-5-8gb": [13900, null],
+  "piezo-buzzer-12v": [25, null],
+  "sg90-micro-servo": [120, null],
+  "ky-038-microphone-sound-sensor": [65, null],
+  "jumper-wires-40pin-mf": [45, null],
+  "resistor-pack-100pcs": [85, null],
+  "active-piezo-buzzer-5v": [20, null],
+  "dht11-temperature-humidity-sensor": [45, null],
+  "ssd1306-oled-display-096": [140, null],
+  "esp32-weather-station-iot-kit": [1995, 2295],
+  "smart-radar-ultrasonic-iot-kit": [1450, 1695],
+  "acoustic-alarm-piezo-iot-kit": [1250, 1495],
+  "arduino-uno-r3-compatible-board": [350, null],
+  "raspberry-pi-pico-w": [550, null],
+  "mpu6050-gyroscope-accelerometer": [95, null],
+  "pir-motion-sensor-hc-sr501": [85, null],
+  "neopixel-rgb-led-ring-16": [180, null],
+  "l298n-motor-driver-module": [120, null],
+  "dc-geared-motor-pair": [180, null],
+  "mb102-breadboard-power-supply": [55, null],
+  "active-passive-component-kit": [250, 299],
+  "breadboard-prototyping-kit": [220, null]
+};
+
+parts.forEach((product) => {
+  const prices = philippineRetailPrices[product.slug];
+  if (prices) {
+    product.price = prices[0];
+    product.compare_at_price = prices[1];
+  }
+});
+
 // GET /shop - Display shop catalog with filters
 exports.renderShop = async (req, res) => {
   const { category, difficulty, sort, q } = req.query;
