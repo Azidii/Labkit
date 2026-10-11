@@ -1,0 +1,117 @@
+.navbar-search {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.navbar-search__toggle {
+  position: relative;
+  z-index: 2;
+}
+
+.navbar-search__form {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 2.75rem;
+  width: 270px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(0.5rem) scaleX(0);
+  transform-origin: right center;
+  transition: width 0.3s ease, opacity 0.2s ease, transform 0.3s ease;
+}
+
+.navbar-search.is-open .navbar-search__form {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0) scaleX(1);
+}
+
+.navbar-search__suggestions {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 2.75rem;
+  width: 270px;
+  max-height: 18rem;
+  overflow-y: auto;
+  padding: 0.35rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.65rem;
+  background: hsl(var(--background));
+  box-shadow: 0 10px 28px hsl(var(--foreground) / .14);
+  z-index: 10;
+}
+
+.navbar-search__suggestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: hsl(var(--foreground));
+  text-align: left;
+  cursor: pointer;
+}
+
+.navbar-search__suggestion:hover,
+.navbar-search__suggestion:focus-visible {
+  background: hsl(var(--muted));
+  outline: none;
+}
+
+.navbar-search__suggestion-label {
+  overflow: hidden;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar-search__suggestion-type {
+  flex: 0 0 auto;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.7rem;
+}
+
+.navbar-search__input {
+  width: 100%;
+  height: 2.25rem;
+  padding: 0 0.75rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 999px;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font: inherit;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.navbar-search__input:focus {
+  border-color: hsl(var(--foreground) / .35);
+  box-shadow: 0 0 0 3px hsl(var(--foreground) / .06);
+}
+
+@media (max-width: 640px) {
+  .navbar-search.is-open .navbar-search__form {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: min(14rem, 70vw);
+    padding: 0.25rem;
+    border-radius: 999px;
+    background: hsl(var(--background));
+    box-shadow: 0 8px 24px hsl(var(--foreground) / .12);
+  }
+
+  .navbar-search__suggestions {
+    top: calc(100% + 3.1rem);
+    right: 0;
+    width: min(20rem, 85vw);
+  }
+}

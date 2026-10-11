@@ -4,6 +4,7 @@ const path = require('path');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const JWT_SECRET = require('./utils/jwtConfig');
 const User = require('./models/userSchema');
 const connectDB = require('./database/mongo-dbconnect');
 
@@ -50,7 +51,7 @@ app.use(async (req, res, next) => {
     const token = req.cookies?.token;
     if (token) {
       try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded;
 
         // Restore user session from MongoDB

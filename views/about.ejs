@@ -9,6 +9,7 @@
         content="LabKit Market provides individual electronic parts for IoT and computer engineering projects. ESP32 microcontrollers, buzzers, microphone sensors, and wiring sold as single units with no minimum order." />
     <link rel="stylesheet" href="/css/about.css" />
     <link rel="stylesheet" href="/css/cart.css" />
+    <link rel="stylesheet" href="/css/navbar-search.css" />
     <script src="/js/theme.js"></script>
     <script src="/js/page-transitions.js"></script>
 </head>
@@ -48,14 +49,18 @@
             </nav>
 
             <div class="navbar__actions">
-                <button type="button" class="navbar__icon-btn" aria-label="Search"
-                    onclick="window.location.href='/shop'">
+                <div class="navbar-search">
+                <button type="button" class="navbar__icon-btn navbar-search__toggle" aria-label="Search" aria-expanded="false">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8" />
                         <line x1="21" y1="21" x2="16.65" y2="16.65" />
                     </svg>
                 </button>
+                <form class="navbar-search__form" action="/shop" method="get" role="search">
+                    <input class="navbar-search__input" name="q" type="search" placeholder="Search products..." aria-label="Search products" />
+                </form>
+                </div>
 
                 <button type="button" class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -673,6 +678,7 @@
     </footer>
 
     <script src="/js/cart.js"></script>
+    <script src="/js/navbar-search.js"></script>
     <script src="/js/about.js"></script>
 </body>
 

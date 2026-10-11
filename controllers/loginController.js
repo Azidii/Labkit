@@ -1,5 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const JWT_SECRET = require("../utils/jwtConfig");
 const User = require("../models/userSchema");
 
 
@@ -58,7 +59,7 @@ exports.processLogin = async (req, res) => {
         role: "admin"
       };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET || "labkit-jwt-secret-key-2026", {
+      const token = jwt.sign(payload, JWT_SECRET, {
         expiresIn: "1d"
       });
 
@@ -126,7 +127,7 @@ exports.processLogin = async (req, res) => {
     };
 
     // Sign it with process.env.JWT_SECRET (1-day expiration)
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    const token = jwt.sign(payload, JWT_SECRET, {
       expiresIn: "1d"
     });
 
@@ -320,7 +321,7 @@ exports.handleGoogleCallback = async (req, res) => {
       role: user.role
     };
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    const token = jwt.sign(payload, JWT_SECRET, {
       expiresIn: "1d"
     });
 
