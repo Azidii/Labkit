@@ -8,7 +8,9 @@
   <meta name="description"
     content="Browse individual electronic parts. Buzzers, sensors, boards, motors and more — every part sold as a single unit, no minimum order." />
   <link rel="stylesheet" href="/css/shop.css" />
+  <link rel="stylesheet" href="/css/navbar.css" />
   <link rel="stylesheet" href="/css/cart.css" />
+  <link rel="stylesheet" href="/css/navbar-search.css" />
   <script src="/js/theme.js"></script>
   <script src="/js/page-transitions.js"></script>
 </head>
@@ -48,13 +50,18 @@
       </nav>
 
       <div class="navbar__actions">
-        <button type="button" class="navbar__icon-btn" aria-label="Search">
+        <div class="navbar-search">
+        <button type="button" class="navbar__icon-btn navbar-search__toggle" aria-label="Search" aria-expanded="false">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
         </button>
+        <form class="navbar-search__form" action="/shop" method="get" role="search">
+          <input class="navbar-search__input" name="q" type="search" placeholder="Search products..." aria-label="Search products" />
+        </form>
+        </div>
 
         <button class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -148,7 +155,12 @@
         </svg>
         <input type="search" name="q" id="searchInput" class="search-input"
           placeholder="Search products, e.g. ESP32, Raspberry Pi, ultrasonic..." value="<%= searchQuery %>" />
+        <button type="submit" class="search-submit" aria-label="Search products">
+          <span>Search</span>
+        </button>
       </div>
+      <div class="search-suggestions" id="searchSuggestions" role="listbox"
+        aria-label="Product suggestions" hidden></div>
     </form>
 
     <div class="shop-layout">
@@ -204,13 +216,25 @@
             </strong> items</span>
           <div class="results-sort">
             <label for="sortSelect">Sort</label>
-            <select name="sort" id="sortSelect" class="sort-select"
-              onchange="document.getElementById('filterForm').appendChild(this.cloneNode(true)); document.getElementById('filterForm').submit();">
-              <option value="rating" <%=activeSort==='rating' ? 'selected' : '' %>>Top rated</option>
-              <option value="featured" <%=activeSort==='featured' ? 'selected' : '' %>>Featured</option>
-              <option value="price-asc" <%=activeSort==='price-asc' ? 'selected' : '' %>>Price: Low to High</option>
-              <option value="price-desc" <%=activeSort==='price-desc' ? 'selected' : '' %>>Price: High to Low</option>
-            </select>
+            <div class="sort-menu" id="sortMenu">
+              <button type="button" class="sort-select" id="sortSelect" aria-haspopup="listbox"
+                aria-expanded="false">
+                <span id="sortSelectLabel">
+                  <%= activeSort==='price-asc' ? 'Price: Low to High' : activeSort==='price-desc' ? 'Price: High to Low' : activeSort==='featured' ? 'Featured' : 'Top rated' %>
+                </span>
+                <span class="sort-select__chevron" aria-hidden="true"></span>
+              </button>
+              <div class="sort-options" id="sortOptions" role="listbox" aria-label="Sort products" hidden>
+                <button type="button" class="sort-option <%= activeSort==='rating' ? 'is-active' : '' %>"
+                  role="option" aria-selected="<%= activeSort==='rating' %>" data-value="rating">Top rated</button>
+                <button type="button" class="sort-option <%= activeSort==='featured' ? 'is-active' : '' %>"
+                  role="option" aria-selected="<%= activeSort==='featured' %>" data-value="featured">Featured</button>
+                <button type="button" class="sort-option <%= activeSort==='price-asc' ? 'is-active' : '' %>"
+                  role="option" aria-selected="<%= activeSort==='price-asc' %>" data-value="price-asc">Price: Low to High</button>
+                <button type="button" class="sort-option <%= activeSort==='price-desc' ? 'is-active' : '' %>"
+                  role="option" aria-selected="<%= activeSort==='price-desc' %>" data-value="price-desc">Price: High to Low</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -229,7 +253,8 @@
           <% } else { %>
             <div class="product-grid">
               <% products.forEach(p=> { %>
-                <div class="product-card" data-slug="<%= p.slug %>">
+                <div class="product-card" data-slug="<%= p.slug %>"
+                  data-search="<%= [p.name, p.tagline, p.description, p.category].filter(Boolean).join(' ').replace(/&/g, '&amp;').replace(/"/g, '&quot;') %>">
                   <div class="product-card__img-wrap">
                     <div class="product-card__badges">
                       <span class="product-card__cat-badge">
@@ -265,7 +290,7 @@
                       </span>
                     </div>
                     <div class="product-card__footer">
-                      <span class="product-card__price">$<%= p.price.toFixed(2) %></span>
+                      <span class="product-card__price">₱<%= p.price.toFixed(2) %></span>
                       <button type="button" class="product-card__add-btn js-add-to-cart"
                         data-id="<%= p.id %>"
                         data-name="<%= (p.name || '').replace(/["']/g, '') %>"
@@ -316,7 +341,7 @@
     <div class="cart-drawer__footer" id="cartDrawerFooter">
       <div class="cart-drawer__subtotal">
         <span>Subtotal</span>
-        <strong id="cartSubtotal">$0.00</strong>
+        <strong id="cartSubtotal">₱0.00</strong>
       </div>
       <div class="cart-drawer__notice">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
@@ -329,7 +354,7 @@
         <span>Every part ships with datasheets and pinout diagrams.</span>
       </div>
       <a href="/checkout" class="btn-checkout" id="checkoutBtn">
-        Checkout · <span id="checkoutTotal">$0.00</span>
+        Checkout · <span id="checkoutTotal">₱0.00</span>
       </a>
     </div>
   </aside>
@@ -379,6 +404,8 @@
   </footer>
 
   <script src="/js/cart.js"></script>
+  <script src="/js/navbar-search.js"></script>
+  <script type="application/json" id="shopSuggestionData"><%- typeof suggestionProductsJson !== 'undefined' ? suggestionProductsJson : '[]' %></script>
   <script src="/js/shop.js"></script>
 </body>
 

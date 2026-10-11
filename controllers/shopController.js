@@ -211,7 +211,183 @@ const parts = [
     review_count: 82,
     in_stock: true,
   },
+  {
+    id: "16",
+    slug: "arduino-uno-r3-compatible-board",
+    name: "Arduino Uno R3 Compatible Board",
+    tagline: "Reliable ATmega328P board for beginner projects",
+    price: 18.99,
+    compare_at_price: null,
+    category: "Microcontrollers",
+    difficulty: "Beginner",
+    image_url: "https://images.unsplash.com/photo-1553406830-ef2513450d76?w=600",
+    rating: 4.8,
+    review_count: 276,
+    in_stock: true,
+  },
+  {
+    id: "17",
+    slug: "raspberry-pi-pico-w",
+    name: "Raspberry Pi Pico W",
+    tagline: "Compact RP2040 microcontroller with WiFi",
+    price: 8.50,
+    compare_at_price: null,
+    category: "Microcontrollers",
+    difficulty: "Intermediate",
+    image_url: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
+    rating: 4.9,
+    review_count: 198,
+    in_stock: true,
+  },
+  {
+    id: "18",
+    slug: "mpu6050-gyroscope-accelerometer",
+    name: "MPU6050 Gyroscope & Accelerometer",
+    tagline: "Six-axis motion tracking module for robotics",
+    price: 4.25,
+    compare_at_price: null,
+    category: "Sensors & Modules",
+    difficulty: "Intermediate",
+    image_url: "https://images.unsplash.com/photo-1553406830-ef2513450d76?w=600",
+    rating: 4.7,
+    review_count: 164,
+    in_stock: true,
+  },
+  {
+    id: "19",
+    slug: "pir-motion-sensor-hc-sr501",
+    name: "HC-SR501 PIR Motion Sensor",
+    tagline: "Adjustable infrared motion detection for automation",
+    price: 2.85,
+    compare_at_price: null,
+    category: "Sensors & Modules",
+    difficulty: "Beginner",
+    image_url: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
+    rating: 4.6,
+    review_count: 231,
+    in_stock: true,
+  },
+  {
+    id: "20",
+    slug: "neopixel-rgb-led-ring-16",
+    name: "NeoPixel RGB LED Ring (16 LEDs)",
+    tagline: "Individually addressable colorful lighting module",
+    price: 6.75,
+    compare_at_price: null,
+    category: "Displays & Power",
+    difficulty: "Beginner",
+    image_url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600",
+    rating: 4.8,
+    review_count: 118,
+    in_stock: true,
+  },
+  {
+    id: "21",
+    slug: "l298n-motor-driver-module",
+    name: "L298N Dual H-Bridge Motor Driver",
+    tagline: "Control two DC motors with direction and speed",
+    price: 5.50,
+    compare_at_price: null,
+    category: "Motors & Actuators",
+    difficulty: "Intermediate",
+    image_url: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=600",
+    rating: 4.6,
+    review_count: 143,
+    in_stock: true,
+  },
+  {
+    id: "22",
+    slug: "dc-geared-motor-pair",
+    name: "TT DC Geared Motor Pair",
+    tagline: "Low-voltage gear motors for small robot platforms",
+    price: 7.25,
+    compare_at_price: null,
+    category: "Motors & Actuators",
+    difficulty: "Beginner",
+    image_url: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=600",
+    rating: 4.5,
+    review_count: 97,
+    in_stock: true,
+  },
+  {
+    id: "23",
+    slug: "mb102-breadboard-power-supply",
+    name: "MB102 Breadboard Power Supply",
+    tagline: "Selectable 3.3V or 5V regulated breadboard power",
+    price: 3.95,
+    compare_at_price: null,
+    category: "Displays & Power",
+    difficulty: "Beginner",
+    image_url: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=600",
+    rating: 4.7,
+    review_count: 185,
+    in_stock: true,
+  },
+  {
+    id: "24",
+    slug: "active-passive-component-kit",
+    name: "Active & Passive Component Starter Kit",
+    tagline: "LEDs, capacitors, transistors and resistors for prototyping",
+    price: 14.50,
+    compare_at_price: 17.99,
+    category: "Displays & Power",
+    difficulty: "Beginner",
+    image_url: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=600",
+    rating: 4.8,
+    review_count: 133,
+    in_stock: true,
+  },
+  {
+    id: "25",
+    slug: "breadboard-prototyping-kit",
+    name: "830-Point Breadboard Prototyping Kit",
+    tagline: "Reusable solderless breadboard with jumper wires and rails",
+    price: 9.99,
+    compare_at_price: null,
+    category: "IoT Kits",
+    difficulty: "Beginner",
+    image_url: "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=600",
+    rating: 4.9,
+    review_count: 207,
+    in_stock: true,
+  },
 ];
+
+const philippineRetailPrices = {
+  "raspberry-pi-4-model-b-4gb": [10450, null],
+  "esp32-devkit-v1-wroom32": [350, null],
+  "hc-sr04-ultrasonic-sensor": [85, null],
+  "orange-pi-5-8gb": [13900, null],
+  "piezo-buzzer-12v": [25, null],
+  "sg90-micro-servo": [120, null],
+  "ky-038-microphone-sound-sensor": [65, null],
+  "jumper-wires-40pin-mf": [45, null],
+  "resistor-pack-100pcs": [85, null],
+  "active-piezo-buzzer-5v": [20, null],
+  "dht11-temperature-humidity-sensor": [45, null],
+  "ssd1306-oled-display-096": [140, null],
+  "esp32-weather-station-iot-kit": [1995, 2295],
+  "smart-radar-ultrasonic-iot-kit": [1450, 1695],
+  "acoustic-alarm-piezo-iot-kit": [1250, 1495],
+  "arduino-uno-r3-compatible-board": [350, null],
+  "raspberry-pi-pico-w": [550, null],
+  "mpu6050-gyroscope-accelerometer": [95, null],
+  "pir-motion-sensor-hc-sr501": [85, null],
+  "neopixel-rgb-led-ring-16": [180, null],
+  "l298n-motor-driver-module": [120, null],
+  "dc-geared-motor-pair": [180, null],
+  "mb102-breadboard-power-supply": [55, null],
+  "active-passive-component-kit": [250, 299],
+  "breadboard-prototyping-kit": [220, null]
+};
+
+parts.forEach((product) => {
+  const prices = philippineRetailPrices[product.slug];
+  if (prices) {
+    product.price = prices[0];
+    product.compare_at_price = prices[1];
+  }
+});
 
 // GET /shop - Display shop catalog with filters
 exports.renderShop = async (req, res) => {
@@ -231,6 +407,13 @@ exports.renderShop = async (req, res) => {
     console.error("Shop custom bundle load error:", error);
   }
 
+  const suggestionProducts = filtered.map((product) => ({
+    name: product.name || "",
+    tagline: product.tagline || "",
+    description: product.description || "",
+    category: product.category || ""
+  }));
+
   if (category && category !== "All") {
     filtered = filtered.filter(
       (p) => p.category.toLowerCase() === category.toLowerCase()
@@ -247,9 +430,10 @@ exports.renderShop = async (req, res) => {
     const query = q.trim().toLowerCase();
     filtered = filtered.filter(
       (p) =>
-        p.name.toLowerCase().includes(query) ||
-        p.tagline.toLowerCase().includes(query) ||
-        p.category.toLowerCase().includes(query)
+        String(p.name || "").toLowerCase().includes(query) ||
+        String(p.tagline || "").toLowerCase().includes(query) ||
+        String(p.description || "").toLowerCase().includes(query) ||
+        String(p.category || "").toLowerCase().includes(query)
     );
   }
 
@@ -268,6 +452,7 @@ exports.renderShop = async (req, res) => {
     activeDifficulty: difficulty || "All levels",
     activeSort: sort || "rating",
     searchQuery: q || "",
+    suggestionProductsJson: JSON.stringify(suggestionProducts).replace(/</g, "\\u003c"),
     loading: false
   });
 };

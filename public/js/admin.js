@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const syncPreview = () => {
     document.getElementById("previewName").textContent = name?.value || "Bundle name";
     document.getElementById("previewTagline").textContent = tagline?.value || "A short, punchy tagline appears here.";
-    document.getElementById("previewPrice").textContent = `$${Number(price?.value || 0).toFixed(2)}`;
+    document.getElementById("previewPrice").textContent = `₱${Number(price?.value || 0).toFixed(2)}`;
     if (slug) slug.value = (name?.value || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
     if (image?.value) previewImage.innerHTML = `<img src="${image.value}" alt="Bundle preview">`;
     else previewImage.innerHTML = "<span>▧</span>";
