@@ -38,50 +38,6 @@ exports.processLogin = async (req, res) => {
         : res.status(400).render("login", { error: msg, success: null });
     }
 
-    // Temporary UI-only admin account. Remove this block after testing the admin console.
-    if (
-      process.env.NODE_ENV !== "production" &&
-      rawIdentifier.toLowerCase() === "admin" &&
-      password === "admin123"
-    ) {
-      req.session.user = {
-        id: "temporary-admin",
-        firstName: "Temporary",
-        lastName: "Admin",
-        username: "admin",
-        email: "admin@test.local",
-        role: "admin",
-        avatar: ""
-      };
-
-      const payload = {
-        userId: "temporary-admin",
-        role: "admin"
-      };
-
-      const token = jwt.sign(payload, JWT_SECRET, {
-        expiresIn: "1d"
-      });
-
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 24 * 60 * 60 * 1000
-      });
-
-      const targetUrl = returnTo || "/admin";
-
-      if (isJson) {
-        return res.json({
-          success: true,
-          redirect: targetUrl,
-          user: req.session.user
-        });
-      }
-
-      return res.redirect(targetUrl);
-    }
-
     const cleanId = rawIdentifier;
     const escapedId = cleanId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const caseInsensitiveRegex = new RegExp(`^${escapedId}$`, "i");

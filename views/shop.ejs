@@ -220,13 +220,11 @@
               <button type="button" class="sort-select" id="sortSelect" aria-haspopup="listbox"
                 aria-expanded="false">
                 <span id="sortSelectLabel">
-                  <%= activeSort==='price-asc' ? 'Price: Low to High' : activeSort==='price-desc' ? 'Price: High to Low' : activeSort==='featured' ? 'Featured' : 'Top rated' %>
+                  <%= activeSort==='price-asc' ? 'Price: Low to High' : activeSort==='price-desc' ? 'Price: High to Low' : 'Featured' %>
                 </span>
                 <span class="sort-select__chevron" aria-hidden="true"></span>
               </button>
               <div class="sort-options" id="sortOptions" role="listbox" aria-label="Sort products" hidden>
-                <button type="button" class="sort-option <%= activeSort==='rating' ? 'is-active' : '' %>"
-                  role="option" aria-selected="<%= activeSort==='rating' %>" data-value="rating">Top rated</button>
                 <button type="button" class="sort-option <%= activeSort==='featured' ? 'is-active' : '' %>"
                   role="option" aria-selected="<%= activeSort==='featured' %>" data-value="featured">Featured</button>
                 <button type="button" class="sort-option <%= activeSort==='price-asc' ? 'is-active' : '' %>"
@@ -310,6 +308,7 @@
                         data-name="<%= (p.name || '').replace(/["']/g, '') %>"
                         data-price="<%= p.price %>"
                         data-img="<%= p.image_url %>"
+                        data-type="<%= p.productType || 'item' %>"
                         data-max="<%= p.maxPurchaseQuantity || 10 %>"
                         aria-label="Add to cart">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"

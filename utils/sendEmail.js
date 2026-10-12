@@ -3,7 +3,10 @@ const nodemailer = require("nodemailer");
 
 // Create reusable transporter using Gmail SMTP / environment credentials
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  requireTLS: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
@@ -193,6 +196,65 @@ async function sendOtpEmail({ to, name, code }) {
   return transporter.sendMail(mailOptions);
 }
 
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[character]));
+}
+
+async function sendInvoiceEmail({ to, name, order, invoice }) {
+  const recipientName = name || "Engineer";
+  const itemRows = order.items.map((item) => `
+    <tr>
+      <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;">${escapeHtml(item.name)}</td>
+      <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;text-align:center;">${item.quantity}</td>
+      <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;text-align:right;">₱${(item.unitPrice * item.quantity).toFixed(2)}</td>
+    </tr>
+  `).join("");
+  const textItems = order.items
+    .map((item) => `${item.name} x${item.quantity} - ₱${(item.unitPrice * item.quantity).toFixed(2)}`)
+    .join("\n");
+
+  const result = await transporter.sendMail({
+    from: `"LabKit Market" <${process.env.EMAIL_USER}>`,
+    to,
+    subject: `LabKit invoice ${invoice.invoiceNumber}`,
+    text: `Hello ${recipientName},\n\nThank you for your LabKit order.\n\nInvoice: ${invoice.invoiceNumber}\nOrder: ${order._id}\n\n${textItems}\n\nSubtotal: ₱${order.subtotal.toFixed(2)}\nShipping: ₱${order.shippingFee.toFixed(2)}\nTotal: ₱${order.totalAmount.toFixed(2)}\n\nThank you for shopping with LabKit Market.`,
+    html: `
+      <div style="max-width:620px;margin:0 auto;padding:32px;font-family:Arial,sans-serif;color:#1e293b;">
+        <h1 style="color:#0f5d63;margin-bottom:4px;">LabKit Market</h1>
+        <p style="color:#64748b;margin-top:0;">Invoice receipt</p>
+        <p>Hello ${escapeHtml(recipientName)},</p>
+        <p>Thank you for your order. Your invoice details are below.</p>
+        <p><strong>Invoice:</strong> ${escapeHtml(invoice.invoiceNumber)}<br>
+        <strong>Order:</strong> ${escapeHtml(order._id)}</p>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr><th style="text-align:left;padding:10px 0;">Item</th><th>Qty</th><th style="text-align:right;">Amount</th></tr></thead>
+          <tbody>${itemRows}</tbody>
+        </table>
+        <p style="text-align:right;line-height:1.8;">
+          Subtotal: ₱${order.subtotal.toFixed(2)}<br>
+          Shipping: ₱${order.shippingFee.toFixed(2)}<br>
+          <strong>Total: ₱${order.totalAmount.toFixed(2)}</strong>
+        </p>
+        <p style="color:#64748b;">This is an automated receipt from LabKit Market.</p>
+      </div>
+    `.trim()
+  });
+
+  if (!result.accepted || !result.accepted.some((recipient) => recipient.toLowerCase() === to.toLowerCase())) {
+    throw new Error(`SMTP did not accept the invoice recipient: ${to}`);
+  }
+
+  console.log(`Invoice email accepted by SMTP for ${to} (${result.messageId})`);
+  return result;
+}
+
 module.exports = {
-  sendOtpEmail
+  sendOtpEmail,
+  sendInvoiceEmail
 };
