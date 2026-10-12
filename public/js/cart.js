@@ -74,7 +74,7 @@ function requireAuthentication() {
   return false;
 }
 
-function addToCart(id, name, price, img, maxPurchaseQuantity) {
+function addToCart(id, name, price, img, maxPurchaseQuantity, productType = "item") {
   if (!isAuthenticated()) {
     requireAuthentication();
     return;
@@ -98,6 +98,16 @@ function addToCart(id, name, price, img, maxPurchaseQuantity) {
     });
   }
   saveCart(cart);
+  fetch("/cart/add", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      itemId: productType === "item" ? id : null,
+      kitId: productType === "kit" ? id : null,
+      quantity: 1,
+      unitPrice: Number(price)
+    })
+  }).catch((error) => console.error("Unable to sync cart with database:", error));
   openCart();
 }
 
@@ -119,6 +129,11 @@ function updateCartQty(id, delta) {
     saveSelectedCartIds(selectedIds);
   }
   saveCart(cart);
+  fetch("/cart/update", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, delta })
+  }).catch((error) => console.error("Unable to sync cart quantity:", error));
 }
 
 function removeCartItem(id) {
@@ -133,6 +148,11 @@ function removeCartItem(id) {
   selectedIds.delete(String(id));
   saveSelectedCartIds(selectedIds);
   saveCart(cart);
+  fetch("/cart/remove", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id })
+  }).catch((error) => console.error("Unable to sync cart removal:", error));
 }
 
 function openCart() {
@@ -323,10 +343,10 @@ document.addEventListener(
         return false;
       }
       // If authenticated and button has dataset values, trigger addToCart
-      const { id, name, price, img, max } = addBtn.dataset;
+      const { id, name, price, img, max, type } = addBtn.dataset;
       if (id && name && price) {
         event.preventDefault();
-        addToCart(id, name, Number(price), img, Number(max) || 10);
+        addToCart(id, name, Number(price), img, Number(max) || 10, type);
       }
     }
 

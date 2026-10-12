@@ -31,7 +31,8 @@ exports.renderShop = async (req, res) => {
       rating: item.rating || 5.0,
       review_count: item.review_count || 0,
       in_stock: (item.stockQuantity !== undefined ? item.stockQuantity > 0 : true),
-      maxPurchaseQuantity: item.maxPurchaseQuantity || 10
+      maxPurchaseQuantity: item.maxPurchaseQuantity || 10,
+      productType: "item"
     }));
     filtered = filtered.concat(customItems);
   } catch (error) {
@@ -46,7 +47,8 @@ exports.renderShop = async (req, res) => {
       id: String(kit._id),
       image_url: kit.image_url || kit.imageUrl,
       review_count: kit.review_count || 0,
-      maxPurchaseQuantity: kit.maxPurchaseQuantity || 10
+      maxPurchaseQuantity: kit.maxPurchaseQuantity || 10,
+      productType: "kit"
     }));
     filtered = filtered.concat(customProducts);
   } catch (error) {
@@ -96,7 +98,7 @@ exports.renderShop = async (req, res) => {
     totalCount: filtered.length,
     activeCategory: category || "All",
     activeDifficulty: difficulty || "All levels",
-    activeSort: sort || "rating",
+    activeSort: sort || "featured",
     searchQuery: q || "",
     suggestionProductsJson: JSON.stringify(suggestionProducts).replace(/</g, "\\u003c"),
     loading: false
