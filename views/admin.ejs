@@ -24,17 +24,19 @@
         <span class="navbar__wordmark">LabKit</span><span class="navbar__sub">/MARKET</span>
       </a>
       <nav class="navbar__nav">
-        <a href="/" class="navbar__link">Home</a><a href="/shop" class="navbar__link">Shop</a>
-        <a href="/about" class="navbar__link">About Us</a><a href="/admin" class="navbar__link navbar__link--active">Admin</a>
+        <a href="/" class="navbar__link">Home</a>
+        <a href="/shop" class="navbar__link">Shop</a>
+        <a href="/about" class="navbar__link">About Us</a>
+        <a href="/admin" class="navbar__link navbar__link--active">Admin</a>
       </nav>
       <div class="navbar__actions">
         <div class="navbar-search">
-        <button type="button" class="navbar__icon-btn navbar-search__toggle" aria-label="Search" aria-expanded="false">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-        <form class="navbar-search__form" action="/shop" method="get" role="search">
-          <input class="navbar-search__input" name="q" type="search" placeholder="Search products..." aria-label="Search products" />
-        </form>
+          <button type="button" class="navbar__icon-btn navbar-search__toggle" aria-label="Search" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+          <form class="navbar-search__form" action="/shop" method="get" role="search">
+            <input class="navbar-search__input" name="q" type="search" placeholder="Search products..." aria-label="Search products" />
+          </form>
         </div>
         <button type="button" class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
@@ -42,14 +44,44 @@
         </button>
         <div class="profile-dropdown-wrapper">
           <button class="navbar__avatar-btn" id="avatarBtn" aria-label="User menu" aria-expanded="false">
-            <span class="navbar__avatar"><%= ((locals.currentUser && locals.currentUser.firstName) || "A").charAt(0).toUpperCase() %></span>
+            <% if (locals.currentUser && locals.currentUser.avatar) { %>
+              <img src="<%= locals.currentUser.avatar %>" alt="User avatar" class="navbar__avatar" style="object-fit: cover; border-radius: 9999px;" referrerpolicy="no-referrer" />
+            <% } else { %>
+              <span class="navbar__avatar"><%= ((locals.currentUser && locals.currentUser.firstName) || "A").charAt(0).toUpperCase() %></span>
+            <% } %>
             <svg class="navbar__avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="profile-dropdown" id="profileDropdown">
-            <div class="profile-dropdown__header"><p class="profile-dropdown__name"><%= (locals.currentUser && locals.currentUser.firstName) || "Admin" %> <%= (locals.currentUser && locals.currentUser.lastName) || "" %></p><p class="profile-dropdown__email"><%= (locals.currentUser && locals.currentUser.email) || "" %></p></div>
+            <div class="profile-dropdown__header">
+              <% if (locals.currentUser && locals.currentUser.avatar) { %>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <img src="<%= locals.currentUser.avatar %>" alt="User avatar" style="width: 38px; height: 38px; border-radius: 9999px; object-fit: cover; border: 1px solid var(--line, #334155); flex-shrink: 0;" referrerpolicy="no-referrer" />
+                  <div style="overflow: hidden;">
+                    <p class="profile-dropdown__name" style="margin: 0; line-height: 1.25;"><%= (locals.currentUser && locals.currentUser.firstName) || "Admin" %> <%= (locals.currentUser && locals.currentUser.lastName) || "" %></p>
+                    <p class="profile-dropdown__email" style="margin: 3px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%= (locals.currentUser && locals.currentUser.email) || "" %></p>
+                  </div>
+                </div>
+              <% } else { %>
+                <p class="profile-dropdown__name"><%= (locals.currentUser && locals.currentUser.firstName) || "Admin" %> <%= (locals.currentUser && locals.currentUser.lastName) || "" %></p>
+                <p class="profile-dropdown__email"><%= (locals.currentUser && locals.currentUser.email) || "" %></p>
+              <% } %>
+            </div>
             <div class="profile-dropdown__divider"></div>
-            <a href="/settings" class="profile-dropdown__item"><span>⚙</span><span>Settings</span></a>
-            <a href="/logout" class="profile-dropdown__item"><span>↪</span><span>Sign out</span></a>
+            <a href="/settings" class="profile-dropdown__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+              <span>Settings</span>
+            </a>
+            <a href="/logout" class="profile-dropdown__item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              <span>Sign out</span>
+            </a>
           </div>
         </div>
       </div>
@@ -59,105 +91,648 @@
   <main class="admin-page">
     <section class="console-header">
       <div class="console-title">
-        <span class="console-icon">◈</span>
-        <div><h1>Admin console</h1><p>Manage bundles and user accounts.</p></div>
+        <span class="console-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="7" height="9" x="3" y="3" rx="1.5"/>
+            <rect width="7" height="5" x="14" y="3" rx="1.5"/>
+            <rect width="7" height="9" x="14" y="12" rx="1.5"/>
+            <rect width="7" height="5" x="3" y="16" rx="1.5"/>
+          </svg>
+        </span>
+        <div>
+          <h1>Admin Console</h1>
+          <p>Manage hardware bundles, catalog inventory, and user accounts.</p>
+        </div>
       </div>
-      <span class="console-label">◉ &nbsp; Inventory console</span>
+      <span class="console-badge">
+        <span class="badge-dot"></span>
+        Inventory &amp; Storefront Console
+      </span>
     </section>
 
-    <% if (error) { %><div class="admin-alert"><%= error %></div><% } %>
+    <% if (error) { %>
+      <div class="admin-alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span><%= error %></span>
+      </div>
+    <% } %>
+    <% if (locals.success) { %>
+      <div class="admin-alert admin-alert--success">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <span><%= success %></span>
+      </div>
+    <% } %>
 
     <div class="tabs" role="tablist">
-      <button type="button" class="tab is-active" data-tab="products">Products</button>
-      <button type="button" class="tab" data-tab="accounts">Accounts</button>
+      <button type="button" class="tab is-active" data-tab="products">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m7.5 4.27 9 5.15"/>
+          <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+          <path d="m3.3 7 8.7 5 8.7-5"/>
+          <path d="M12 22V12"/>
+        </svg>
+        <span>Products &amp; Items</span>
+        <span class="tab-count"><%= (locals.items ? items.length : 0) + (locals.kits ? kits.length : 0) %></span>
+      </button>
+      <button type="button" class="tab" data-tab="accounts">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <span>User Accounts</span>
+        <span class="tab-count"><%= users.length %></span>
+      </button>
     </div>
 
     <section class="tab-panel is-active" data-panel="products">
       <section class="admin-card bundle-list-card">
         <div class="section-heading">
-          <div class="section-heading__title"><span class="section-icon">◈</span><div><h2>Manage bundles</h2><p>Remove items from the shop.</p></div></div>
-          <button type="button" class="outline-button" id="focusBundleForm">＋ &nbsp;Add new</button>
+          <div class="section-heading__title">
+            <span class="section-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m7.5 4.27 9 5.15"/>
+                <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                <path d="m3.3 7 8.7 5 8.7-5"/>
+                <path d="M12 22V12"/>
+              </svg>
+            </span>
+            <div>
+              <h2>Manage Catalog Items</h2>
+              <p>Review active catalog items and stock levels in the shop.</p>
+            </div>
+          </div>
+          <button type="button" class="outline-button" id="focusBundleForm">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            <span>Add new item</span>
+          </button>
         </div>
-        <% if (!kits.length) { %><p class="empty-state">No bundles yet — add your first one below.</p><% } %>
-        <% kits.forEach(kit => { %>
-          <div class="bundle-row"><div><strong><%= kit.name %></strong><span><%= kit.category %> · ₱<%= kit.price.toFixed(2) %> · <%= kit.stock_quantity %> in stock</span></div><strong>Limit: <%= kit.maxPurchaseQuantity %></strong></div>
+        <% const itemList = locals.items || []; %>
+        <% const kitList = locals.kits || []; %>
+        <% if (!itemList.length && !kitList.length) { %>
+          <div class="empty-state">
+            <div class="empty-state__icon">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m7.5 4.27 9 5.15"/>
+                <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                <path d="m3.3 7 8.7 5 8.7-5"/>
+                <path d="M12 22V12"/>
+              </svg>
+            </div>
+            <p class="empty-state__title">No items yet</p>
+            <p class="empty-state__desc">Add your first hardware item to the storefront using the form below.</p>
+          </div>
+        <% } %>
+        <% itemList.forEach(item => { %>
+          <div class="bundle-row" data-id="<%= item._id %>" data-type="item">
+            <script type="application/json" class="js-item-data">
+              <%- JSON.stringify(item).replace(/</g, '\\u003c') %>
+            </script>
+            <div class="bundle-row__meta">
+              <strong><%= item.name %></strong>
+              <span>
+                <span class="bundle-tag"><%= item.category %></span>
+                &bull;
+                <span class="bundle-price">₱<%= (Number(item.price) || 0).toFixed(2) %></span>
+                &bull;
+                <span class="bundle-stock"><%= (item.stockQuantity !== undefined ? item.stockQuantity : item.stock_quantity) %> in stock</span>
+                <% if (item.difficulty) { %>
+                  &bull;
+                  <span class="bundle-diff"><%= item.difficulty %></span>
+                <% } %>
+              </span>
+            </div>
+            <div class="bundle-row__actions" style="display: flex; align-items: center; gap: 0.75rem;">
+              <div class="bundle-row__badge">
+                <span>Limit: <strong><%= item.maxPurchaseQuantity || 10 %></strong></span>
+              </div>
+              <button class="outline-button edit-button js-edit-item-btn" type="button" title="Edit item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9"/>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+                <span>Edit</span>
+              </button>
+              <form method="post" action="/admin/items/<%= item._id %>/delete" class="js-delete-item-form" data-name="<%= item.name %>" style="margin: 0;">
+                <button class="remove-button js-remove-item-btn" type="button" title="Remove item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                  <span>Remove</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+        <% kitList.forEach(kit => { %>
+          <div class="bundle-row" data-id="<%= kit._id %>" data-type="kit">
+            <script type="application/json" class="js-item-data">
+              <%- JSON.stringify(kit).replace(/</g, '\\u003c') %>
+            </script>
+            <div class="bundle-row__meta">
+              <strong><%= kit.name %></strong>
+              <span>
+                <span class="bundle-tag"><%= kit.category %></span>
+                &bull;
+                <span class="bundle-price">₱<%= kit.price.toFixed(2) %></span>
+                &bull;
+                <span class="bundle-stock"><%= (kit.stock_quantity !== undefined ? kit.stock_quantity : kit.stockQuantity) %> in stock</span>
+              </span>
+            </div>
+            <div class="bundle-row__actions" style="display: flex; align-items: center; gap: 0.75rem;">
+              <div class="bundle-row__badge">
+                <span>Limit: <strong><%= kit.maxPurchaseQuantity %></strong></span>
+              </div>
+              <button class="outline-button edit-button js-edit-kit-btn" type="button" title="Edit bundle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9"/>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+                <span>Edit</span>
+              </button>
+              <form method="post" action="/admin/bundles/<%= kit._id %>/delete" class="js-delete-kit-form" data-name="<%= kit.name %>" style="margin: 0;">
+                <button class="remove-button js-remove-kit-btn" type="button" title="Remove bundle">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                  <span>Remove</span>
+                </button>
+              </form>
+            </div>
+          </div>
         <% }) %>
       </section>
 
-      <form class="bundle-editor" id="bundleForm" method="post" action="/admin/bundles">
+      <form class="bundle-editor" id="bundleForm" method="post" action="/admin/items" enctype="multipart/form-data">
+        <input type="hidden" name="existingImageUrl" id="existingImageUrl" value="" />
+        <input type="hidden" name="itemId" id="formItemId" value="" />
         <div class="editor-main">
-          <section class="admin-card">
-            <div class="section-heading"><div class="section-heading__title"><span class="section-icon">▣</span><div><h2>Basics</h2><p>Identity, imagery, and category.</p></div></div></div>
-            <div class="form-grid">
-              <label>Name *<input name="name" id="bundleName" required value="<%= formData.name || '' %>" /></label>
-              <label>Slug<input id="bundleSlug" placeholder="auto-generated if blank" readonly /></label>
-              <label>Tagline *<input name="tagline" id="bundleTagline" required value="<%= formData.tagline || '' %>" /></label>
-              <label>Image URL *<input name="image_url" id="bundleImage" type="url" required placeholder="https://..." value="<%= formData.image_url || '' %>" /></label>
-              <label>Category *
-                <select name="category"><option>IoT & WiFi</option><option>IoT Kits</option><option>Sensors & Modules</option><option>Microcontrollers</option></select>
-              </label>
-              <label>Difficulty *
-                <select name="difficulty"><option>Beginner</option><option>Intermediate</option><option>Advanced</option><option>All levels</option></select>
-              </label>
+          <div class="edit-mode-banner" id="editModeBanner" style="display: none;">
+            <div class="edit-mode-banner__info">
+              <span class="edit-mode-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M12 20h9"/>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+                <span>EDITING ITEM</span>
+              </span>
+              <span class="edit-mode-title">Currently editing: <strong id="editingItemName">...</strong></span>
             </div>
-            <label>Description *<textarea name="description" id="bundleDescription" required><%= formData.description || '' %></textarea></label>
+            <button type="button" class="cancel-edit-btn" id="cancelEditBannerBtn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+              <span>Cancel edit</span>
+            </button>
+          </div>
+          <section class="admin-card">
+            <div class="section-heading">
+              <div class="section-heading__title">
+                <span class="section-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9"/>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                  </svg>
+                </span>
+                <div>
+                  <h2>Item Information</h2>
+                  <p>Core identity, imagery, and classification based on item schema.</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label" for="bundleName">
+                  <span class="form-label__title">Item Name <span class="req">*</span></span>
+                </label>
+                <input name="name" id="bundleName" required placeholder="e.g. ESP32 Ultimate IoT Starter Kit" value="<%= formData.name || '' %>" />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="bundleSlug">
+                  <span class="form-label__title">URL Slug</span>
+                  <span class="form-label__hint">Auto-generated</span>
+                </label>
+                <input id="bundleSlug" placeholder="auto-generated from name" readonly />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="bundleTagline">
+                  <span class="form-label__title">Tagline</span>
+                  <span class="form-label__hint">Short punchy subtitle</span>
+                </label>
+                <input name="tagline" id="bundleTagline" placeholder="e.g. Complete IoT hardware bundle with Wi-Fi and Bluetooth" value="<%= formData.tagline || '' %>" />
+              </div>
+              <div class="form-field image-upload-field">
+                <label class="form-label" for="itemImageInput">
+                  <span class="form-label__title">Item Image <span class="req">*</span></span>
+                  <span class="form-label__hint">Upload file</span>
+                </label>
+                <div class="file-upload-dropzone" id="imageDropzone">
+                  <input type="file" name="itemImage" id="itemImageInput" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" class="file-upload-input" />
+                  <div class="file-upload-content" id="uploadPlaceholder">
+                    <div class="file-upload-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                      </svg>
+                    </div>
+                    <div class="file-upload-text">
+                      <span class="file-upload-prompt"><strong>Upload image</strong> or drag &amp; drop</span>
+                      <span class="file-upload-types">PNG, JPG, WebP up to 5MB</span>
+                    </div>
+                  </div>
+                  <div class="file-upload-preview" id="fileUploadPreview" style="display: none;">
+                    <img id="filePreviewThumb" src="" alt="Thumbnail" />
+                    <div class="file-preview-info">
+                      <span class="file-preview-name" id="filePreviewName"></span>
+                      <span class="file-preview-size" id="filePreviewSize"></span>
+                    </div>
+                    <button type="button" class="file-preview-remove" id="removeFileBtn" title="Change image" aria-label="Remove image">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="image-url-toggle-wrap">
+                  <button type="button" class="image-url-toggle-btn" id="toggleUrlInputBtn">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                    </svg>
+                    <span id="toggleUrlText">Or enter image URL instead</span>
+                  </button>
+                  <div class="image-url-input-container" id="urlInputContainer" style="display: none;">
+                    <input name="imageUrl" id="bundleImage" type="url" placeholder="https://..." value="<%= formData.imageUrl || formData.image_url || '' %>" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="bundleCategory">
+                  <span class="form-label__title">Category <span class="req">*</span></span>
+                </label>
+                <select name="category" id="bundleCategory">
+                  <option <%= (formData.category === 'IoT Kits' || !formData.category) ? 'selected' : '' %>>IoT Kits</option>
+                  <option <%= (formData.category === 'Microcontrollers') ? 'selected' : '' %>>Microcontrollers</option>
+                  <option <%= (formData.category === 'Single-Board Computers') ? 'selected' : '' %>>Single-Board Computers</option>
+                  <option <%= (formData.category === 'Sensors & Modules') ? 'selected' : '' %>>Sensors & Modules</option>
+                  <option <%= (formData.category === 'Buzzers & Audio') ? 'selected' : '' %>>Buzzers & Audio</option>
+                  <option <%= (formData.category === 'Motors & Actuators') ? 'selected' : '' %>>Motors & Actuators</option>
+                  <option <%= (formData.category === 'Displays & Power') ? 'selected' : '' %>>Displays & Power</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="bundleDifficulty">
+                  <span class="form-label__title">Difficulty Level <span class="req">*</span></span>
+                </label>
+                <select name="difficulty" id="bundleDifficulty">
+                  <option <%= (formData.difficulty === 'All levels') ? 'selected' : '' %>>All levels</option>
+                  <option <%= (formData.difficulty === 'Beginner' || !formData.difficulty) ? 'selected' : '' %>>Beginner</option>
+                  <option <%= (formData.difficulty === 'Intermediate') ? 'selected' : '' %>>Intermediate</option>
+                  <option <%= (formData.difficulty === 'Advanced') ? 'selected' : '' %>>Advanced</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="bundleDescription">
+                <span class="form-label__title">Description <span class="req">*</span></span>
+                <span class="form-label__hint">Detailed overview of the item</span>
+              </label>
+              <textarea name="description" id="bundleDescription" required placeholder="Write a thorough summary of this kit, included hardware, and recommended learning applications..."><%= formData.description || '' %></textarea>
+            </div>
           </section>
 
           <section class="admin-card">
-            <div class="section-heading"><div class="section-heading__title"><span class="section-icon">◇</span><div><h2>Pricing &amp; inventory</h2><p>Set the price and stock level.</p></div></div></div>
-            <div class="form-grid form-grid--three">
-              <label>Price (PHP) *<input name="price" id="bundlePrice" type="number" min="0" step="0.01" required value="<%= formData.price || '' %>" /></label>
-              <label>Compare-at (PHP)<input name="compare_at_price" type="number" min="0" step="0.01" /></label>
-              <label>Stock<input name="stock_quantity" type="number" min="0" step="1" required value="<%= formData.stock_quantity || 25 %>" /></label>
-              <label>Max per order<input name="maxPurchaseQuantity" type="number" min="1" step="1" required value="<%= formData.maxPurchaseQuantity || 10 %>" /></label>
+            <div class="section-heading">
+              <div class="section-heading__title">
+                <span class="section-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M14.5 9h-4a1.5 1.5 0 0 0 0 3h3a1.5 1.5 0 0 1 0 3h-4"/>
+                    <path d="M12 6v2m0 8v2"/>
+                  </svg>
+                </span>
+                <div>
+                  <h2>Pricing &amp; Inventory Control</h2>
+                  <p>Configure pricing, discounts, and order purchase limits.</p>
+                </div>
+              </div>
             </div>
-            <label class="feature-toggle"><span>☆ &nbsp; Feature on the home page</span><input type="checkbox" /></label>
+            <div class="form-grid form-grid--four">
+              <div class="form-field">
+                <label class="form-label" for="bundlePrice">
+                  <span class="form-label__title">Price (PHP) <span class="req">*</span></span>
+                </label>
+                <input name="price" id="bundlePrice" type="number" min="0" step="0.01" required placeholder="0.00" value="<%= formData.price || '' %>" />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="bundleComparePrice">
+                  <span class="form-label__title">Compare-at Price</span>
+                  <span class="form-label__hint">Optional</span>
+                </label>
+                <input name="compare_at_price" id="bundleComparePrice" type="number" min="0" step="0.01" placeholder="0.00" value="<%= formData.compare_at_price || '' %>" />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="bundleStock">
+                  <span class="form-label__title">Stock Quantity <span class="req">*</span></span>
+                </label>
+                <input name="stockQuantity" id="bundleStock" type="number" min="0" step="1" required placeholder="25" value="<%= formData.stockQuantity !== undefined ? formData.stockQuantity : (formData.stock_quantity || 25) %>" />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="bundleMaxPurchase">
+                  <span class="form-label__title">Max per Order</span>
+                  <span class="form-label__hint">Optional</span>
+                </label>
+                <input name="maxPurchaseQuantity" id="bundleMaxPurchase" type="number" min="1" step="1" placeholder="10" value="<%= formData.maxPurchaseQuantity || 10 %>" />
+              </div>
+            </div>
+            <label class="feature-toggle" for="bundleFeatured">
+
+              <span class="feature-toggle__label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                <span>Feature this item on the home page showcase</span>
+              </span>
+              <input type="checkbox" id="bundleFeatured" />
+            </label>
           </section>
 
           <section class="admin-card">
-            <div class="section-heading"><div class="section-heading__title"><span class="section-icon">♧</span><div><h2>Contents</h2><p>Components and features, one per line.</p></div></div></div>
+            <div class="section-heading">
+              <div class="section-heading__title">
+                <span class="section-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                    <polyline points="2 17 12 22 22 17"/>
+                    <polyline points="2 12 12 17 22 12"/>
+                  </svg>
+                </span>
+                <div>
+                  <h2>Package Contents &amp; Highlights</h2>
+                  <p>List components and features, one item per line.</p>
+                </div>
+              </div>
+            </div>
+
             <div class="form-grid">
-              <label>Components (one per line) *<textarea name="components" required placeholder="ESP32 board | 1 | WiFi + Bluetooth"><%= formData.components || '' %></textarea></label>
-              <label>Features (one per line)<textarea name="features" placeholder="Pinout diagrams&#10;Sample code snippets"></textarea></label>
+              <div class="form-field">
+                <label class="form-label" for="bundleComponents">
+                  <span class="form-label__title">Included Hardware Components</span>
+                  <span class="form-label__hint">Auto-bulleted &bull; Name | Qty</span>
+                </label>
+                <textarea name="components" id="bundleComponents" class="bullet-textarea" placeholder="• ESP32 Board | 1&#10;• DHT11 Sensor&#10;• OLED Screen"><%= formData.components || '' %></textarea>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="bundleFeatures">
+                  <span class="form-label__title">Key Highlights &amp; Features</span>
+                  <span class="form-label__hint">Auto-bulleted</span>
+                </label>
+                <textarea name="features" id="bundleFeatures" class="bullet-textarea" placeholder="• Pinout diagrams&#10;• Sample code files&#10;• Jumper wires"><%= formData.features || '' %></textarea>
+              </div>
             </div>
           </section>
         </div>
 
         <aside class="editor-side">
-          <div class="preview-label">LIVE PREVIEW</div>
+          <div class="preview-badge">
+            <span class="live-dot"></span>
+            LIVE PREVIEW
+          </div>
           <article class="preview-card">
-            <div class="preview-image" id="previewImage"><span>▧</span></div>
-            <div class="preview-body"><div><b>Beginner</b> <small>IoT &amp; WiFi</small></div><h3 id="previewName">Bundle name</h3><p id="previewTagline">A short, punchy tagline appears here.</p><strong id="previewPrice">₱0.00</strong></div>
+            <div class="preview-image" id="previewImage">
+              <div class="preview-placeholder">
+                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                  <circle cx="9" cy="9" r="2"/>
+                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                </svg>
+                <span>Image Preview</span>
+              </div>
+            </div>
+            <div class="preview-body">
+              <div class="preview-meta">
+                <b id="previewDifficulty">Beginner</b>
+                <small id="previewCategory">IoT Kits</small>
+              </div>
+              <h3 id="previewName">Item name</h3>
+              <p id="previewTagline">A short, punchy tagline appears here.</p>
+              <div class="preview-price-wrapper">
+                <strong id="previewPrice">₱0.00</strong>
+              </div>
+            </div>
           </article>
-          <div class="side-actions"><button class="primary-button" type="submit">＋ &nbsp; Add bundle</button><a href="/admin" class="cancel-button">Cancel</a></div>
+          <div class="side-actions">
+            <button class="primary-button" id="submitItemBtn" type="submit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="submitItemBtnIcon">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              <span id="submitItemBtnText">Add Item</span>
+            </button>
+            <button type="button" class="cancel-button" id="discardChangesBtn" style="display: none;">Cancel edit</button>
+            <a href="/admin" class="cancel-button" id="adminResetLink">Discard changes</a>
+          </div>
         </aside>
       </form>
     </section>
 
     <section class="tab-panel" data-panel="accounts">
       <section class="admin-card accounts-card">
-        <div class="section-heading"><div class="section-heading__title"><span class="section-icon">♧</span><div><h2>Accounts</h2><p>Remove app accounts. You can't remove your own.</p></div></div></div>
+        <div class="section-heading">
+          <div class="section-heading__title">
+            <span class="section-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </span>
+            <div>
+              <h2>User Accounts</h2>
+              <p>Manage registered user accounts and administrative access. Your current account is protected.</p>
+            </div>
+          </div>
+        </div>
         <% users.forEach(user => { %>
           <div class="account-row">
-            <div><strong><%= user.firstName %> <%= user.lastName %></strong><span><%= user.email %> · @<%= user.username %> · <%= user.role %></span></div>
+            <div class="account-row__meta">
+              <div class="account-row__name-wrapper">
+                <strong><%= user.firstName %> <%= user.lastName %></strong>
+                <span class="role-badge <%= user.role === 'admin' ? 'role-badge--admin' : 'role-badge--user' %>"><%= user.role %></span>
+              </div>
+              <span><%= user.email %> &bull; @<%= user.username %></span>
+            </div>
             <% const currentUserId = currentUser ? String(currentUser.id || currentUser._id || '') : ''; %>
-            <% if (String(user._id) !== currentUserId) { %><form method="post" action="/admin/accounts/<%= user._id %>/delete"><button class="remove-button" type="submit">Remove</button></form><% } else { %><span class="you-label">You</span><% } %>
+            <% if (String(user._id) !== currentUserId) { %>
+              <form method="post" action="/admin/accounts/<%= user._id %>/delete" class="js-delete-account-form" data-name="<%= user.firstName %> <%= user.lastName %>" data-email="<%= user.email %>">
+                <button class="remove-button js-remove-account-btn" type="button" aria-label="Remove account for <%= user.email %>">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                  <span>Remove</span>
+                </button>
+              </form>
+            <% } else { %>
+              <span class="you-label">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Current session</span>
+              </span>
+            <% } %>
           </div>
         <% }) %>
       </section>
+
       <section class="admin-card password-card">
-        <div class="section-heading"><div class="section-heading__title"><span class="section-icon">⚿</span><div><h2>Change your password</h2><p>Changes the password for <%= (currentUser && currentUser.email) || 'your account' %>.</p></div></div></div>
+        <div class="section-heading">
+          <div class="section-heading__title">
+            <span class="section-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+            </span>
+            <div>
+              <h2>Change Admin Password</h2>
+              <p>Update password credentials for <%= (currentUser && currentUser.email) || 'your administrator account' %>.</p>
+            </div>
+          </div>
+        </div>
         <form class="password-form" id="adminPasswordForm">
-          <input name="currentPassword" type="password" placeholder="Current password" required />
-          <input name="newPassword" type="password" placeholder="New password" required />
-          <input name="confirmPassword" type="password" placeholder="Confirm new password" required />
-          <button class="primary-button" type="submit">⚿ &nbsp; Update password</button>
+          <div class="form-field">
+            <label class="form-label" for="currentPass">
+              <span class="form-label__title">Current Password <span class="req">*</span></span>
+            </label>
+            <input id="currentPass" name="currentPassword" type="password" placeholder="••••••••" required autocomplete="current-password" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="newPass">
+              <span class="form-label__title">New Password <span class="req">*</span></span>
+            </label>
+            <input id="newPass" name="newPassword" type="password" placeholder="••••••••" required autocomplete="new-password" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="confirmPass">
+              <span class="form-label__title">Confirm Password <span class="req">*</span></span>
+            </label>
+            <input id="confirmPass" name="confirmPassword" type="password" placeholder="••••••••" required autocomplete="new-password" />
+          </div>
+          <div class="form-field form-field--action">
+            <label class="form-label form-label--empty" aria-hidden="true">&nbsp;</label>
+            <button class="primary-button" type="submit">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>Update Password</span>
+            </button>
+          </div>
         </form>
       </section>
     </section>
   </main>
 
-  <footer class="admin-footer"><strong>⚙ &nbsp; LabKit Market</strong><p>Project-ready hardware bundles for engineering students and hobbyists.</p><p>Copyright &copy; 2026 Alain Bibaoco and Andrea Caunga. All rights reserved.</p></footer>
+  <!-- Styled Confirmation Modal Dialog -->
+  <div class="confirm-modal-backdrop" id="deleteConfirmModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+    <div class="confirm-modal" role="document">
+      <button type="button" class="confirm-modal__close" id="confirmModalClose" aria-label="Close dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+
+      <div class="confirm-modal__header">
+        <div class="confirm-modal__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18"/>
+            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+            <line x1="10" y1="11" x2="10" y2="17"/>
+            <line x1="14" y1="11" x2="14" y2="17"/>
+          </svg>
+        </div>
+        <div class="confirm-modal__headings">
+          <h3 class="confirm-modal__title" id="confirmModalTitle">Are you sure to remove acc?</h3>
+          <p class="confirm-modal__subtitle" id="confirmModalSubtitle">This action cannot be undone.</p>
+        </div>
+      </div>
+
+      <div class="confirm-modal__body">
+        <p class="confirm-modal__message" id="confirmModalMessage">
+          Are you sure you want to delete this account?
+        </p>
+        <div class="confirm-modal__entity-box" id="confirmModalEntityBox">
+          <div class="confirm-modal__entity-avatar" id="confirmModalEntityAvatar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="confirm-modal__entity-details">
+            <strong id="confirmModalEntityName">User Name</strong>
+            <span id="confirmModalEntityDetail">user@example.com</span>
+          </div>
+        </div>
+        <div class="confirm-modal__warning">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span id="confirmModalWarningText">All permissions and sessions will be permanently revoked.</span>
+        </div>
+      </div>
+
+      <div class="confirm-modal__footer">
+        <button type="button" class="confirm-modal__btn confirm-modal__btn--cancel" id="confirmModalCancel">
+          Cancel
+        </button>
+        <button type="button" class="confirm-modal__btn confirm-modal__btn--danger" id="confirmModalConfirm">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+          <span>Remove</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="admin-footer">
+    <div class="admin-footer__inner">
+      <div class="admin-footer__brand">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9"/>
+          <path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>
+        </svg>
+        <strong>LabKit Market</strong>
+        <span class="admin-footer__badge">Admin Console</span>
+      </div>
+      <p>Hardware bundles &amp; electronic components platform for engineering students and makers.</p>
+      <p>Copyright &copy; 2026 Alain Bibaoco and Andrea Caunga. All rights reserved.</p>
+    </div>
+  </footer>
   <script src="/js/cart.js"></script>
   <script src="/js/navbar-search.js"></script>
   <script src="/js/admin.js"></script>

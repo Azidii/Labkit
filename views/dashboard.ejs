@@ -150,7 +150,7 @@
 
           <p class="hero__desc">
             A marketplace for engineering students and hobbyists who buy exactly what they
-            need. From piezo buzzers and ultrasonic sensors to ESP32 boards and Raspberry Pi
+            need. From development boards and sensors to power modules and wiring
             — every part is sold individually, tested before it ships, with no minimum order.
           </p>
 
@@ -251,8 +251,18 @@
               <% } %>
           </div>
           <% } else if (!featured || featured.length===0) { %>
-            <p class="product-grid__empty">No parts yet — check back soon.</p>
-            <% } else { %>
+            <div class="empty-state" style="padding: 3rem 1.5rem; text-align: center; border: 1px dashed hsl(var(--border)); border-radius: 0.75rem; background: hsl(var(--card) / 0.4); margin: 1.5rem 0;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 0.75rem auto; color: hsl(var(--muted-foreground)); opacity: 0.7;">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <line x1="8" y1="11" x2="14" y2="11" />
+              </svg>
+              <h3 style="font-size: 1.1rem; font-weight: 600; color: hsl(var(--foreground)); margin-bottom: 0.35rem;">No featured items available yet</h3>
+              <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1.25rem;">Items added from the admin console will appear here once published.</p>
+              <a href="/shop" class="btn btn--outline" style="display: inline-flex; font-size: 0.85rem; padding: 0.45rem 1.2rem;">Browse Shop Catalog</a>
+            </div>
+          <% } else { %>
               <div class="product-grid">
                 <% featured.forEach(function(p) { %>
                   <div class="product-card" data-slug="<%= p.slug %>">
@@ -297,7 +307,7 @@
                           data-name="<%= (p.name || '').replace(/["']/g, '') %>"
                           data-price="<%= p.price %>"
                           data-img="<%= p.image_url %>"
-                          data-max="10"
+                          data-max="<%= p.maxPurchaseQuantity || 10 %>"
                           aria-label="Add to cart">
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -369,8 +379,8 @@
               </span>
               <h2>No bulky kits. Buy only the exact IoT parts you need.</h2>
               <p class="cta__desc">
-                Tired of paying for starter kits full of parts you'll never use? Pick individual ESP32 microcontrollers,
-                microphone sound modules, jumper wires, resistor packs, and buzzers. Every unit is bench-checked,
+                Tired of paying for starter kits full of parts you'll never use? Pick individual
+                microcontrollers, sensors, breakout boards, and modules for your build. Every unit is bench-checked,
                 sold as a single piece with no minimum order.
               </p>
               <a href="/shop" class="btn btn--secondary">
@@ -398,7 +408,7 @@
                 </div>
                 <div class="vault-file__info">
                   <p class="vault-file__name">Microcontrollers</p>
-                  <p class="vault-file__note">ESP32 DevKit V1 (WROOM-32) &amp; dev boards</p>
+                  <p class="vault-file__note">Development boards, MCUs &amp; accessories</p>
                 </div>
                 <span class="vault-file__arrow" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -420,7 +430,7 @@
                 </div>
                 <div class="vault-file__info">
                   <p class="vault-file__name">Sensors &amp; Modules</p>
-                  <p class="vault-file__note">KY-038 Microphone, ultrasonic &amp; detectors</p>
+                  <p class="vault-file__note">Sound, environmental &amp; motion detectors</p>
                 </div>
                 <span class="vault-file__arrow" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -440,7 +450,7 @@
                 </div>
                 <div class="vault-file__info">
                   <p class="vault-file__name">Displays &amp; Power</p>
-                  <p class="vault-file__note">40-Pin jumper wires, resistors &amp; OLEDs</p>
+                  <p class="vault-file__note">Wiring, power modules &amp; passives</p>
                 </div>
                 <span class="vault-file__arrow" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -462,7 +472,7 @@
                 </div>
                 <div class="vault-file__info">
                   <p class="vault-file__name">Buzzers &amp; Audio</p>
-                  <p class="vault-file__note">5V active piezo buzzers &amp; tone modules</p>
+                  <p class="vault-file__note">Piezo buzzers, audio alert &amp; tone modules</p>
                 </div>
                 <span class="vault-file__arrow" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -485,7 +495,7 @@
                 </div>
                 <div class="vault-file__info">
                   <p class="vault-file__name">IoT Kits</p>
-                  <p class="vault-file__note">All-in-one project bundles &amp; sensor starter packs</p>
+                  <p class="vault-file__note">All-in-one project bundles &amp; sensor packs</p>
                 </div>
                 <span class="vault-file__arrow" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -570,8 +580,7 @@
             <span class="footer__brand-text">LabKit Market</span>
           </div>
           <p class="footer__desc">
-            Individual electronic components and IoT hardware for engineering students and makers. Buy single
-            ESP32 boards, buzzers, sensors, and wiring &mdash; bench-checked with pinout datasheets included.
+            Individual electronic components and IoT hardware for engineering students and makers &mdash; bench-checked with pinout datasheets included.
           </p>
         </div>
 

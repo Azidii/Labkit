@@ -154,7 +154,7 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
         <input type="search" name="q" id="searchInput" class="search-input"
-          placeholder="Search products, e.g. ESP32, Raspberry Pi, ultrasonic..." value="<%= searchQuery %>" />
+          placeholder="Search products..." value="<%= searchQuery %>" />
         <button type="submit" class="search-submit" aria-label="Search products">
           <span>Search</span>
         </button>
@@ -220,13 +220,11 @@
               <button type="button" class="sort-select" id="sortSelect" aria-haspopup="listbox"
                 aria-expanded="false">
                 <span id="sortSelectLabel">
-                  <%= activeSort==='price-asc' ? 'Price: Low to High' : activeSort==='price-desc' ? 'Price: High to Low' : activeSort==='featured' ? 'Featured' : 'Top rated' %>
+                  <%= activeSort==='price-asc' ? 'Price: Low to High' : activeSort==='price-desc' ? 'Price: High to Low' : 'Featured' %>
                 </span>
                 <span class="sort-select__chevron" aria-hidden="true"></span>
               </button>
               <div class="sort-options" id="sortOptions" role="listbox" aria-label="Sort products" hidden>
-                <button type="button" class="sort-option <%= activeSort==='rating' ? 'is-active' : '' %>"
-                  role="option" aria-selected="<%= activeSort==='rating' %>" data-value="rating">Top rated</button>
                 <button type="button" class="sort-option <%= activeSort==='featured' ? 'is-active' : '' %>"
                   role="option" aria-selected="<%= activeSort==='featured' %>" data-value="featured">Featured</button>
                 <button type="button" class="sort-option <%= activeSort==='price-asc' ? 'is-active' : '' %>"
@@ -246,9 +244,23 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
               <line x1="8" y1="11" x2="14" y2="11" />
             </svg>
-            <h3>No parts match your criteria</h3>
-            <p>Try clearing your active filters or searching for another keyword.</p>
-            <a href="/shop" class="btn-clear-filters">Clear all filters</a>
+            <% if (activeCategory !== 'All' || activeDifficulty !== 'All levels' || searchQuery) { %>
+              <h3>No parts match your criteria</h3>
+              <p>Try clearing your active filters or searching for another keyword.</p>
+              <a href="/shop" class="btn-clear-filters">Clear all filters</a>
+            <% } else { %>
+              <h3>No products available yet</h3>
+              <p>Items added via the admin panel will appear here in the shop catalog.</p>
+              <% if (locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) { %>
+                <a href="/admin" class="btn-clear-filters" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  Add items in Admin Console
+                </a>
+              <% } %>
+            <% } %>
           </div>
           <% } else { %>
             <div class="product-grid">
@@ -296,6 +308,7 @@
                         data-name="<%= (p.name || '').replace(/["']/g, '') %>"
                         data-price="<%= p.price %>"
                         data-img="<%= p.image_url %>"
+                        data-type="<%= p.productType || 'item' %>"
                         data-max="<%= p.maxPurchaseQuantity || 10 %>"
                         aria-label="Add to cart">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
