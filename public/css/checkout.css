@@ -820,6 +820,31 @@ a {
   box-shadow: 0 0 0 1px hsl(var(--foreground));
 }
 
+.form-input.is-invalid {
+  border-color: hsl(var(--destructive)) !important;
+  box-shadow: 0 0 0 1px hsl(var(--destructive)) !important;
+}
+
+.form-error-msg {
+  display: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: hsl(var(--destructive));
+  margin-top: 0.25rem;
+  animation: formErrorIn 0.15s ease both;
+}
+
+@keyframes formErrorIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .form-select {
   appearance: none;
   padding-right: 2.75rem;
