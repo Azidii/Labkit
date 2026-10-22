@@ -6,11 +6,30 @@ const Invoice = require("../models/invoiceSchema");
 const User = require("../models/userSchema");
 const Cart = require("../models/cartSchema");
 const { sendInvoiceEmail } = require("../utils/sendEmail");
-
-const SHIPPING_FEE = 380.25;
+const { calculateShippingFee } = require("../utils/shippingCalculator");
 
 exports.renderCheckout = (req, res) => {
   res.render("checkout");
+};
+
+/**
+ * GET /checkout/shipping-fee?country=...&province=...&city=...&quantity=...
+ * Returns the dynamic shipping fee for the given location & quantity.
+ */
+exports.getShippingFee = (req, res) => {
+  const { country, province, city, quantity } = req.query;
+  const ctry = (country || "Philippines").trim();
+  const prov = (province || "").trim();
+  const cty = (city || "").trim();
+  const isDomestic = !ctry || ctry.toLowerCase() === "philippines" || ctry.toLowerCase() === "ph";
+
+  if (isDomestic && !prov) {
+    return res.status(400).json({ error: "Province is required for domestic shipping." });
+  }
+
+  const totalQuantity = Math.max(1, Number(quantity) || 1);
+  const result = calculateShippingFee(prov, cty, totalQuantity, ctry);
+  return res.json(result);
 };
 
 exports.createCheckout = async (req, res) => {
@@ -26,12 +45,16 @@ exports.createCheckout = async (req, res) => {
     return res.status(400).json({ error: "Select a valid payment method." });
   }
 
-  if (!billing || !billing.address || !billing.province || !billing.city || !billing.barangay) {
+  const country = billing?.country || "Philippines";
+  const isInternational = country.toLowerCase() !== "philippines" && country.toLowerCase() !== "ph";
+
+  if (!billing || !billing.address || (!isInternational && (!billing.province || !billing.city))) {
     return res.status(400).json({ error: "Complete your billing information before checking out." });
   }
 
   const orderItems = [];
   try {
+    let totalQuantity = 0;
     for (const cartItem of items) {
       if (!mongoose.Types.ObjectId.isValid(cartItem.id)) {
         return res.status(400).json({ error: "One or more cart items are invalid." });
@@ -41,6 +64,8 @@ exports.createCheckout = async (req, res) => {
       if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
         return res.status(400).json({ error: "Cart quantities must be between 1 and 10." });
       }
+
+      totalQuantity += quantity;
 
       const product = await Item.findById(cartItem.id) || await Kit.findById(cartItem.id);
       if (!product) {
@@ -58,12 +83,21 @@ exports.createCheckout = async (req, res) => {
       });
     }
 
+    // Calculate shipping fee dynamically based on billing location
+    const { fee: shippingFee } = calculateShippingFee(
+      billing.province || "",
+      billing.city || "",
+      totalQuantity,
+      country
+    );
+
     const shippingAddress = [
       billing.address,
       billing.barangay,
       billing.city,
       billing.province,
-      billing.zipCode
+      billing.zipCode,
+      isInternational ? country : null
     ].filter(Boolean).join(", ");
     const paymentStatus = paymentMethod === "cod" ? "pending" : "paid";
     const order = await Order.recordOrder({
@@ -73,7 +107,7 @@ exports.createCheckout = async (req, res) => {
       paymentMethod,
       paymentStatus,
       orderStatus: "processing",
-      shippingFee: SHIPPING_FEE
+      shippingFee
     });
     const invoice = await Invoice.generateForOrder(order);
     const user = await User.findById(userId).lean();

@@ -134,10 +134,39 @@
               <h2 class="checkout-section-title">Billing information</h2>
 
               <div class="form-group">
-                <label for="country">Country/region</label>
+                <label for="country">Country/region *</label>
                 <div class="checkout-custom-select" data-select-id="country">
-                  <select id="country" class="form-input form-select">
-                    <option value="Philippines" selected>Philippines</option>
+                  <select id="country" class="form-input form-select" required>
+                    <optgroup label="Domestic (Delivery Origin: Davao City)">
+                      <option value="Philippines" selected>Philippines</option>
+                    </optgroup>
+                    <optgroup label="Southeast Asia">
+                      <option value="Singapore">Singapore</option>
+                      <option value="Malaysia">Malaysia</option>
+                      <option value="Indonesia">Indonesia</option>
+                      <option value="Thailand">Thailand</option>
+                      <option value="Vietnam">Vietnam</option>
+                    </optgroup>
+                    <optgroup label="East Asia & Pacific">
+                      <option value="Japan">Japan</option>
+                      <option value="South Korea">South Korea</option>
+                      <option value="Taiwan">Taiwan</option>
+                      <option value="Hong Kong">Hong Kong</option>
+                      <option value="Australia">Australia</option>
+                      <option value="New Zealand">New Zealand</option>
+                    </optgroup>
+                    <optgroup label="North America">
+                      <option value="United States">United States</option>
+                      <option value="Canada">Canada</option>
+                    </optgroup>
+                    <optgroup label="Europe & United Kingdom">
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="Germany">Germany</option>
+                      <option value="France">France</option>
+                    </optgroup>
+                    <optgroup label="Other International">
+                      <option value="Other">Other Country</option>
+                    </optgroup>
                   </select>
                   <button type="button" class="checkout-select-trigger" aria-haspopup="listbox" aria-expanded="false">
                     <span>Philippines</span><i aria-hidden="true"></i>
@@ -164,78 +193,100 @@
 
               <div class="form-group">
                 <label for="address">Address *</label>
-                <input type="text" id="address" class="form-input" required />
+                <input type="text" id="address" class="form-input" placeholder="House/Unit, Street, Building" required />
               </div>
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="province">Province *</label>
-                  <div class="checkout-custom-select" data-select-id="province">
-                  <select id="province" class="form-input form-select" required>
-                    <option value="">Select Province</option>
-                    <optgroup label="Luzon (38 Provinces)">
-                      <option>Abra</option><option>Albay</option><option>Apayao</option><option>Aurora</option>
-                      <option>Bataan</option><option>Batanes</option><option>Batangas</option><option>Benguet</option>
-                      <option>Bulacan</option><option>Cagayan</option><option>Camarines Norte</option><option>Camarines Sur</option>
-                      <option>Catanduanes</option><option>Cavite</option><option>Ifugao</option><option>Ilocos Norte</option>
-                      <option>Ilocos Sur</option><option>Isabela</option><option>Kalinga</option><option>La Union</option>
-                      <option>Laguna</option><option>Marinduque</option><option>Masbate</option><option>Mountain Province</option>
-                      <option>Nueva Ecija</option><option>Nueva Vizcaya</option><option>Occidental Mindoro</option>
-                      <option>Oriental Mindoro</option><option>Palawan</option><option>Pampanga</option><option>Pangasinan</option>
-                      <option>Quezon</option><option>Quirino</option><option>Rizal</option><option>Romblon</option>
-                      <option>Sorsogon</option><option>Tarlac</option><option>Zambales</option>
-                    </optgroup>
-                    <optgroup label="Visayas (16 Provinces)">
-                      <option>Aklan</option><option>Antique</option><option>Biliran</option><option>Bohol</option>
-                      <option>Capiz</option><option>Cebu</option><option>Eastern Samar</option><option>Guimaras</option>
-                      <option>Iloilo</option><option>Leyte</option><option>Negros Occidental</option><option>Negros Oriental</option>
-                      <option>Northern Samar</option><option>Samar (formerly Western Samar)</option><option>Siquijor</option>
-                      <option>Southern Leyte</option>
-                    </optgroup>
-                    <optgroup label="Mindanao (28 Provinces)">
-                      <option>Agusan del Norte</option><option>Agusan del Sur</option><option>Basilan</option><option>Bukidnon</option>
-                      <option>Camiguin</option><option>Cotabato (formerly North Cotabato)</option>
-                      <option>Davao de Oro (formerly Compostela Valley)</option><option>Davao del Norte</option>
-                      <option>Davao del Sur</option><option>Davao Occidental</option><option>Davao Oriental</option>
-                      <option>Dinagat Islands</option><option>Lanao del Norte</option><option>Lanao del Sur</option>
-                      <option>Maguindanao del Norte</option><option>Maguindanao del Sur</option><option>Misamis Occidental</option>
-                      <option>Misamis Oriental</option><option>Sarangani</option><option>South Cotabato</option>
-                      <option>Sultan Kudarat</option><option>Sulu</option><option>Surigao del Norte</option>
-                      <option>Surigao del Sur</option><option>Tawi-Tawi</option><option>Zamboanga del Norte</option>
-                      <option>Zamboanga del Sur</option><option>Zamboanga Sibugay</option>
-                    </optgroup>
-                    <optgroup label="National Capital Region">
-                      <option>Metro Manila (NCR)</option>
-                    </optgroup>
-                  </select>
-                  <button type="button" class="checkout-select-trigger" aria-haspopup="listbox" aria-expanded="false">
-                    <span>Select Province</span><i aria-hidden="true"></i>
-                  </button>
-                  <div class="checkout-select-options" role="listbox" hidden></div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="city">City / Municipality *</label>
-                  <div class="checkout-custom-select is-disabled" data-select-id="city">
-                    <select id="city" class="form-input form-select" required disabled>
-                      <option value="">Select City / Municipality</option>
+              <!-- Domestic (Philippines) Fields -->
+              <div id="domesticFields" class="location-fields-group">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="province">Province *</label>
+                    <div class="checkout-custom-select" data-select-id="province">
+                    <select id="province" class="form-input form-select" required>
+                      <option value="">Select Province</option>
+                      <optgroup label="Luzon (38 Provinces)">
+                        <option>Abra</option><option>Albay</option><option>Apayao</option><option>Aurora</option>
+                        <option>Bataan</option><option>Batanes</option><option>Batangas</option><option>Benguet</option>
+                        <option>Bulacan</option><option>Cagayan</option><option>Camarines Norte</option><option>Camarines Sur</option>
+                        <option>Catanduanes</option><option>Cavite</option><option>Ifugao</option><option>Ilocos Norte</option>
+                        <option>Ilocos Sur</option><option>Isabela</option><option>Kalinga</option><option>La Union</option>
+                        <option>Laguna</option><option>Marinduque</option><option>Masbate</option><option>Mountain Province</option>
+                        <option>Nueva Ecija</option><option>Nueva Vizcaya</option><option>Occidental Mindoro</option>
+                        <option>Oriental Mindoro</option><option>Palawan</option><option>Pampanga</option><option>Pangasinan</option>
+                        <option>Quezon</option><option>Quirino</option><option>Rizal</option><option>Romblon</option>
+                        <option>Sorsogon</option><option>Tarlac</option><option>Zambales</option>
+                      </optgroup>
+                      <optgroup label="Visayas (16 Provinces)">
+                        <option>Aklan</option><option>Antique</option><option>Biliran</option><option>Bohol</option>
+                        <option>Capiz</option><option>Cebu</option><option>Eastern Samar</option><option>Guimaras</option>
+                        <option>Iloilo</option><option>Leyte</option><option>Negros Occidental</option><option>Negros Oriental</option>
+                        <option>Northern Samar</option><option>Samar (formerly Western Samar)</option><option>Siquijor</option>
+                        <option>Southern Leyte</option>
+                      </optgroup>
+                      <optgroup label="Mindanao (28 Provinces)">
+                        <option>Agusan del Norte</option><option>Agusan del Sur</option><option>Basilan</option><option>Bukidnon</option>
+                        <option>Camiguin</option><option>Cotabato (formerly North Cotabato)</option>
+                        <option>Davao de Oro (formerly Compostela Valley)</option><option>Davao del Norte</option>
+                        <option>Davao del Sur</option><option>Davao Occidental</option><option>Davao Oriental</option>
+                        <option>Dinagat Islands</option><option>Lanao del Norte</option><option>Lanao del Sur</option>
+                        <option>Maguindanao del Norte</option><option>Maguindanao del Sur</option><option>Misamis Occidental</option>
+                        <option>Misamis Oriental</option><option>Sarangani</option><option>South Cotabato</option>
+                        <option>Sultan Kudarat</option><option>Sulu</option><option>Surigao del Norte</option>
+                        <option>Surigao del Sur</option><option>Tawi-Tawi</option><option>Zamboanga del Norte</option>
+                        <option>Zamboanga del Sur</option><option>Zamboanga Sibugay</option>
+                      </optgroup>
+                      <optgroup label="National Capital Region">
+                        <option>Metro Manila (NCR)</option>
+                      </optgroup>
                     </select>
-                    <button type="button" class="checkout-select-trigger" aria-haspopup="listbox" aria-expanded="false" disabled>
-                      <span>Select City / Municipality</span><i aria-hidden="true"></i>
+                    <button type="button" class="checkout-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                      <span>Select Province</span><i aria-hidden="true"></i>
                     </button>
                     <div class="checkout-select-options" role="listbox" hidden></div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="city">City / Municipality *</label>
+                    <div class="checkout-custom-select is-disabled" data-select-id="city">
+                      <select id="city" class="form-input form-select" required disabled>
+                        <option value="">Select City / Municipality</option>
+                      </select>
+                      <button type="button" class="checkout-select-trigger" aria-haspopup="listbox" aria-expanded="false" disabled>
+                        <span>Select City / Municipality</span><i aria-hidden="true"></i>
+                      </button>
+                      <div class="checkout-select-options" role="listbox" hidden></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="barangay">Barangay *</label>
+                    <input type="text" id="barangay" class="form-input" placeholder="e.g. Matina / Poblacion" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="zipCode">Postal code</label>
+                    <input type="text" id="zipCode" class="form-input" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="e.g. 8000" />
                   </div>
                 </div>
               </div>
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="barangay">Barangay *</label>
-                  <input type="text" id="barangay" class="form-input" required />
+              <!-- International Fields -->
+              <div id="internationalFields" class="location-fields-group" hidden style="display: none;">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="intlCity">City / Town *</label>
+                    <input type="text" id="intlCity" class="form-input" placeholder="e.g. Singapore / Los Angeles / Tokyo" />
+                  </div>
+                  <div class="form-group">
+                    <label for="intlState">State / Province / Region <span class="form-optional">(optional)</span></label>
+                    <input type="text" id="intlState" class="form-input" placeholder="e.g. California / Tokyo / Ontario" />
+                  </div>
                 </div>
+
                 <div class="form-group">
-                  <label for="zipCode">Postal code</label>
-                  <input type="text" id="zipCode" class="form-input" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" />
+                  <label for="intlZip">Postal / ZIP code</label>
+                  <input type="text" id="intlZip" class="form-input" placeholder="e.g. 238801 / 90001 / SW1A 1AA" />
                 </div>
               </div>
 
@@ -341,8 +392,11 @@
                 <span id="subtotalAmount">₱24.00</span>
               </div>
               <div class="summary-line">
-                <span>Shipping</span>
-                <span id="shippingAmount">₱6.50</span>
+                <div class="summary-line__label-wrap">
+                  <span>Shipping</span>
+                  <small id="shippingLabel" class="shipping-zone-label" style="display:none"></small>
+                </div>
+                <span id="shippingAmount">—</span>
               </div>
               <div class="summary-line summary-line--total">
                 <span>Total</span>
@@ -502,9 +556,69 @@
         style: "currency", currency: "PHP", minimumFractionDigits: 2
       }).format(Number(amount) || 0);
       const subtotal = checkoutItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const shipping = 380.25;
-      const total = subtotal + shipping;
+      const totalQuantity = checkoutItems.reduce((sum, item) => sum + item.qty, 0);
+      let currentShippingFee = 0;
 
+      // Dynamic shipping fee – fetches from /checkout/shipping-fee
+      const fetchShippingFee = async (country, province, city) => {
+        const ctry = (country !== undefined ? country : (document.getElementById("country")?.value || "Philippines")).trim();
+        const isDomestic = !ctry || ctry.toLowerCase() === "philippines" || ctry.toLowerCase() === "ph";
+        const prov = (province !== undefined ? province : (document.getElementById("province")?.value || "")).trim();
+        const cty = (city !== undefined ? city : (document.getElementById("city")?.value || "")).trim();
+
+        const shippingEl = document.getElementById("shippingAmount");
+        const shippingLabel = document.getElementById("shippingLabel");
+
+        if (isDomestic && !prov) {
+          // If domestic and no province selected yet, show default base rate (Davao City local ₱50)
+          currentShippingFee = 50;
+          if (shippingLabel) {
+            shippingLabel.textContent = "Davao City base";
+            shippingLabel.style.display = "inline";
+          }
+          if (shippingEl) shippingEl.classList.remove("shipping-loading");
+          updateTotals();
+          return;
+        }
+
+        if (shippingEl) {
+          shippingEl.textContent = "Calculating...";
+          shippingEl.classList.add("shipping-loading");
+        }
+
+        try {
+          const params = new URLSearchParams({
+            country: ctry,
+            province: prov,
+            city: cty,
+            quantity: totalQuantity
+          });
+          const response = await fetch(`/checkout/shipping-fee?${params}`);
+          if (!response.ok) throw new Error("Failed to fetch shipping fee");
+          const data = await response.json();
+          currentShippingFee = data.fee;
+          if (shippingEl) shippingEl.classList.remove("shipping-loading");
+
+          if (shippingLabel && data.label) {
+            shippingLabel.textContent = data.label;
+            shippingLabel.style.display = "inline";
+          }
+        } catch (err) {
+          console.error("Shipping fee calculation error:", err);
+          currentShippingFee = isDomestic ? 50 : 650;
+          if (shippingEl) shippingEl.classList.remove("shipping-loading");
+        }
+        updateTotals();
+      };
+
+      const updateTotals = () => {
+        const total = subtotal + currentShippingFee;
+        document.getElementById("subtotalAmount").textContent = formatCurrency(subtotal);
+        document.getElementById("shippingAmount").textContent = formatCurrency(currentShippingFee);
+        document.getElementById("totalAmount").textContent = formatCurrency(total);
+      };
+
+      // Render order summary items
       const itemsListEl = document.getElementById("summaryItemsList");
       if (itemsListEl) {
         const summaryMarkup = checkoutItems.map(item => `
@@ -520,9 +634,9 @@
         itemsListEl.innerHTML = summaryMarkup;
       }
 
-      document.getElementById("subtotalAmount").textContent = formatCurrency(subtotal);
-      document.getElementById("shippingAmount").textContent = formatCurrency(shipping);
-      document.getElementById("totalAmount").textContent = formatCurrency(total);
+      // Initialize totals
+      updateTotals();
+
       const showStep = (stepNumber) => {
         document.querySelectorAll("[data-step-panel]").forEach((panel) => {
           const isActive = panel.dataset.stepPanel === String(stepNumber);
@@ -599,6 +713,14 @@
         });
       });
 
+      const countrySelect = document.getElementById("country");
+      const domesticFields = document.getElementById("domesticFields");
+      const internationalFields = document.getElementById("internationalFields");
+      const intlState = document.getElementById("intlState");
+      const intlCity = document.getElementById("intlCity");
+      const intlZip = document.getElementById("intlZip");
+      const barangay = document.getElementById("barangay");
+      const zipCode = document.getElementById("zipCode");
       const provinceSelect = document.getElementById("province");
       const citySelect = document.getElementById("city");
       const cityCustomSelect = document.querySelector('[data-select-id="city"]');
@@ -650,6 +772,9 @@
             cityCustomSelect.classList.remove("is-open");
             cityTrigger.setAttribute("aria-expanded", "false");
             cityOptionsPanel.hidden = true;
+            // Recalculate shipping when city changes
+            const ctry = countrySelect?.value || "Philippines";
+            fetchShippingFee(ctry, provinceSelect.value, option.value);
           });
           cityOptionsPanel.appendChild(button);
         });
@@ -658,7 +783,8 @@
         cityCustomSelect.classList.remove("is-disabled");
         cityTriggerLabel.textContent = options[0].name.trim();
         citySelect.value = options[0].name.trim();
-        citySelect.dispatchEvent(new Event("change", { bubbles: true }));
+        const ctry = countrySelect?.value || "Philippines";
+        fetchShippingFee(ctry, provinceName, options[0].name.trim());
       };
 
       provinceSelect?.addEventListener("change", async () => {
@@ -671,6 +797,9 @@
         cityTriggerLabel.textContent = provinceName ? "Loading localities..." : "Select City / Municipality";
         cityOptionsPanel.hidden = true;
         if (!provinceName) return;
+
+        // Calculate shipping immediately when province changes
+        fetchShippingFee("Philippines", provinceName, "");
 
         try {
           const localities = await loadLocalities(provinceName);
@@ -688,6 +817,52 @@
         }
       });
 
+      const handleCountryChange = () => {
+        const ctry = (countrySelect?.value || "Philippines").trim();
+        const isDomestic = !ctry || ctry.toLowerCase() === "philippines" || ctry.toLowerCase() === "ph";
+
+        if (isDomestic) {
+          if (domesticFields) {
+            domesticFields.hidden = false;
+            domesticFields.style.display = "block";
+          }
+          if (internationalFields) {
+            internationalFields.hidden = true;
+            internationalFields.style.display = "none";
+          }
+          if (provinceSelect) provinceSelect.required = true;
+          if (citySelect) citySelect.required = true;
+          if (barangay) barangay.required = true;
+          if (intlCity) intlCity.required = false;
+          fetchShippingFee("Philippines", provinceSelect?.value, citySelect?.value);
+        } else {
+          if (domesticFields) {
+            domesticFields.hidden = true;
+            domesticFields.style.display = "none";
+          }
+          if (internationalFields) {
+            internationalFields.hidden = false;
+            internationalFields.style.display = "block";
+          }
+          if (provinceSelect) provinceSelect.required = false;
+          if (citySelect) citySelect.required = false;
+          if (barangay) barangay.required = false;
+          if (intlCity) intlCity.required = true;
+          fetchShippingFee(ctry, intlState?.value || "", intlCity?.value || "");
+        }
+      };
+
+      countrySelect?.addEventListener("change", handleCountryChange);
+      intlState?.addEventListener("input", () => {
+        fetchShippingFee(countrySelect?.value, intlState.value, intlCity?.value);
+      });
+      intlCity?.addEventListener("input", () => {
+        fetchShippingFee(countrySelect?.value, intlState?.value, intlCity.value);
+      });
+
+      // Initial country state setup and shipping calculation
+      handleCountryChange();
+
       const formatDigitInput = (input, groupSizes, maxDigits) => {
         const digits = input.value.replace(/\D/g, "").slice(0, maxDigits);
         let offset = 0;
@@ -701,7 +876,6 @@
           .join(" ");
       };
 
-      const zipCode = document.getElementById("zipCode");
       zipCode?.addEventListener("input", () => {
         zipCode.value = zipCode.value.replace(/\D/g, "").slice(0, 4);
       });
@@ -737,8 +911,8 @@
       document.querySelectorAll("[data-next-step]").forEach((button) => {
         button.addEventListener("click", () => {
           const currentPanel = button.closest("[data-step-panel]");
-          const fields = [...currentPanel.querySelectorAll("input[required]")];
-          if (fields.some((field) => !field.reportValidity())) return;
+          const fields = [...currentPanel.querySelectorAll("input[required], select[required]")];
+          if (fields.some((field) => !field.disabled && !field.closest("[hidden]") && field.offsetParent !== null && !field.reportValidity())) return;
           if (Number(button.dataset.nextStep) === 3) {
             const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
               "&": "&amp;",
@@ -748,14 +922,46 @@
               "'": "&#39;"
             }[character]));
             const payment = document.querySelector('input[name="paymentMethod"]:checked');
-            const billing = ["firstName", "lastName", "company", "address", "province", "city", "barangay", "zipCode", "phone", "email"]
-              .map((id) => [id, document.getElementById(id)?.value || ""])
-              .filter(([, value]) => value);
+            const ctry = (countrySelect?.value || "Philippines").trim();
+            const isDomestic = !ctry || ctry.toLowerCase() === "philippines" || ctry.toLowerCase() === "ph";
+
+            const billing = isDomestic ? [
+              ["country", "Philippines"],
+              ["firstName", document.getElementById("firstName")?.value || ""],
+              ["lastName", document.getElementById("lastName")?.value || ""],
+              ["company", document.getElementById("company")?.value || ""],
+              ["address", document.getElementById("address")?.value || ""],
+              ["province", provinceSelect?.value || ""],
+              ["city", citySelect?.value || ""],
+              ["barangay", barangay?.value || ""],
+              ["zipCode", zipCode?.value || ""],
+              ["phone", document.getElementById("phone")?.value || ""],
+              ["email", document.getElementById("email")?.value || ""]
+            ].filter(([, value]) => value) : [
+              ["country", ctry],
+              ["firstName", document.getElementById("firstName")?.value || ""],
+              ["lastName", document.getElementById("lastName")?.value || ""],
+              ["company", document.getElementById("company")?.value || ""],
+              ["address", document.getElementById("address")?.value || ""],
+              ["city", intlCity?.value || ""],
+              ["state", intlState?.value || ""],
+              ["zipCode", intlZip?.value || ""],
+              ["phone", document.getElementById("phone")?.value || ""],
+              ["email", document.getElementById("email")?.value || ""]
+            ].filter(([, value]) => value);
+
             const paymentLabels = { gcash: "GCash", card: "Card", cod: "Cash on delivery" };
             document.getElementById("reviewDetails").innerHTML = `
               <h3>Billing information</h3>
               <dl class="review-details-list">
-                ${billing.map(([id, value]) => `<div><dt>${id === "zipCode" ? "Postal code" : id === "firstName" ? "First name" : id === "lastName" ? "Last name" : id.charAt(0).toUpperCase() + id.slice(1)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
+                ${billing.map(([id, value]) => `<div><dt>${
+                  id === "country" ? "Country" :
+                  id === "zipCode" ? "Postal code" :
+                  id === "firstName" ? "First name" :
+                  id === "lastName" ? "Last name" :
+                  id === "state" ? "State / Region" :
+                  id.charAt(0).toUpperCase() + id.slice(1)
+                }</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
               </dl>
               <h3>Payment method</h3>
               <p class="review-payment-method">${paymentLabels[payment?.value] || "Not selected"}</p>
@@ -800,11 +1006,23 @@
 
         submitButton.disabled = true;
         submitButton.textContent = "Processing order...";
-        const billing = ["firstName", "lastName", "company", "address", "province", "city", "barangay", "zipCode", "phone", "email"]
-          .reduce((details, id) => {
-            details[id] = document.getElementById(id)?.value.trim() || "";
-            return details;
-          }, {});
+
+        const ctry = (countrySelect?.value || "Philippines").trim();
+        const isDomestic = !ctry || ctry.toLowerCase() === "philippines" || ctry.toLowerCase() === "ph";
+
+        const billing = {
+          country: ctry,
+          firstName: document.getElementById("firstName")?.value.trim() || "",
+          lastName: document.getElementById("lastName")?.value.trim() || "",
+          company: document.getElementById("company")?.value.trim() || "",
+          address: document.getElementById("address")?.value.trim() || "",
+          province: isDomestic ? (provinceSelect?.value || "").trim() : (intlState?.value || "").trim(),
+          city: isDomestic ? (citySelect?.value || "").trim() : (intlCity?.value || "").trim(),
+          barangay: isDomestic ? (barangay?.value || "").trim() : "",
+          zipCode: isDomestic ? (zipCode?.value || "").trim() : (intlZip?.value || "").trim(),
+          phone: document.getElementById("phone")?.value.trim() || "",
+          email: document.getElementById("email")?.value.trim() || ""
+        };
 
         try {
           const response = await fetch("/checkout", {
