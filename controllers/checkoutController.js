@@ -9,8 +9,21 @@ const { sendInvoiceEmail } = require("../utils/sendEmail");
 
 const SHIPPING_FEE = 380.25;
 
-exports.renderCheckout = (req, res) => {
-  res.render("checkout");
+exports.renderCheckout = async (req, res) => {
+  try {
+    const userId = req.session?.user?.id || req.session?.user?._id;
+    let isDbCartEmpty = true;
+    if (userId) {
+      const cart = await Cart.findOne({ userId }).lean();
+      if (cart && Array.isArray(cart.items) && cart.items.length > 0) {
+        isDbCartEmpty = false;
+      }
+    }
+    res.render("checkout", { isDbCartEmpty });
+  } catch (error) {
+    console.error("Error in renderCheckout:", error);
+    res.render("checkout", { isDbCartEmpty: false });
+  }
 };
 
 exports.createCheckout = async (req, res) => {

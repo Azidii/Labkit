@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en" data-auth="<%= locals.currentUser ? 'true' : 'false' %>">
 <head>
   <meta charset="UTF-8" />
@@ -9,6 +9,21 @@
   <link rel="stylesheet" href="/css/navbar-search.css" />
   <script src="/js/theme.js"></script>
   <script src="/js/page-transitions.js"></script>
+  <script>
+    (function () {
+      try {
+        var raw = localStorage.getItem("circuitCart");
+        var cart = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(cart) || cart.length === 0) {
+          document.documentElement.classList.add("cart-empty-checkout");
+        } else {
+          document.documentElement.classList.remove("cart-empty-checkout");
+        }
+      } catch (e) {
+        document.documentElement.classList.add("cart-empty-checkout");
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -110,7 +125,50 @@
   </header>
 
   <main class="checkout-page container page-main">
-    <div class="checkout-container">
+    <!-- Empty Cart View (Shown if cart is empty) -->
+    <div class="checkout-empty-view" id="checkoutEmptyView">
+      <a href="/shop" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        <span>Continue shopping</span>
+      </a>
+
+      <div class="checkout-empty-card">
+        <div class="checkout-empty-card__icon-wrap">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+            <path d="M3 6h18"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+
+        <h1 class="checkout-empty-card__title">Your cart is empty</h1>
+        <p class="checkout-empty-card__desc">
+          Your cart currently has no items. You must add products or project kits to your cart before proceeding to checkout.
+        </p>
+
+        <a href="/shop" class="checkout-empty-card__btn" id="checkoutEmptyShopBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>Return to Shop</span>
+        </a>
+
+        <div class="checkout-empty-card__categories">
+          <span class="checkout-empty-card__cat-label">Explore components:</span>
+          <div class="checkout-empty-card__cat-pills">
+            <a href="/shop?category=Microcontrollers" class="checkout-cat-pill">Microcontrollers</a>
+            <a href="/shop?category=IoT+Kits" class="checkout-cat-pill">IoT Kits</a>
+            <a href="/shop?category=Sensors+%26+Modules" class="checkout-cat-pill">Sensors &amp; Modules</a>
+            <a href="/shop?category=Displays+%26+Power" class="checkout-cat-pill">Displays &amp; Power</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-container" id="checkoutActiveView">
       <a href="/shop" class="back-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="19" y1="12" x2="5" y2="12"/>
@@ -489,40 +547,85 @@
   <script src="/js/navbar-search.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const savedCart = getCart();
-      const selectedCart = typeof getSelectedCart === "function" ? getSelectedCart() : savedCart;
-      const checkoutItems = selectedCart;
-      const confirmButton = document.getElementById("checkoutConfirmBtn");
-      if (checkoutItems.length === 0 && confirmButton) {
-        confirmButton.disabled = true;
-        confirmButton.textContent = "Select items in your cart";
-      }
-
       const formatCurrency = (amount) => new Intl.NumberFormat("en-PH", {
         style: "currency", currency: "PHP", minimumFractionDigits: 2
       }).format(Number(amount) || 0);
-      const subtotal = checkoutItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const shipping = 380.25;
-      const total = subtotal + shipping;
 
-      const itemsListEl = document.getElementById("summaryItemsList");
-      if (itemsListEl) {
-        const summaryMarkup = checkoutItems.map(item => `
-          <div class="order-summary-item">
-            <img src="${item.img}" alt="${item.name}" class="order-summary-item__img" />
-            <div class="order-summary-item__info">
-              <h4 class="order-summary-item__name">${item.name}</h4>
-              <span class="order-summary-item__qty">Qty ${item.qty}</span>
-            </div>
-            <span class="order-summary-item__price">${formatCurrency(item.price * item.qty)}</span>
-          </div>
-        `).join("");
-        itemsListEl.innerHTML = summaryMarkup;
+      let currentCheckoutItems = [];
+
+      function getEffectiveCart() {
+        const savedCart = typeof getCart === "function" ? getCart() : [];
+        let selectedCart = typeof getSelectedCart === "function" ? getSelectedCart() : savedCart;
+        if (savedCart.length > 0 && selectedCart.length === 0) {
+          const allIds = new Set(savedCart.map((i) => String(i.id)));
+          if (typeof saveSelectedCartIds === "function") {
+            saveSelectedCartIds(allIds);
+          }
+          selectedCart = savedCart;
+        }
+        return { savedCart, selectedCart };
       }
 
-      document.getElementById("subtotalAmount").textContent = formatCurrency(subtotal);
-      document.getElementById("shippingAmount").textContent = formatCurrency(shipping);
-      document.getElementById("totalAmount").textContent = formatCurrency(total);
+      function renderOrderSummary(items) {
+        const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
+        const shipping = items.length > 0 ? 380.25 : 0;
+        const total = subtotal + shipping;
+
+        const itemsListEl = document.getElementById("summaryItemsList");
+        if (itemsListEl) {
+          const summaryMarkup = items.map(item => `
+            <div class="order-summary-item">
+              <img src="${item.img}" alt="${item.name}" class="order-summary-item__img" />
+              <div class="order-summary-item__info">
+                <h4 class="order-summary-item__name">${item.name}</h4>
+                <span class="order-summary-item__qty">Qty ${item.qty}</span>
+              </div>
+              <span class="order-summary-item__price">${formatCurrency(item.price * item.qty)}</span>
+            </div>
+          `).join("");
+          itemsListEl.innerHTML = summaryMarkup;
+        }
+
+        const subtotalEl = document.getElementById("subtotalAmount");
+        if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
+        const shippingEl = document.getElementById("shippingAmount");
+        if (shippingEl) shippingEl.textContent = formatCurrency(shipping);
+        const totalEl = document.getElementById("totalAmount");
+        if (totalEl) totalEl.textContent = formatCurrency(total);
+      }
+
+      function syncCheckoutView() {
+        const { savedCart, selectedCart } = getEffectiveCart();
+        const isCartEmpty = !savedCart || savedCart.length === 0 || !selectedCart || selectedCart.length === 0;
+
+        document.documentElement.classList.toggle("cart-empty-checkout", isCartEmpty);
+        const emptyView = document.getElementById("checkoutEmptyView");
+        const activeView = document.getElementById("checkoutActiveView");
+
+        if (isCartEmpty) {
+          currentCheckoutItems = [];
+          if (emptyView) emptyView.style.display = "flex";
+          if (activeView) activeView.style.display = "none";
+          return false;
+        }
+
+        currentCheckoutItems = selectedCart;
+        if (emptyView) emptyView.style.display = "none";
+        if (activeView) activeView.style.display = "block";
+
+        renderOrderSummary(currentCheckoutItems);
+
+        const confirmButton = document.getElementById("checkoutConfirmBtn");
+        if (confirmButton) {
+          confirmButton.disabled = false;
+          confirmButton.textContent = "Confirm checkout";
+        }
+        return true;
+      }
+
+      syncCheckoutView();
+      window.addEventListener("cartUpdated", syncCheckoutView);
+      window.addEventListener("storage", syncCheckoutView);
       const showStep = (stepNumber) => {
         document.querySelectorAll("[data-step-panel]").forEach((panel) => {
           const isActive = panel.dataset.stepPanel === String(stepNumber);
@@ -790,8 +893,11 @@
       const checkoutForm = document.getElementById("checkoutForm");
       checkoutForm?.addEventListener("submit", async (event) => {
         event.preventDefault();
-        if (checkoutItems.length === 0) {
-          document.getElementById("checkoutConfirmBtn")?.focus();
+        const { selectedCart } = getEffectiveCart();
+        currentCheckoutItems = selectedCart;
+        if (!currentCheckoutItems || currentCheckoutItems.length === 0) {
+          syncCheckoutView();
+          document.getElementById("checkoutEmptyShopBtn")?.focus();
           return;
         }
         const submitButton = document.getElementById("checkoutConfirmBtn");
@@ -814,7 +920,7 @@
               "Accept": "application/json"
             },
             body: JSON.stringify({
-              items: checkoutItems.map((item) => ({ id: item.id, quantity: item.qty })),
+              items: currentCheckoutItems.map((item) => ({ id: item.id, quantity: item.qty })),
               billing,
               paymentMethod: payment.value
             })
@@ -825,10 +931,11 @@
             : { error: "The checkout service returned an unexpected response. Please refresh and try again." };
           if (!response.ok) throw new Error(result.error || "Unable to complete checkout.");
 
-          const purchasedIds = new Set(checkoutItems.map((item) => String(item.id)));
+          const purchasedIds = new Set(currentCheckoutItems.map((item) => String(item.id)));
           const remainingCart = getCart().filter((item) => !purchasedIds.has(String(item.id)));
           localStorage.setItem("circuitCart", JSON.stringify(remainingCart));
           saveSelectedCartIds(getSelectedCartIds(remainingCart));
+          window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { cart: remainingCart } }));
 
           const paymentToast = document.getElementById("paymentToast");
           const paymentToastOrder = document.getElementById("paymentToastOrder");
