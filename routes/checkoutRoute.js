@@ -19,6 +19,9 @@ function requireAuthentication(req, res, next) {
 // Localities endpoint using admin controller method
 router.get("/localities", adminController.getLocalities);
 
+// Shipping fee calculator endpoint
+router.get("/shipping-fee", checkoutController.getShippingFee);
+
 // Checkout page
 router.get("/", requireAuthentication, checkoutController.renderCheckout);
 router.post("/", requireAuthentication, checkoutController.createCheckout);
