@@ -55,10 +55,12 @@ function saveCart(cart) {
     try {
       localStorage.removeItem("circuitCart");
     } catch (e) {}
+    window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { cart: [] } }));
     return;
   }
   localStorage.setItem("circuitCart", JSON.stringify(cart));
   renderCart();
+  window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { cart } }));
 }
 
 function isAuthenticated() {

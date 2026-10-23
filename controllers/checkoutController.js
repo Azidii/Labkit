@@ -8,8 +8,21 @@ const Cart = require("../models/cartSchema");
 const { sendInvoiceEmail } = require("../utils/sendEmail");
 const { calculateShippingFee } = require("../utils/shippingCalculator");
 
-exports.renderCheckout = (req, res) => {
-  res.render("checkout");
+exports.renderCheckout = async (req, res) => {
+  try {
+    const userId = req.session?.user?.id || req.session?.user?._id;
+    let isDbCartEmpty = true;
+    if (userId) {
+      const cart = await Cart.findOne({ userId }).lean();
+      if (cart && Array.isArray(cart.items) && cart.items.length > 0) {
+        isDbCartEmpty = false;
+      }
+    }
+    res.render("checkout", { isDbCartEmpty });
+  } catch (error) {
+    console.error("Error in renderCheckout:", error);
+    res.render("checkout", { isDbCartEmpty: false });
+  }
 };
 
 /**
@@ -50,6 +63,12 @@ exports.createCheckout = async (req, res) => {
 
   if (!billing || !billing.address || (!isInternational && (!billing.province || !billing.city))) {
     return res.status(400).json({ error: "Complete your billing information before checking out." });
+  }
+
+  const billingEmail = String(billing.email || "").trim().toLowerCase();
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+  if (!billingEmail || !emailRegex.test(billingEmail)) {
+    return res.status(400).json({ error: "Please provide a valid email address (e.g. name@example.com)." });
   }
 
   const orderItems = [];
@@ -112,7 +131,7 @@ exports.createCheckout = async (req, res) => {
     const invoice = await Invoice.generateForOrder(order);
     const user = await User.findById(userId).lean();
     const recipientEmail = String(billing.email || user?.email || "").trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipientEmail)) {
+    if (!emailRegex.test(recipientEmail)) {
       throw new Error("A valid email address is required to send the invoice.");
     }
 
