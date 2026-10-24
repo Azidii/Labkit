@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".navbar-search").forEach((search) => {
+  const searchContainers = document.querySelectorAll(".navbar-search");
+  if (!searchContainers || searchContainers.length === 0) return;
+
+  searchContainers.forEach((search) => {
+    if (!search) return;
     const toggle = search.querySelector(".navbar-search__toggle");
     const form = search.querySelector(".navbar-search__form");
     const input = search.querySelector(".navbar-search__input");

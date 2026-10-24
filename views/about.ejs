@@ -44,25 +44,9 @@
                 <a href="/" class="navbar__link">Home</a>
                 <a href="/shop" class="navbar__link">Shop</a>
                 <a href="/about" class="navbar__link navbar__link--active">About Us</a>
-                <% if (locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) { %>
-                <a href="/admin" class="navbar__link navbar__link--admin">Admin</a>
-                <% } %>
             </nav>
 
             <div class="navbar__actions">
-                <div class="navbar-search">
-                <button type="button" class="navbar__icon-btn navbar-search__toggle" aria-label="Search" aria-expanded="false">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8" />
-                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                    </svg>
-                </button>
-                <form class="navbar-search__form" action="/shop" method="get" role="search">
-                    <input class="navbar-search__input" name="q" type="search" placeholder="Search products..." aria-label="Search products" />
-                </form>
-                </div>
-
                 <button type="button" class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
