@@ -20,22 +20,22 @@
 }
 
 .dark {
-  --background: 214 40% 7.5%;
-  --foreground: 210 40% 98%;
-  --card: 213 36% 11%;
-  --card-foreground: 210 40% 98%;
-  --primary: 187 80% 42%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 213 30% 15%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 213 30% 15%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 213 28% 18%;
-  --accent-foreground: 187 80% 75%;
-  --destructive: 0 62.8% 30.6%;
-  --border: 213 25% 18%;
-  --input: 213 25% 18%;
-  --ring: 187 80% 42%;
+  --background: 216 28% 7%;        /* #0D1117 deep carbon-slate base canvas */
+  --foreground: 210 33% 96%;       /* #F0F4F8 off-white primary text */
+  --card: 216 28% 10.5%;           /* #131922 stepped slate elevated surfaces */
+  --card-foreground: 210 33% 96%;
+  --primary: 187 82% 44%;          /* #13a9c2 tuned crisp teal */
+  --primary-foreground: 216 28% 7%;/* high contrast text on teal */
+  --secondary: 215 25% 12%;        /* #161D26 dark technical well */
+  --secondary-foreground: 210 33% 96%;
+  --muted: 215 27% 14%;            /* #1A222D elevated hover / control */
+  --muted-foreground: 215 20% 65%; /* #94A3B8 muted slate body text */
+  --accent: 215 27% 14%;           /* #1A222D */
+  --accent-foreground: 187 82% 52%;
+  --destructive: 0 72% 51%;
+  --border: 216 22% 16%;           /* #1C232E quiet 1px structural border (8% white) */
+  --input: 216 22% 16%;
+  --ring: 187 82% 44%;
 }
 
 *, *::before, *::after {
@@ -87,9 +87,7 @@ a {
 .brand-panel__grid {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M28 0H0V28' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 28px 28px;
   pointer-events: none;
 }
@@ -147,10 +145,10 @@ a {
 }
 
 .brand-panel__title {
-  font-size: 2.25rem;
-  line-height: 1.15;
+  font-size: 1.75rem;
+  line-height: 1.25;
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
   color: #ffffff;
   margin-bottom: 1.25rem;
 }
@@ -197,14 +195,14 @@ a {
 }
 
 .vault-card__name {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.8125rem;
+  font-family: inherit;
+  font-size: 0.875rem;
   color: #e4e4e7;
   letter-spacing: -0.01em;
 }
 
 .brand-panel__footer {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: #71717a;
 }
 
@@ -233,7 +231,7 @@ a {
 }
 
 .form-panel__title {
-  font-size: 1.875rem;
+  font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.025em;
   margin-bottom: 0.375rem;
@@ -277,7 +275,7 @@ a {
   text-align: center;
   margin: 1.5rem 0;
   color: hsl(var(--muted-foreground));
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.05em;
 }
@@ -481,3 +479,64 @@ a {
   border-color: hsl(142 76% 36% / 0.35);
 }
 
+
+/* Precision Hardware Dark Mode Overrides for Auth Screens */
+.dark .brand-panel {
+  background: #0D1117;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .form-panel {
+  background: #0D1117;
+}
+
+.dark .form-panel__title {
+  color: #F0F4F8;
+}
+
+.dark .form-panel__subtitle {
+  color: #94A3B8;
+}
+
+.dark .form-group input {
+  background: #161D26;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F0F4F8;
+}
+
+.dark .form-group input:focus {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 2px rgba(19, 169, 194, 0.2);
+}
+
+.dark .form-group label {
+  color: #CBD5E1;
+}
+
+.dark .btn-submit {
+  background: hsl(var(--primary));
+  color: #0D1117;
+  font-weight: 600;
+  border-color: transparent;
+}
+
+.dark .btn-submit:hover {
+  background: hsl(187 84% 48%);
+  box-shadow: none;
+}
+
+.dark .btn-google {
+  background: #131922;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F0F4F8;
+}
+
+.dark .btn-google:hover {
+  background: #1A222D;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.dark .auth-card {
+  background: #131922;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}

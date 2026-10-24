@@ -161,8 +161,8 @@ orderSchema.statics.recordOrder = async function ({
   orderStatus = "processing",
   shippingFee = 0
 }) {
-  const Kit = mongoose.model("Kit");
-  const Item = mongoose.model("Item");
+  const Kit = mongoose.models.Kit || mongoose.model("Kit");
+  const Item = mongoose.models.Item || mongoose.model("Item");
 
   let calculatedSubtotal = 0;
   const processedItems = [];
@@ -173,16 +173,46 @@ orderSchema.statics.recordOrder = async function ({
     let name = itemData.name || "";
 
     if (itemData.kit) {
-      const kit = await Kit.findById(itemData.kit);
-      if (!kit) throw new Error(`Kit not found: ${itemData.kit}`);
-      await kit.reduceStock(qty);
+      let kit = await Kit.findById(itemData.kit);
+      if (!kit) {
+        kit = await Item.findById(itemData.kit);
+        if (kit) {
+          itemData.item = kit._id;
+          itemData.kit = null;
+        } else {
+          throw new Error(`Kit not found: ${itemData.kit}`);
+        }
+      }
+      if (typeof kit.reduceStock === "function") {
+        await kit.reduceStock(qty);
+      } else {
+        const newStock = Math.max(0, (kit.stockQuantity || 0) - qty);
+        await kit.constructor.findByIdAndUpdate(kit._id, {
+          stockQuantity: newStock,
+          in_stock: newStock > 0
+        });
+      }
       unitPrice = kit.price;
       name = name || kit.name;
     } else if (itemData.item) {
-      const item = await Item.findById(itemData.item);
-      if (!item) throw new Error(`Item not found: ${itemData.item}`);
+      let item = await Item.findById(itemData.item);
+      if (!item) {
+        item = await Kit.findById(itemData.item);
+        if (item) {
+          itemData.kit = item._id;
+          itemData.item = null;
+        } else {
+          throw new Error(`Item not found: ${itemData.item}`);
+        }
+      }
       if (typeof item.reduceStock === "function") {
         await item.reduceStock(qty);
+      } else {
+        const newStock = Math.max(0, (item.stockQuantity || 0) - qty);
+        await item.constructor.findByIdAndUpdate(item._id, {
+          stockQuantity: newStock,
+          in_stock: newStock > 0
+        });
       }
       unitPrice = item.price;
       name = name || item.name;

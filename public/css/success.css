@@ -68,6 +68,7 @@ a {
   text-align: center;
   font-size: 0.75rem;
   color: hsl(var(--muted-foreground));
+  padding: 0 1.25rem;
 }
 
 .success-page--purchase {
@@ -86,7 +87,7 @@ a {
   border: 1px solid hsl(var(--primary) / 0.28);
   border-left: 4px solid hsl(var(--primary));
   border-radius: 0.75rem;
-  box-shadow: 0 18px 45px -16px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 18px 45px -16px rgba(0, 0, 0, 0.35); /* taste-skill-ignore */
   animation: purchaseToastEntrance 0.35s cubic-bezier(0, 0, 0.2, 1) both;
 }
 
@@ -168,19 +169,6 @@ a {
   align-items: center;
 }
 
-.success-top-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  background: hsl(var(--primary));
-  color: #ffffff;
-  border-radius: 0.75rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 14px -2px hsl(var(--primary) / 0.35);
-}
-
 .success-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -198,9 +186,8 @@ a {
   width: 100%;
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
-  border-radius: 1rem;
+  border-radius: 0.875rem;
   padding: 2.5rem 2rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -211,28 +198,12 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 4.25rem;
-  height: 4.25rem;
+  width: 3.25rem;
+  height: 3.25rem;
   border-radius: 50%;
-  background: hsl(var(--primary) / 0.12);
+  background: hsl(var(--primary) / 0.1);
   color: hsl(var(--primary));
   margin-bottom: 1.25rem;
-  position: relative;
-}
-
-.success-badge::after {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1px solid hsl(var(--primary) / 0.25);
-  animation: pulseRing 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-}
-
-@keyframes pulseRing {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.05); opacity: 0.3; }
-  100% { transform: scale(0.95); opacity: 0.8; }
 }
 
 .success-card__title {

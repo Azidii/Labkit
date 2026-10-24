@@ -1,7 +1,14 @@
+const mongoose = require("mongoose");
 const Cart = require("../models/cartSchema");
+const Item = require("../models/itemSchema");
+const Kit = require("../models/kitsSchema");
 
 function getAuthUserId(req) {
-  return req.session?.user?.id || req.session?.user?._id || req.user?.userId || null;
+  const rawId = req.session?.user?.id || req.session?.user?._id || req.user?.userId || req.user?.id;
+  if (rawId && mongoose.Types.ObjectId.isValid(rawId)) {
+    return String(rawId);
+  }
+  return null;
 }
 
 // GET /cart - Retrieve user's active cart
@@ -46,21 +53,62 @@ exports.addToCart = async (req, res) => {
     }
 
     const { id, kitId, itemId, price, unitPrice, quantity, qty } = req.body;
-    const targetKit = kitId || id;
-    const targetItem = itemId || null;
-    const itemPrice = Number(unitPrice !== undefined ? unitPrice : price);
-    const itemQty = Math.max(1, Number(quantity || qty || 1));
+    let targetKit = kitId && mongoose.Types.ObjectId.isValid(kitId) ? String(kitId) : null;
+    let targetItem = itemId && mongoose.Types.ObjectId.isValid(itemId) ? String(itemId) : null;
+
+    if (!targetKit && !targetItem && id && mongoose.Types.ObjectId.isValid(id)) {
+      const dbItem = await Item.findById(id).lean();
+      if (dbItem) {
+        targetItem = String(id);
+      } else {
+        const dbKit = await Kit.findById(id).lean();
+        if (dbKit) {
+          targetKit = String(id);
+        } else {
+          targetItem = String(id);
+        }
+      }
+    }
 
     if (!targetKit && !targetItem) {
-      return res.status(400).json({ success: false, error: "Missing required item or kit ID." });
+      return res.status(400).json({ success: false, error: "Missing or invalid item/kit ID." });
     }
+
+    // Authoritative server-side price check and stock validation
+    let verifiedPrice = Number(unitPrice !== undefined ? unitPrice : price);
+    let availableStock = 9999;
+    if (targetItem) {
+      const dbItem = await Item.findById(targetItem).lean();
+      if (dbItem) {
+        if (Number.isFinite(dbItem.price) && dbItem.price >= 0) {
+          verifiedPrice = dbItem.price;
+        }
+        availableStock = Number(dbItem.stockQuantity !== undefined ? dbItem.stockQuantity : (dbItem.stock || 0));
+      }
+    } else if (targetKit) {
+      const dbKit = await Kit.findById(targetKit).lean() || await Item.findById(targetKit).lean();
+      if (dbKit) {
+        if (Number.isFinite(dbKit.price) && dbKit.price >= 0) {
+          verifiedPrice = dbKit.price;
+        }
+        availableStock = Number(dbKit.stockQuantity !== undefined ? dbKit.stockQuantity : (dbKit.stock_quantity !== undefined ? dbKit.stock_quantity : 0));
+      }
+    }
+
+    if (availableStock <= 0) {
+      return res.status(400).json({ success: false, error: "This item is currently out of stock." });
+    }
+
+    const parsedQty = Number(quantity || qty || 1);
+    const requestedQty = Math.max(1, Number.isInteger(parsedQty) ? parsedQty : 1);
+    const itemQty = Math.min(availableStock, requestedQty);
 
     const cart = await Cart.getOrCreateForUser(userId);
     await cart.addItem({
       kit: targetKit,
       item: targetItem,
       quantity: itemQty,
-      unitPrice: itemPrice
+      unitPrice: verifiedPrice
     });
 
     const totalCount = (cart.items || []).reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
@@ -92,7 +140,11 @@ exports.updateCartQty = async (req, res) => {
     }
 
     const { id, quantity, delta } = req.body;
-    const targetId = String(id || req.params.id);
+    const rawId = id || req.params?.id;
+    if (!rawId) {
+      return res.status(400).json({ success: false, error: "Item ID is required." });
+    }
+    const targetId = String(rawId);
 
     const cart = await Cart.findOne({ userId });
     if (!cart) {
@@ -107,10 +159,25 @@ exports.updateCartQty = async (req, res) => {
       return res.status(404).json({ success: false, error: "Item not found in cart." });
     }
 
+    // Determine available stock in database for dynamic limit
+    const targetProduct = (item.item ? await Item.findById(item.item).lean() : null) ||
+                          (item.kit ? await Kit.findById(item.kit).lean() : null) ||
+                          await Item.findById(item.item || item.kit).lean() ||
+                          await Kit.findById(item.item || item.kit).lean();
+    const availableStock = targetProduct
+      ? Number(targetProduct.stockQuantity !== undefined ? targetProduct.stockQuantity : (targetProduct.stock || 0))
+      : 9999;
+
     if (delta !== undefined) {
-      item.quantity = Math.max(0, item.quantity + Number(delta));
+      const deltaNum = Number(delta);
+      if (Number.isFinite(deltaNum)) {
+        item.quantity = Math.min(availableStock, Math.max(0, item.quantity + deltaNum));
+      }
     } else if (quantity !== undefined) {
-      item.quantity = Math.max(0, Number(quantity));
+      const qtyNum = Number(quantity);
+      if (Number.isFinite(qtyNum)) {
+        item.quantity = Math.min(availableStock, Math.max(0, Math.round(qtyNum)));
+      }
     }
 
     if (item.quantity <= 0) {
@@ -148,7 +215,11 @@ exports.removeCartItem = async (req, res) => {
     }
 
     const { id } = req.body;
-    const targetId = String(id || req.params.id);
+    const rawId = id || req.params?.id;
+    if (!rawId) {
+      return res.status(400).json({ success: false, error: "Item ID is required." });
+    }
+    const targetId = String(rawId);
 
     const cart = await Cart.findOne({ userId });
     if (!cart) {

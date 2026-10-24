@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const User = require("../models/userSchema");
 const Item = require("../models/itemSchema");
 const Kit = require("../models/kitsSchema");
@@ -5,51 +6,62 @@ const Kit = require("../models/kitsSchema");
 async function getFeaturedProducts() {
   try {
     const databaseItems = await Item.find({
-      $or: [
-        { stockQuantity: { $gt: 0 } },
-        { stock_quantity: { $gt: 0 } },
-        { in_stock: true }
-      ]
+      stockQuantity: { $gt: 0 }
     })
       .sort({ createdAt: -1 })
       .limit(6)
       .lean();
 
-    const featuredItems = databaseItems.map((item) => ({
-      ...item,
-      id: String(item._id),
-      slug: item.slug || String(item._id),
-      name: item.name,
-      tagline: item.tagline || (item.description ? item.description.slice(0, 80) : ""),
-      description: item.description,
-      price: Number(item.price) || 0,
-      compare_at_price: item.compare_at_price ? Number(item.compare_at_price) : null,
-      category: item.category || "Sensors & Modules",
-      difficulty: item.difficulty || "Beginner",
-      image_url: item.imageUrl || item.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
-      rating: item.rating || 5.0,
-      review_count: item.review_count || 0,
-      in_stock: item.stockQuantity !== undefined ? item.stockQuantity > 0 : true,
-      maxPurchaseQuantity: item.maxPurchaseQuantity || 10
-    }));
+    const featuredItems = databaseItems.map((item) => {
+      const stock = Math.max(0, Number(item.stockQuantity !== undefined ? item.stockQuantity : (item.stock || 0)));
+      return {
+        ...item,
+        id: String(item._id),
+        slug: item.slug || String(item._id),
+        name: item.name,
+        tagline: item.tagline || (item.description ? item.description.slice(0, 80) : ""),
+        description: item.description,
+        price: Number(item.price) || 0,
+        compare_at_price: item.compare_at_price ? Number(item.compare_at_price) : null,
+        category: item.category || "Sensors & Modules",
+        difficulty: item.difficulty || "Beginner",
+        image_url: item.imageUrl || item.image_url || "/img/electronics-workbench.jpg",
+        imageUrl: item.imageUrl || item.image_url || "/img/electronics-workbench.jpg",
+        rating: item.rating || 5.0,
+        review_count: item.review_count || 0,
+        stockQuantity: stock,
+        stock: stock,
+        in_stock: stock > 0,
+        maxPurchaseQuantity: stock
+      };
+    });
 
     if (featuredItems.length < 6) {
-      const databaseKits = await Kit.find({ in_stock: true, stock_quantity: { $gt: 0 } })
+      const databaseKits = await Kit.find({
+        stockQuantity: { $gt: 0 }
+      })
         .sort({ createdAt: -1 })
         .limit(6 - featuredItems.length)
         .lean();
 
-      const featuredKits = databaseKits.map((kit) => ({
-        ...kit,
-        id: String(kit._id),
-        slug: kit.slug || String(kit._id),
-        name: kit.name,
-        tagline: kit.tagline || (kit.description ? kit.description.slice(0, 80) : ""),
-        image_url: kit.image_url || kit.imageUrl || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
-        rating: kit.rating || 5.0,
-        review_count: kit.review_count || 0,
-        maxPurchaseQuantity: kit.maxPurchaseQuantity || 10
-      }));
+      const featuredKits = databaseKits.map((kit) => {
+        const stock = Math.max(0, Number(kit.stockQuantity !== undefined ? kit.stockQuantity : (kit.stock_quantity !== undefined ? kit.stock_quantity : 0)));
+        return {
+          ...kit,
+          id: String(kit._id),
+          slug: kit.slug || String(kit._id),
+          name: kit.name,
+          tagline: kit.tagline || (kit.description ? kit.description.slice(0, 80) : ""),
+          image_url: kit.image_url || kit.imageUrl || "/img/electronics-workbench.jpg",
+          imageUrl: kit.imageUrl || kit.image_url || "/img/electronics-workbench.jpg",
+          rating: kit.rating || 5.0,
+          review_count: kit.review_count || 0,
+          stockQuantity: stock,
+          stock: stock,
+          in_stock: stock > 0,
+          maxPurchaseQuantity: stock
+        };
+      });
 
       return featuredItems.concat(featuredKits);
     }
@@ -70,10 +82,11 @@ exports.renderDashboard = async (req, res) => {
 
 // GET /settings - User Settings page
 exports.renderSettings = async (req, res) => {
-  let currentUser = (req.session && req.session.user) || res.locals.currentUser || null;
-  if (currentUser && currentUser.id) {
+  let currentUser = (req.session && req.session.user) || (res.locals && res.locals.currentUser) || req.user || null;
+  const rawId = currentUser?.id || currentUser?._id || currentUser?.userId;
+  if (rawId && mongoose.Types.ObjectId.isValid(rawId)) {
     try {
-      const dbUser = await User.findById(currentUser.id);
+      const dbUser = await User.findById(String(rawId)).lean();
       if (dbUser) {
         currentUser = {
           id: dbUser._id,
@@ -85,7 +98,9 @@ exports.renderSettings = async (req, res) => {
           avatar: dbUser.avatar || "",
           hasPassword: !!dbUser.passwordHash
         };
-        req.session.user = currentUser;
+        if (req.session) {
+          req.session.user = currentUser;
+        }
       }
     } catch (err) {
       console.error("Error refreshing user in settings:", err);
@@ -96,19 +111,20 @@ exports.renderSettings = async (req, res) => {
 
 // POST /settings/username - Add or update username
 exports.updateUsername = async (req, res) => {
-  if (!req.session || !req.session.user) {
+  const rawUserId = req.session?.user?.id || req.session?.user?._id || req.user?.userId || req.user?.id;
+  if (!rawUserId || !mongoose.Types.ObjectId.isValid(rawUserId)) {
     return res.status(401).json({ success: false, error: "Please sign in to update your username." });
   }
+  const currentUserId = String(rawUserId);
 
   try {
-    const rawUsername = req.body.username;
-    const cleanUsername = (rawUsername || "").trim();
+    const rawUsername = String(req.body?.username || "").trim();
 
-    if (!cleanUsername) {
+    if (!rawUsername) {
       return res.status(400).json({ success: false, error: "Username cannot be empty." });
     }
 
-    if (!/^[a-zA-Z0-9_]{3,30}$/.test(cleanUsername)) {
+    if (!/^[a-zA-Z0-9_]{3,30}$/.test(rawUsername)) {
       return res.status(400).json({
         success: false,
         error: "Username must be 3-30 characters long (letters, numbers, and underscores only)."
@@ -116,29 +132,32 @@ exports.updateUsername = async (req, res) => {
     }
 
     // Check if username is taken by another account
+    const escapedUsername = rawUsername.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const existing = await User.findOne({
-      username: { $regex: new RegExp(`^${cleanUsername.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`, "i") },
-      _id: { $ne: req.session.user.id }
+      username: { $regex: new RegExp(`^${escapedUsername}$`, "i") },
+      _id: { $ne: currentUserId }
     });
 
     if (existing) {
       return res.status(400).json({ success: false, error: "This username is already taken. Please choose another." });
     }
 
-    const user = await User.findById(req.session.user.id);
+    const user = await User.findById(currentUserId);
     if (!user) {
       return res.status(404).json({ success: false, error: "Account not found." });
     }
 
-    user.username = cleanUsername;
+    user.username = rawUsername;
     await user.save();
 
-    req.session.user.username = cleanUsername;
+    if (req.session?.user) {
+      req.session.user.username = rawUsername;
+    }
 
     return res.json({
       success: true,
       message: "Username updated successfully!",
-      username: cleanUsername
+      username: rawUsername
     });
   } catch (err) {
     console.error("Settings username update error:", err);
@@ -148,13 +167,18 @@ exports.updateUsername = async (req, res) => {
 
 // POST /settings/change-password - Change account password
 exports.changePassword = async (req, res) => {
-  if (!req.session || !req.session.user) {
+  const rawUserId = req.session?.user?.id || req.session?.user?._id || req.user?.userId || req.user?.id;
+  if (!rawUserId || !mongoose.Types.ObjectId.isValid(rawUserId)) {
     return res.status(401).json({ success: false, error: "Please sign in to change your password." });
   }
+  const currentUserId = String(rawUserId);
 
   try {
-    const { currentPassword, newPassword, confirmPassword } = req.body;
-    const user = await User.findById(req.session.user.id);
+    const currentPassword = String(req.body?.currentPassword || "");
+    const newPassword = String(req.body?.newPassword || "");
+    const confirmPassword = String(req.body?.confirmPassword || "");
+
+    const user = await User.findById(currentUserId);
 
     if (!user) {
       return res.status(404).json({ success: false, error: "Account not found." });
@@ -199,15 +223,21 @@ exports.redirectAdmin = (req, res) => {
 
 // GET /logout - Sign out user and destroy session
 exports.logout = (req, res) => {
-  res.clearCookie("token", { httpOnly: true, path: "/" });
+  const clearOpts = {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/"
+  };
+  res.clearCookie("token", clearOpts);
   if (req.session) {
     req.session.destroy((err) => {
       if (err) console.error("Error destroying session:", err);
-      res.clearCookie("connect.sid", { path: "/" });
+      res.clearCookie("connect.sid", clearOpts);
       res.redirect("/login");
     });
   } else {
-    res.clearCookie("connect.sid", { path: "/" });
+    res.clearCookie("connect.sid", clearOpts);
     res.redirect("/login");
   }
 };

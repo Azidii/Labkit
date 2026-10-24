@@ -21,22 +21,22 @@
 }
 
 .dark {
-  --background: 214 40% 7.5%;
-  --foreground: 210 40% 98%;
-  --card: 213 36% 11%;
-  --card-foreground: 210 40% 98%;
-  --primary: 187 80% 42%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 213 30% 15%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 213 30% 15%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 213 28% 18%;
-  --accent-foreground: 187 80% 75%;
-  --destructive: 0 62.8% 30.6%;
-  --border: 213 25% 18%;
-  --input: 213 25% 18%;
-  --ring: 187 80% 42%;
+  --background: 216 28% 7%;        /* #0D1117 deep carbon-slate base canvas */
+  --foreground: 210 33% 96%;       /* #F0F4F8 off-white primary text */
+  --card: 216 28% 10.5%;           /* #131922 stepped slate elevated surfaces */
+  --card-foreground: 210 33% 96%;
+  --primary: 187 82% 44%;          /* #13a9c2 tuned crisp teal */
+  --primary-foreground: 216 28% 7%;/* high contrast text on teal */
+  --secondary: 215 25% 12%;        /* #161D26 dark technical well */
+  --secondary-foreground: 210 33% 96%;
+  --muted: 215 27% 14%;            /* #1A222D elevated hover / control */
+  --muted-foreground: 215 20% 65%; /* #94A3B8 muted slate body text */
+  --accent: 215 27% 14%;           /* #1A222D */
+  --accent-foreground: 187 82% 52%;
+  --destructive: 0 72% 51%;
+  --border: 216 22% 16%;           /* #1C232E quiet 1px structural border (8% white) */
+  --input: 216 22% 16%;
+  --ring: 187 82% 44%;
 }
 
 *, *::before, *::after {
@@ -308,91 +308,112 @@ a {
 
 .settings-page {
   flex: 1;
-  padding: 3rem 1rem 5rem;
+  padding: 3rem 1.5rem 5rem;
+  background: hsl(var(--background));
 }
 
 .settings-container {
   width: 100%;
-  max-width: 680px;
+  max-width: 64rem;
   margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  color: hsl(var(--muted-foreground));
-  margin-bottom: 2rem;
-  transition: color 0.15s ease;
+@media (min-width: 900px) {
+  .settings-container {
+    grid-template-columns: 280px 1fr;
+    align-items: start;
+    gap: 3.5rem;
+  }
 }
 
-.back-link:hover {
-  color: hsl(var(--foreground));
-}
-
-.settings-title-row {
+.settings-header {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 0.75rem;
-  margin-bottom: 1.75rem;
-}
-
-.settings-title-icon {
-  color: hsl(var(--foreground));
 }
 
 .settings-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
   color: hsl(var(--foreground));
+  line-height: 1.25;
+}
+
+@media (min-width: 768px) {
+  .settings-title {
+    font-size: 1.75rem;
+  }
+}
+
+.settings-subtitle {
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.55;
+}
+
+.settings-admin-bar {
+  margin-top: 0.5rem;
+}
+
+.btn-settings-admin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: hsl(var(--primary));
+  text-decoration: none;
+}
+.btn-settings-admin:hover {
+  text-decoration: underline;
+}
+
+.settings-main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .settings-card {
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   overflow: hidden;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
-  margin-bottom: 1.5rem;
-  animation: settingsCardEntrance 0.3s cubic-bezier(0, 0, 0.2, 1) forwards;
-}
-
-@keyframes settingsCardEntrance {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  box-shadow: none;
 }
 
 .settings-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 1.5rem;
+  padding: 1.125rem 1.5rem;
 }
 
 .settings-row__left {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .settings-row__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.75rem;
-  border: 1px solid hsl(190 70% 88%);
-  background: hsl(190 75% 95%);
-  color: hsl(var(--primary));
+  width: 1.25rem;
+  height: 1.25rem;
+  background: transparent;
+  border: none;
+  color: hsl(var(--muted-foreground));
   flex-shrink: 0;
 }
 .dark .settings-row__icon {
-  border-color: hsl(190 40% 22%);
-  background: hsl(190 50% 14%);
-  color: hsl(var(--primary));
+  background: transparent;
+  border: none;
+  color: hsl(var(--muted-foreground));
 }
 
 .settings-row__meta {
@@ -402,14 +423,14 @@ a {
 }
 
 .settings-row__label {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: hsl(var(--muted-foreground));
 }
 
 .settings-row__value {
   font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: 500;
   color: hsl(var(--foreground));
 }
 
@@ -882,4 +903,60 @@ input:checked + .toggle-slider::before {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Precision Hardware Dark Mode Overrides for Settings */
+.dark .settings-card,
+.dark .settings-panel {
+  background: #131922;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .settings-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .settings-row__title {
+  color: #F0F4F8;
+}
+
+.dark .settings-row__desc {
+  color: #94A3B8;
+}
+
+.dark .toggle-slider {
+  background: #1C232E;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.dark input:checked + .toggle-slider {
+  background: hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+
+.dark .btn-settings-action {
+  background: #1A222D;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F0F4F8;
+}
+
+.dark .btn-settings-action:hover {
+  background: #212B39;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.dark .modal-card {
+  background: #131922;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+.dark .form-control {
+  background: #161D26;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F0F4F8;
+}
+
+.dark .form-control:focus {
+  border-color: hsl(var(--primary));
 }
