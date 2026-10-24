@@ -5,12 +5,14 @@
   backdrop-filter: blur(2px);
   z-index: 998;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.25s;
 }
 
 .cart-drawer-backdrop.is-open {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 
@@ -26,13 +28,15 @@
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
   z-index: 999;
   transform: translateX(100%);
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  visibility: hidden;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.25s;
   display: flex;
   flex-direction: column;
 }
 
 .cart-drawer.is-open {
   transform: translateX(0);
+  visibility: visible;
 }
 
 .cart-drawer__header {
@@ -291,7 +295,7 @@
 .cart-qty-num {
   min-width: 1.5rem;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: hsl(var(--foreground));
   user-select: none;
@@ -357,7 +361,7 @@
   background: hsl(var(--muted));
   border-radius: 0.5rem;
   color: hsl(var(--muted-foreground));
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   line-height: 1.35;
 }
 
@@ -404,6 +408,61 @@
   border-radius: 9999px;
   background: hsl(var(--primary));
   color: #ffffff;
-  font-size: 0.625rem;
+  font-size: 0.8125rem;
   font-weight: 700;
+}
+
+/* Precision Hardware Dark Mode Overrides for Cart */
+.dark .cart-drawer {
+  background: #131922;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .cart-drawer__header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .cart-item-card {
+  background: #161D26;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .cart-item-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dark .cart-item-thumb {
+  background: #1A222D;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .cart-item-title {
+  color: #F0F4F8;
+}
+
+.dark .cart-item-price {
+  color: hsl(var(--primary));
+}
+
+.dark .cart-qty-btn {
+  background: #1A222D;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F0F4F8;
+}
+
+.dark .cart-qty-btn:hover {
+  background: #212B39;
+}
+
+.dark .cart-drawer__footer {
+  background: #131922;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .cart-total-label {
+  color: #94A3B8;
+}
+
+.dark .cart-total-val {
+  color: #F0F4F8;
 }

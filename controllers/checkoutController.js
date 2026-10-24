@@ -8,8 +8,21 @@ const Cart = require("../models/cartSchema");
 const { sendInvoiceEmail } = require("../utils/sendEmail");
 const { calculateShippingFee } = require("../utils/shippingCalculator");
 
-exports.renderCheckout = (req, res) => {
-  res.render("checkout");
+exports.renderCheckout = async (req, res) => {
+  try {
+    const rawUserId = req.session?.user?.id || req.session?.user?._id || req.user?.userId || req.user?.id;
+    let isDbCartEmpty = true;
+    if (rawUserId && mongoose.Types.ObjectId.isValid(rawUserId)) {
+      const cart = await Cart.findOne({ userId: String(rawUserId) }).lean();
+      if (cart && Array.isArray(cart.items) && cart.items.length > 0) {
+        isDbCartEmpty = false;
+      }
+    }
+    res.render("checkout", { isDbCartEmpty });
+  } catch (error) {
+    console.error("Error in renderCheckout:", error);
+    res.render("checkout", { isDbCartEmpty: false });
+  }
 };
 
 /**
@@ -18,9 +31,9 @@ exports.renderCheckout = (req, res) => {
  */
 exports.getShippingFee = (req, res) => {
   const { country, province, city, quantity } = req.query;
-  const ctry = (country || "Philippines").trim();
-  const prov = (province || "").trim();
-  const cty = (city || "").trim();
+  const ctry = String(country || "Philippines").trim();
+  const prov = String(province || "").trim();
+  const cty = String(city || "").trim();
   const isDomestic = !ctry || ctry.toLowerCase() === "philippines" || ctry.toLowerCase() === "ph";
 
   if (isDomestic && !prov) {
@@ -33,7 +46,12 @@ exports.getShippingFee = (req, res) => {
 };
 
 exports.createCheckout = async (req, res) => {
-  const userId = req.session.user.id;
+  const rawUserId = req.session?.user?.id || req.session?.user?._id || req.user?.userId || req.user?.id;
+  if (!rawUserId || !mongoose.Types.ObjectId.isValid(rawUserId)) {
+    return res.status(401).json({ error: "Please log in to complete your checkout." });
+  }
+  const userId = String(rawUserId);
+
   const { items, billing, paymentMethod } = req.body || {};
 
   if (!Array.isArray(items) || items.length === 0) {
@@ -45,7 +63,7 @@ exports.createCheckout = async (req, res) => {
     return res.status(400).json({ error: "Select a valid payment method." });
   }
 
-  const country = billing?.country || "Philippines";
+  const country = String(billing?.country || "Philippines").trim();
   const isInternational = country.toLowerCase() !== "philippines" && country.toLowerCase() !== "ph";
 
   if (!billing || !billing.address || (!isInternational && (!billing.province || !billing.city))) {

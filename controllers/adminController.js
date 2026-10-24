@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs");
+const mongoose = require("mongoose");
 const Item = require("../models/itemSchema");
 const Kit = require("../models/kitsSchema");
 const User = require("../models/userSchema");
@@ -50,9 +51,10 @@ exports.requireAdmin = requireAdmin;
 async function getAdminUser(req) {
   let currentUser = req.session?.user || req.user || {};
   try {
-    const query = (currentUser.id || currentUser._id)
-      ? { _id: currentUser.id || currentUser._id }
-      : (currentUser.email ? { email: currentUser.email } : null);
+    const rawId = currentUser.id || currentUser._id || currentUser.userId;
+    const query = rawId && mongoose.Types.ObjectId.isValid(rawId)
+      ? { _id: String(rawId) }
+      : (currentUser.email ? { email: String(currentUser.email).toLowerCase().trim() } : null);
     if (query) {
       const dbUser = await User.findOne(query).lean();
       if (dbUser) {
@@ -64,7 +66,7 @@ async function getAdminUser(req) {
           lastName: dbUser.lastName || "",
           username: dbUser.username || "",
           email: dbUser.email || "",
-          role: dbUser.role || "admin",
+          role: dbUser.role || "user",
           avatar: dbUser.avatar || "",
           hasPassword: !!dbUser.passwordHash
         };
@@ -75,6 +77,20 @@ async function getAdminUser(req) {
     console.warn("Could not load fresh user in admin:", err.message);
   }
   return currentUser;
+}
+
+// Handler-level authorization helper (AUTHZ-03 defense in depth)
+async function verifyAdminAuth(req, res) {
+  const admin = await getAdminUser(req);
+  if (!admin || !admin.id || admin.role !== "admin") {
+    if (req.headers?.accept?.includes("application/json")) {
+      res.status(403).json({ error: "Forbidden: Restricted access. Admin privileges required." });
+    } else {
+      res.status(403).send("Forbidden: Restricted access. Admin privileges required.");
+    }
+    return null;
+  }
+  return admin;
 }
 
 exports.renderAdmin = async (req, res) => {
@@ -106,8 +122,16 @@ exports.renderAdmin = async (req, res) => {
 };
 
 exports.removeUser = async (req, res) => {
-  const userId = String(req.params.userId || "");
-  if (userId === String(req.session.user.id)) {
+  const currentAdmin = await verifyAdminAuth(req, res);
+  if (!currentAdmin) return;
+
+  const rawUserId = req.params?.userId;
+  if (!rawUserId || !mongoose.Types.ObjectId.isValid(rawUserId)) {
+    return res.status(400).send("Invalid user ID specified.");
+  }
+  const userId = String(rawUserId);
+  const selfId = String(currentAdmin.id || currentAdmin._id);
+  if (userId === selfId) {
     return res.status(400).send("You cannot remove your own account.");
   }
 
@@ -121,8 +145,11 @@ exports.removeUser = async (req, res) => {
 };
 
 exports.createItem = async (req, res) => {
+  const currentAdmin = await verifyAdminAuth(req, res);
+  if (!currentAdmin) return;
+
   const formData = { ...req.body };
-  const currentUser = req.session?.user || res.locals.currentUser || req.user || {};
+  const currentUser = currentAdmin;
 
   try {
     if (req.uploadError) {
@@ -236,7 +263,7 @@ exports.createItem = async (req, res) => {
       items,
       kits,
       users,
-      error: error.message || "Unable to save this item. Check that all fields are correct.",
+      error: "Unable to save this item. Check that all fields are correct.",
       formData,
       currentUser
     });
@@ -244,7 +271,14 @@ exports.createItem = async (req, res) => {
 };
 
 exports.removeItem = async (req, res) => {
-  const itemId = String(req.params.itemId || "");
+  const currentAdmin = await verifyAdminAuth(req, res);
+  if (!currentAdmin) return;
+
+  const rawId = req.params?.itemId;
+  if (!rawId || !mongoose.Types.ObjectId.isValid(rawId)) {
+    return res.status(400).send("Invalid item ID specified.");
+  }
+  const itemId = String(rawId);
   try {
     await Item.findByIdAndDelete(itemId);
     res.redirect("/admin?tab=products");
@@ -255,7 +289,14 @@ exports.removeItem = async (req, res) => {
 };
 
 exports.removeBundle = async (req, res) => {
-  const bundleId = String(req.params.bundleId || req.params.kitId || "");
+  const currentAdmin = await verifyAdminAuth(req, res);
+  if (!currentAdmin) return;
+
+  const rawId = req.params?.bundleId || req.params?.kitId;
+  if (!rawId || !mongoose.Types.ObjectId.isValid(rawId)) {
+    return res.status(400).send("Invalid bundle ID specified.");
+  }
+  const bundleId = String(rawId);
   try {
     await Kit.findByIdAndDelete(bundleId);
     res.redirect("/admin?tab=products");
@@ -269,9 +310,16 @@ exports.removeBundle = async (req, res) => {
 exports.createKit = exports.createItem;
 
 exports.updateItem = async (req, res) => {
-  const itemId = String(req.params.itemId || req.params.bundleId || "");
+  const currentAdmin = await verifyAdminAuth(req, res);
+  if (!currentAdmin) return;
+
+  const rawId = req.params?.itemId || req.params?.bundleId;
+  if (!rawId || !mongoose.Types.ObjectId.isValid(rawId)) {
+    return res.status(400).send("Invalid item ID specified.");
+  }
+  const itemId = String(rawId);
   const formData = { ...req.body };
-  const currentUser = req.session?.user || res.locals.currentUser || req.user || {};
+  const currentUser = currentAdmin;
 
   try {
     let targetDoc = await Item.findById(itemId);
@@ -409,7 +457,7 @@ exports.updateItem = async (req, res) => {
       items,
       kits,
       users,
-      error: error.message || "Unable to update this item. Check that all fields are correct.",
+      error: "Unable to update this item. Check that all fields are correct.",
       success: null,
       formData,
       currentUser

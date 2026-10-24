@@ -1,4 +1,9 @@
-/package-lock.json
-/package.json
 /node_modules
+.agents/
+.taste-skill/
 .env
+.env.*
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db

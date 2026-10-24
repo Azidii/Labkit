@@ -3,7 +3,10 @@ const Item = require("../models/itemSchema");
 
 // GET /shop - Display shop catalog with filters
 exports.renderShop = async (req, res) => {
-  const { category, difficulty, sort, q } = req.query;
+  const category = typeof req.query?.category === "string" ? req.query.category.trim() : null;
+  const difficulty = typeof req.query?.difficulty === "string" ? req.query.difficulty.trim() : null;
+  const sort = typeof req.query?.sort === "string" ? req.query.sort.trim() : null;
+  const q = typeof req.query?.q === "string" ? req.query.q.trim() : null;
 
   let filtered = [];
 

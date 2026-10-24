@@ -28,8 +28,8 @@ exports.processLogin = async (req, res) => {
     !requestedReturnTo.startsWith("//") ? requestedReturnTo : null;
 
   try {
-    const rawIdentifier = (req.body.email || req.body.username || req.body.identifier || "").trim();
-    const { password } = req.body;
+    const rawIdentifier = String(req.body?.email || req.body?.username || req.body?.identifier || "").trim();
+    const password = String(req.body?.password || "");
 
     if (!rawIdentifier || !password) {
       const msg = "Please enter your email/username and password.";
@@ -82,14 +82,16 @@ exports.processLogin = async (req, res) => {
       role: user.role
     };
 
-    // Sign it with process.env.JWT_SECRET (1-day expiration)
+    // Sign it with process.env.JWT_SECRET (1-day expiration, HS256)
     const token = jwt.sign(payload, JWT_SECRET, {
+      algorithm: "HS256",
       expiresIn: "1d"
     });
 
     // Set it in an httpOnly cookie
     res.cookie("token", token, {
       httpOnly: true,
+      sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60 * 1000 // 1 day
     });
@@ -278,11 +280,13 @@ exports.handleGoogleCallback = async (req, res) => {
     };
 
     const token = jwt.sign(payload, JWT_SECRET, {
+      algorithm: "HS256",
       expiresIn: "1d"
     });
 
     res.cookie("token", token, {
       httpOnly: true,
+      sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60 * 1000
     });
@@ -315,15 +319,21 @@ exports.handleGoogleCallback = async (req, res) => {
  * Clears the token cookie and redirects to /login.
  */
 exports.logout = (req, res) => {
-  res.clearCookie("token", { httpOnly: true, path: "/" });
+  const clearOpts = {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/"
+  };
+  res.clearCookie("token", clearOpts);
   if (req.session) {
     req.session.destroy((err) => {
       if (err) console.error("Session destroy error:", err);
-      res.clearCookie("connect.sid", { path: "/" });
+      res.clearCookie("connect.sid", clearOpts);
       res.redirect("/login");
     });
   } else {
-    res.clearCookie("connect.sid", { path: "/" });
+    res.clearCookie("connect.sid", clearOpts);
     res.redirect("/login");
   }
 };

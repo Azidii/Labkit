@@ -161,13 +161,21 @@ function openCart() {
     return;
   }
   ensureCartDrawerDom();
-  document.getElementById("cartDrawer")?.classList.add("is-open");
-  document.getElementById("cartBackdrop")?.classList.add("is-open");
+  const drawer = document.getElementById("cartDrawer");
+  const backdrop = document.getElementById("cartBackdrop");
+  drawer?.classList.add("is-open");
+  drawer?.setAttribute("aria-hidden", "false");
+  backdrop?.classList.add("is-open");
+  backdrop?.setAttribute("aria-hidden", "false");
 }
 
 function closeCart() {
-  document.getElementById("cartDrawer")?.classList.remove("is-open");
-  document.getElementById("cartBackdrop")?.classList.remove("is-open");
+  const drawer = document.getElementById("cartDrawer");
+  const backdrop = document.getElementById("cartBackdrop");
+  drawer?.classList.remove("is-open");
+  drawer?.setAttribute("aria-hidden", "true");
+  backdrop?.classList.remove("is-open");
+  backdrop?.setAttribute("aria-hidden", "true");
 }
 
 function ensureCartDrawerDom() {
@@ -176,11 +184,13 @@ function ensureCartDrawerDom() {
   const backdrop = document.createElement("div");
   backdrop.className = "cart-drawer-backdrop";
   backdrop.id = "cartBackdrop";
+  backdrop.setAttribute("aria-hidden", "true");
 
   const drawer = document.createElement("aside");
   drawer.className = "cart-drawer";
   drawer.id = "cartDrawer";
   drawer.setAttribute("aria-label", "Shopping Cart");
+  drawer.setAttribute("aria-hidden", "true");
   drawer.innerHTML = `
     <div class="cart-drawer__header">
       <div class="cart-drawer__title-wrap">

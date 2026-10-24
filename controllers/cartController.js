@@ -1,7 +1,14 @@
+const mongoose = require("mongoose");
 const Cart = require("../models/cartSchema");
+const Item = require("../models/itemSchema");
+const Kit = require("../models/kitsSchema");
 
 function getAuthUserId(req) {
-  return req.session?.user?.id || req.session?.user?._id || req.user?.userId || null;
+  const rawId = req.session?.user?.id || req.session?.user?._id || req.user?.userId || req.user?.id;
+  if (rawId && mongoose.Types.ObjectId.isValid(rawId)) {
+    return String(rawId);
+  }
+  return null;
 }
 
 // GET /cart - Retrieve user's active cart
@@ -46,21 +53,38 @@ exports.addToCart = async (req, res) => {
     }
 
     const { id, kitId, itemId, price, unitPrice, quantity, qty } = req.body;
-    const targetKit = kitId || id;
-    const targetItem = itemId || null;
-    const itemPrice = Number(unitPrice !== undefined ? unitPrice : price);
-    const itemQty = Math.max(1, Number(quantity || qty || 1));
+    const rawKitId = kitId || id;
+    const rawItemId = itemId;
+    const targetKit = rawKitId && mongoose.Types.ObjectId.isValid(rawKitId) ? String(rawKitId) : null;
+    const targetItem = rawItemId && mongoose.Types.ObjectId.isValid(rawItemId) ? String(rawItemId) : null;
 
     if (!targetKit && !targetItem) {
-      return res.status(400).json({ success: false, error: "Missing required item or kit ID." });
+      return res.status(400).json({ success: false, error: "Missing or invalid item/kit ID." });
     }
+
+    // Authoritative server-side price check to prevent client price tampering
+    let verifiedPrice = Number(unitPrice !== undefined ? unitPrice : price);
+    if (targetItem) {
+      const dbItem = await Item.findById(targetItem).lean();
+      if (dbItem && Number.isFinite(dbItem.price) && dbItem.price >= 0) {
+        verifiedPrice = dbItem.price;
+      }
+    } else if (targetKit) {
+      const dbKit = await Kit.findById(targetKit).lean() || await Item.findById(targetKit).lean();
+      if (dbKit && Number.isFinite(dbKit.price) && dbKit.price >= 0) {
+        verifiedPrice = dbKit.price;
+      }
+    }
+
+    const parsedQty = Number(quantity || qty || 1);
+    const itemQty = Math.min(10, Math.max(1, Number.isInteger(parsedQty) ? parsedQty : 1));
 
     const cart = await Cart.getOrCreateForUser(userId);
     await cart.addItem({
       kit: targetKit,
       item: targetItem,
       quantity: itemQty,
-      unitPrice: itemPrice
+      unitPrice: verifiedPrice
     });
 
     const totalCount = (cart.items || []).reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
@@ -92,7 +116,11 @@ exports.updateCartQty = async (req, res) => {
     }
 
     const { id, quantity, delta } = req.body;
-    const targetId = String(id || req.params.id);
+    const rawId = id || req.params?.id;
+    if (!rawId) {
+      return res.status(400).json({ success: false, error: "Item ID is required." });
+    }
+    const targetId = String(rawId);
 
     const cart = await Cart.findOne({ userId });
     if (!cart) {
@@ -108,9 +136,15 @@ exports.updateCartQty = async (req, res) => {
     }
 
     if (delta !== undefined) {
-      item.quantity = Math.max(0, item.quantity + Number(delta));
+      const deltaNum = Number(delta);
+      if (Number.isFinite(deltaNum)) {
+        item.quantity = Math.min(10, Math.max(0, item.quantity + deltaNum));
+      }
     } else if (quantity !== undefined) {
-      item.quantity = Math.max(0, Number(quantity));
+      const qtyNum = Number(quantity);
+      if (Number.isFinite(qtyNum)) {
+        item.quantity = Math.min(10, Math.max(0, Math.round(qtyNum)));
+      }
     }
 
     if (item.quantity <= 0) {
@@ -148,7 +182,11 @@ exports.removeCartItem = async (req, res) => {
     }
 
     const { id } = req.body;
-    const targetId = String(id || req.params.id);
+    const rawId = id || req.params?.id;
+    if (!rawId) {
+      return res.status(400).json({ success: false, error: "Item ID is required." });
+    }
+    const targetId = String(rawId);
 
     const cart = await Cart.findOne({ userId });
     if (!cart) {

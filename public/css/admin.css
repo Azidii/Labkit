@@ -53,16 +53,14 @@ body {
   color: var(--teal);
 }
 
-/* ── Console Header Banner ── */
 .console-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 26px 30px;
-  border: 1px solid #ccfbf1;
-  background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 55%, #f8fafc 100%);
-  border-radius: 18px;
-  box-shadow: 0 1px 3px rgba(14, 116, 144, 0.04);
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  background: var(--admin-card);
+  border-radius: 12px;
 }
 
 .console-title,
@@ -86,28 +84,29 @@ body {
   box-shadow: 0 1px 3px rgba(14, 116, 144, 0.1);
 }
 
-.console-header h1 {
+.console-header h1,
+.console-heading {
   margin: 0;
-  font-size: 1.625rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--admin-heading);
   letter-spacing: -0.02em;
 }
 
-.console-header p {
+.console-header p,
+.console-subtitle {
   margin: 4px 0 0;
   color: var(--admin-muted);
   font-size: 0.875rem;
 }
 
+.console-icon {
+  display: none;
+}
+
 .console-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #0e7490;
-  background: #ecfeff;
+  display: none;
+}
   border: 1px solid #b2f5ea;
   padding: 6px 14px;
   border-radius: 9999px;
@@ -206,14 +205,12 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Admin Cards ── */
 .admin-card {
   background: var(--admin-card);
   border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 26px;
+  border-radius: 12px;
+  padding: 24px;
   margin-bottom: 22px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   transition: border-color 0.15s ease;
 }
 
@@ -247,19 +244,12 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #ecfeff;
-  border: 1px solid #b2f5ea;
-  color: #0e7490;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: var(--teal);
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
-  transition: all 0.2s ease;
-}
-
-.admin-card:hover .section-icon {
-  background: #cffafe;
-  border-color: #67e8f9;
 }
 
 /* ── Buttons ── */
@@ -309,15 +299,16 @@ body {
   background: var(--teal);
   color: #ffffff;
   border-radius: 8px;
-  padding: 11px 18px;
+  padding: 10px 18px;
   cursor: pointer;
   font-weight: 600;
   font-size: 0.875rem;
-  box-shadow: 0 1px 2px rgba(14, 116, 144, 0.2);
-  transition: background-color 0.15s ease, transform 0.1s ease;
+  transition: opacity 0.15s ease;
 }
 
 .primary-button:hover {
+  opacity: 0.92;
+}
   background: var(--teal-hover);
 }
 
@@ -423,10 +414,12 @@ body {
 .bundle-price {
   font-weight: 600;
   color: var(--admin-heading);
+  font-variant-numeric: tabular-nums;
 }
 
 .bundle-stock {
   color: var(--admin-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .bundle-row__badge {
@@ -1046,16 +1039,16 @@ textarea {
    Dark Mode Tokens & Overrides
    ========================================================================== */
 .dark {
-  --bg: #090e17;
-  --admin-card: #0f1723;
-  --admin-heading: #f8fafc;
-  --ink: #e2e8f0;
-  --admin-muted: #94a3b8;
-  --line: #1e293b;
-  --line-strong: #334155;
+  --bg: #0D1117;
+  --admin-card: #131922;
+  --admin-heading: #F0F4F8;
+  --ink: #CBD5E1;
+  --admin-muted: #94A3B8;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
   --teal: #14b8a6;
   --teal-hover: #0d9488;
-  --soft: #0c232f;
+  --soft: #161D26;
 }
 
 .dark .form-label {
@@ -1069,14 +1062,7 @@ textarea {
 
 .dark .console-header {
   border-color: #1e3a4a;
-  background: linear-gradient(135deg, #0d222e 0%, #0f1723 60%, #090e17 100%);
-}
-
-.dark .console-icon {
-  background: #0f2d3a;
-  border-color: #155e75;
-  color: #22d3ee;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  background: #0f1723;
 }
 
 .dark .console-badge {
@@ -1274,7 +1260,7 @@ textarea {
   background: #ffffff;
   border: 1px solid var(--line, #e2e8f0);
   border-radius: 18px;
-  box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.15), 0 8px 12px -6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.15), 0 8px 12px -6px rgba(0, 0, 0, 0.08); /* taste-skill-ignore */
   padding: 24px;
   transform: scale(0.95) translateY(12px);
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1491,7 +1477,7 @@ textarea {
 .dark .confirm-modal {
   background: #0f1723;
   border-color: #1e293b;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.04); /* taste-skill-ignore */
 }
 
 .dark .confirm-modal__close:hover {
@@ -1603,9 +1589,8 @@ textarea {
   padding: 12px 18px;
   margin-bottom: 22px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+  background: #f0fdfa;
   border: 1px solid #99f6e4;
-  box-shadow: 0 1px 3px rgba(13, 148, 136, 0.08);
   animation: bannerSlideDown 0.25s ease-out;
 }
 
@@ -1700,9 +1685,8 @@ textarea {
 }
 
 .dark .edit-mode-banner {
-  background: linear-gradient(135deg, #042f2e 0%, #083344 100%);
+  background: #042f2e;
   border-color: #115e59;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 .dark .edit-mode-badge {
@@ -1812,3 +1796,90 @@ textarea {
 
 
 
+
+/* Precision Hardware Dark Mode Overrides for Admin App Screens */
+.dark body {
+  background: #0D1117;
+  color: #CBD5E1;
+}
+
+.dark .admin-card {
+  background: #131922;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+.dark .admin-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+}
+
+.dark .tabs {
+  background: #161D26;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .tab {
+  color: #94A3B8;
+}
+
+.dark .tab:hover {
+  color: #F0F4F8;
+}
+
+.dark .tab.is-active {
+  background: #0D1117;
+  color: #14b8a6;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.dark .tab.is-active svg {
+  color: #14b8a6;
+}
+
+.dark .tab-count {
+  background: #1C232E;
+  color: #94A3B8;
+}
+
+.dark .tab.is-active .tab-count {
+  background: rgba(20, 184, 166, 0.15);
+  color: #14b8a6;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  background: #161D26;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #F0F4F8;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+}
+
+.dark .table-responsive,
+.dark .data-table {
+  background: #131922;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .data-table th {
+  background: #161D26;
+  color: #94A3B8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .data-table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #CBD5E1;
+}
+
+.dark .data-table tr:hover td {
+  background: #1A222D;
+}

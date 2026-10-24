@@ -19,7 +19,12 @@ exports.redirectToGoogle = (req, res) => {
 // POST /register - Handle new user registration (Supports fetch JSON and form submit)
 exports.register = async (req, res) => {
   const isJson = req.is("json") || req.headers.accept?.includes("application/json");
-  const { firstName, lastName, username, email, password, confirmPassword } = req.body;
+  const firstName = String(req.body?.firstName || "").trim();
+  const lastName = String(req.body?.lastName || "").trim();
+  const username = String(req.body?.username || "").trim();
+  const email = String(req.body?.email || "").toLowerCase().trim();
+  const password = String(req.body?.password || "");
+  const confirmPassword = String(req.body?.confirmPassword || "");
   const formData = { firstName, lastName, username, email };
 
   try {
@@ -48,7 +53,7 @@ exports.register = async (req, res) => {
     }
 
     // 4. Validate username format
-    const cleanUsername = username.trim();
+    const cleanUsername = username;
     if (!/^[a-zA-Z0-9_]{3,30}$/.test(cleanUsername)) {
       const msg = "Username must be 3-30 characters (letters, numbers, underscores only).";
       return isJson
@@ -57,7 +62,7 @@ exports.register = async (req, res) => {
     }
 
     // 5. Check if email already registered
-    const cleanEmail = email.toLowerCase().trim();
+    const cleanEmail = email;
     const existingEmail = await User.findOne({ email: cleanEmail });
     if (existingEmail) {
       const msg = "An account with this email already exists.";
@@ -78,10 +83,10 @@ exports.register = async (req, res) => {
     // 7. Hash password using schema static method
     const passwordHash = await User.hashPassword(password);
 
-    // 8. Create user document adhering to userSchema
+    // 8. Create user document adhering to userSchema (role strictly enforced)
     const newUser = await User.create({
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
+      firstName,
+      lastName,
       username: cleanUsername,
       email: cleanEmail,
       passwordHash,
@@ -100,7 +105,7 @@ exports.register = async (req, res) => {
     res.redirect("/success?type=register");
   } catch (error) {
     console.error("Registration error:", error);
-    const msg = error.message || "Failed to create account. Please try again.";
+    const msg = "Failed to create account. Please try again.";
     if (isJson) {
       return res.status(500).json({ success: false, error: msg });
     }
