@@ -43,25 +43,9 @@
         <a href="/" class="navbar__link navbar__link--active">Home</a>
         <a href="/shop" class="navbar__link">Shop</a>
         <a href="/about" class="navbar__link">About Us</a>
-        <% if (locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) { %>
-        <a href="/admin" class="navbar__link navbar__link--admin">Admin</a>
-        <% } %>
       </nav>
 
       <div class="navbar__actions">
-        <div class="navbar-search">
-        <button type="button" class="navbar__icon-btn navbar-search__toggle" aria-label="Search" aria-expanded="false">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-        </button>
-        <form class="navbar-search__form" action="/shop" method="get" role="search">
-          <input class="navbar-search__input" name="q" type="search" placeholder="Search products..." aria-label="Search products" />
-        </form>
-        </div>
-
         <button type="button" class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -124,7 +108,7 @@
           </div>
         </div>
         <% } else { %>
-        <a href="/login" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.45rem 1rem; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; background: hsl(var(--primary)); color: #ffffff; text-decoration: none; transition: opacity 0.15s ease;">Login</a>
+        <a href="/login" class="navbar__login-btn">Login</a>
         <% } %>
       </div>
     </div>
@@ -133,39 +117,151 @@
   <main class="page-main">
     <!-- ── HERO ── -->
     <section class="hero">
-      <div class="container">
-        <div class="hero__inner">
-          <span class="hero__badge">
-            <span class="hero__dot">
-              <span class="hero__dot-ping"></span>
-              <span class="hero__dot-core"></span>
-            </span>
-            Individual parts · sold as single units
-          </span>
+      <div class="container hero__inner">
+        <div class="hero__grid">
+          <div class="hero__content">
+            <div class="hero__tech-tag">
+              <span class="hero__tech-tag-dot"></span>
+              <span>Direct hardware sourcing for labs &amp; prototypes</span>
+            </div>
 
-          <h1>
-            Every part your project needs
-            — <span class="accent">buzzers, boards, and beyond.</span>
-          </h1>
+            <h1 class="hero__title">
+              Every part your project needs.
+            </h1>
 
-          <p class="hero__desc">
-            A marketplace for engineering students and hobbyists who buy exactly what they
-            need. From development boards and sensors to power modules and wiring
-            — every part is sold individually, tested before it ships, with no minimum order.
-          </p>
+            <p class="hero__desc">
+              Single-unit microcontrollers, sensors, buzzers, and wiring for engineering students and makers — bench-checked before dispatch with zero minimum order.
+            </p>
 
-          <div class="hero__actions">
-            <a href="/shop" class="btn btn--primary">
-              Browse the shop
-              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </a>
-            <a href="/about" class="btn btn--outline">
-              How ordering works
-            </a>
+            <div class="hero__actions">
+              <a href="/shop" class="btn btn--primary hero__btn-primary">
+                <span>Browse the shop</span>
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </a>
+              <a href="/about" class="btn btn--outline">
+                How ordering works
+              </a>
+            </div>
+
+            <div class="hero__spec-strip">
+              <div class="hero__spec-col">
+                <span class="hero__spec-val">100%</span>
+                <span class="hero__spec-lbl">Bench tested</span>
+              </div>
+              <span class="hero__spec-divider" aria-hidden="true">/</span>
+              <div class="hero__spec-col">
+                <span class="hero__spec-val">1 Unit</span>
+                <span class="hero__spec-lbl">Zero min order</span>
+              </div>
+              <span class="hero__spec-divider" aria-hidden="true">/</span>
+              <div class="hero__spec-col">
+                <span class="hero__spec-val">24h</span>
+                <span class="hero__spec-lbl">Direct dispatch</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero__media">
+            <%
+              const spotlights = (Array.isArray(featured) && featured.length > 0)
+                ? featured.filter(p => Number(p.stockQuantity !== undefined ? p.stockQuantity : (p.stock || 0)) > 0).map((p) => ({
+                    name: p.name,
+                    category: p.category || "Sensors & Modules",
+                    difficulty: p.difficulty || "Beginner",
+                    spec: p.tagline || (p.description ? p.description.slice(0, 85) : "Bench-tested hardware component"),
+                    price: Number(p.price) || 0,
+                    image_url: p.imageUrl || p.image_url || "/img/electronics-workbench.jpg",
+                    slug: p.slug || p.id
+                  }))
+                : [];
+            %>
+
+            <!-- Component Highlight Showcase Carousel -->
+            <% if (spotlights.length > 0) { %>
+            <div class="spotlight-showcase" id="spotlightShowcase" data-ui="spotlight">
+              <div class="spotlight-showcase__header">
+                <div class="spotlight-showcase__status">
+                  <span class="spotlight-showcase__live-dot" aria-hidden="true"></span>
+                  <span class="spotlight-showcase__header-title">Workbench Spotlight</span>
+                </div>
+                <div class="spotlight-showcase__nav" style="<%= spotlights.length <= 1 ? 'display: none;' : '' %>">
+                  <button type="button" class="spotlight-nav-btn spotlight-nav-btn--prev" id="spotlightPrevBtn" aria-label="Previous component">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+                  <span class="spotlight-showcase__counter" id="spotlightCounter">1 / <%= spotlights.length %></span>
+                  <button type="button" class="spotlight-nav-btn spotlight-nav-btn--next" id="spotlightNextBtn" aria-label="Next component">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="spotlight-slider-wrapper">
+                <div class="spotlight-track" id="spotlightTrack">
+                  <% spotlights.forEach(function(item, idx) { %>
+                    <article class="spotlight-slide <%= idx === 0 ? 'is-active' : '' %>" data-slide-index="<%= idx %>" aria-hidden="<%= idx === 0 ? 'false' : 'true' %>">
+                      <div class="spotlight-slide__media">
+                        <img src="<%= item.image_url %>" alt="<%= item.name %>" class="spotlight-slide__img" loading="<%= idx === 0 ? 'eager' : 'lazy' %>" />
+                        <div class="spotlight-slide__badges">
+                          <span class="spotlight-badge spotlight-badge--cat"><%= item.category %></span>
+                          <span class="spotlight-badge spotlight-badge--diff spotlight-badge--<%= (item.difficulty || 'beginner').toLowerCase().replace(/\s/g, '-') %>"><%= item.difficulty || 'Beginner' %></span>
+                        </div>
+                      </div>
+                      <div class="spotlight-slide__body">
+                        <h3 class="spotlight-slide__title"><%= item.name %></h3>
+                        <p class="spotlight-slide__spec"><%= item.spec %></p>
+                        <div class="spotlight-slide__footer">
+                          <div class="spotlight-slide__pricing">
+                            <span class="spotlight-slide__price-label">Unit price</span>
+                            <span class="spotlight-slide__price">₱<%= item.price.toFixed(2) %></span>
+                          </div>
+                          <a href="/shop?category=<%= encodeURIComponent(item.category) %>" class="spotlight-slide__action">
+                            <span>Inspect part</span>
+                            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                              <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+                  <% }); %>
+                </div>
+              </div>
+
+              <div class="spotlight-showcase__footer" style="<%= spotlights.length <= 1 ? 'display: none;' : '' %>">
+                <div class="spotlight-indicators" id="spotlightIndicators">
+                  <% spotlights.forEach(function(_, idx) { %>
+                    <button type="button" class="spotlight-dot <%= idx === 0 ? 'is-active' : '' %>" data-index="<%= idx %>" aria-label="Go to component <%= idx + 1 %>"></button>
+                  <% }); %>
+                </div>
+                <div class="spotlight-progress" aria-hidden="true">
+                  <div class="spotlight-progress__bar" id="spotlightProgressBar"></div>
+                </div>
+              </div>
+            </div>
+            <% } else { %>
+            <div class="spotlight-showcase spotlight-showcase--empty" id="spotlightShowcase" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 320px; text-align: center; padding: 2rem;">
+              <div class="spotlight-empty-state" style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: hsl(var(--muted-foreground)); opacity: 0.6;">
+                  <rect width="18" height="18" x="3" y="3" rx="2"/>
+                  <path d="M7 8h10"/>
+                  <path d="M7 12h10"/>
+                  <path d="M7 16h6"/>
+                </svg>
+                <h4 style="margin: 0; font-size: 1.1rem; font-weight: 600; color: hsl(var(--foreground));">Catalog Updating</h4>
+                <p style="margin: 0; font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 260px;">Available hardware components from the database will appear here.</p>
+                <a href="/shop" class="btn btn--outline" style="margin-top: 0.5rem; font-size: 0.825rem; padding: 0.4rem 1rem;">Browse Catalog</a>
+              </div>
+            </div>
+            <% } %>
           </div>
         </div>
       </div>
@@ -174,54 +270,53 @@
     <!-- ── VALUE PROPS ── -->
     <section class="value-props">
       <div class="container value-props__inner">
-        <div class="value-props__grid">
-          <% const valueProps=[ { title: "Tested before shipping" ,
-            text: "Every unit is bench-checked before it leaves — no dead boards, no dud buzzers." }, {
-            title: "Single units, no minimums" ,
-            text: "Buy exactly one buzzer or twenty sensors. Parts are sold individually, always." }, {
-            title: "Fast shipping" , text: "In-stock parts ship within 24 hours, packed for safe transit to your bench."
-            }, { title: "Datasheets included" ,
-            text: "Pinouts and datasheets for every module so you can wire it up without guessing." }, ]; %>
+        <div class="value-bar">
+          <div class="value-bar__grid">
+            <% const valueProps=[ 
+              { title: "Tested before shipping", text: "Every unit is bench-checked before dispatch — no dead boards, no dud buzzers." },
+              { title: "Single units, no minimums", text: "Buy exactly one buzzer or twenty sensors. Parts sold individually, always." },
+              { title: "Fast 24-hour dispatch", text: "In-stock parts ship within 24 hours, packed anti-static for safe bench transit." },
+              { title: "Pinouts & datasheets", text: "Direct pinouts and verified datasheets for every module so you wire with confidence." }
+            ]; %>
             <% valueProps.forEach(function(f, i) { %>
-              <div class="value-card">
-                <div class="value-card__icon">
-                  <% if (i===0) { %>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                    <% } else if (i===1) { %>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+              <div class="value-bar__item value-card" data-step="<%= i %>">
+                <div class="value-bar__header">
+                  <div class="value-bar__icon">
+                    <% if (i === 0) { %>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <polyline points="9 12 11 14 15 10" />
+                      </svg>
+                    <% } else if (i === 1) { %>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                         <circle cx="9" cy="7" r="4" />
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        <line x1="19" y1="8" x2="19" y2="14" />
+                        <line x1="22" y1="11" x2="16" y2="11" />
                       </svg>
-                      <% } else if (i===2) { %>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <rect x="1" y="3" width="15" height="13" />
-                          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
-                          <circle cx="5.5" cy="18.5" r="2.5" />
-                          <circle cx="18.5" cy="18.5" r="2.5" />
-                        </svg>
-                        <% } else { %>
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                          </svg>
-                          <% } %>
+                    <% } else if (i === 2) { %>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="3" width="15" height="13" />
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 8" />
+                        <circle cx="5.5" cy="18.5" r="2.5" />
+                        <circle cx="18.5" cy="18.5" r="2.5" />
+                      </svg>
+                    <% } else { %>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                      </svg>
+                    <% } %>
+                  </div>
                 </div>
-                <h3>
-                  <%= f.title %>
-                </h3>
-                <p>
-                  <%= f.text %>
-                </p>
+                <h3 class="value-bar__title"><%= f.title %></h3>
+                <p class="value-bar__desc"><%= f.text %></p>
               </div>
-              <% }); %>
+            <% }); %>
+          </div>
         </div>
       </div>
     </section>
@@ -244,7 +339,7 @@
           </a>
         </div>
 
-        <% if (loading) { %>
+        <% if (locals.loading) { %>
           <div class="product-grid">
             <% for (let i=0; i < 4; i++) { %>
               <div class="skeleton"></div>
@@ -289,32 +384,51 @@
                       </p>
                       <div class="product-card__meta">
                         <span class="product-card__rating">
-                          ★ <%= p.rating ? p.rating.toFixed(1) : '—' %>
-                            <span class="product-card__review-count">(<%= p.review_count || 0 %>)</span>
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" style="color: #f59e0b; vertical-align: -1px; margin-right: 3px;">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                          </svg><%= p.rating ? p.rating.toFixed(1) : '—' %>
+                          <span class="product-card__review-count">(<%= p.review_count || 0 %>)</span>
                         </span>
-                        <span class="product-card__unit-tag">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                          </svg>
-                          Single unit
-                        </span>
+                        <% const currentStock = Number(p.stock !== undefined ? p.stock : (p.stockQuantity !== undefined ? p.stockQuantity : 0)); %>
+                        <% if (currentStock <= 0) { %>
+                          <span class="product-card__stock-tag product-card__stock-tag--out">
+                            <span class="stock-dot stock-dot--out"></span>
+                            Out of stock
+                          </span>
+                        <% } else if (currentStock <= 5) { %>
+                          <span class="product-card__stock-tag product-card__stock-tag--low">
+                            <span class="stock-dot stock-dot--low"></span>
+                            Only <%= currentStock %> left
+                          </span>
+                        <% } else { %>
+                          <span class="product-card__stock-tag product-card__stock-tag--in">
+                            <span class="stock-dot stock-dot--in"></span>
+                            <%= currentStock %> left in stock
+                          </span>
+                        <% } %>
                       </div>
                       <div class="product-card__footer">
                         <span class="product-card__price">₱<%= p.price.toFixed(2) %></span>
-                        <button type="button" class="product-card__add-btn js-add-to-cart"
-                          data-id="<%= p.id %>"
-                          data-name="<%= (p.name || '').replace(/["']/g, '') %>"
-                          data-price="<%= p.price %>"
-                          data-img="<%= p.image_url %>"
-                          data-max="<%= p.maxPurchaseQuantity || 10 %>"
-                          aria-label="Add to cart">
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19" />
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                          </svg>
-                        </button>
+                        <% if (currentStock > 0) { %>
+                          <button type="button" class="product-card__add-btn js-add-to-cart"
+                            data-id="<%= p.id %>"
+                            data-name="<%= (p.name || '').replace(/["']/g, '') %>"
+                            data-price="<%= p.price %>"
+                            data-img="<%= p.image_url %>"
+                            data-stock="<%= currentStock %>"
+                            data-max="<%= currentStock %>"
+                            aria-label="Add to cart">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="12" y1="5" x2="12" y2="19" />
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                          </button>
+                        <% } else { %>
+                          <button type="button" class="product-card__add-btn is-sold-out" disabled aria-label="Sold out" title="Out of stock">
+                            <span class="sold-out-text">Sold out</span>
+                          </button>
+                        <% } %>
                       </div>
                     </div>
                   </div>
@@ -338,19 +452,12 @@
             <% categories.forEach(function(c) { %>
               <a href="/shop?category=<%= encodeURIComponent(c.name) %>" class="category-card">
                 <div class="category-card__inner">
-                  <div>
-                    <h3>
-                      <%= c.name %>
-                    </h3>
-                    <p class="category-card__count">
-                      <%= c.desc %>
-                    </p>
-                  </div>
-                  <svg class="category-card__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
+                  <h3>
+                    <%= c.name %>
+                  </h3>
+                  <p class="category-card__count">
+                    <%= c.desc %>
+                  </p>
                 </div>
               </a>
               <% }); %>
@@ -362,22 +469,9 @@
     <section class="cta">
       <div class="container">
         <div class="cta__card">
-          <div class="cta__grid-overlay"></div>
           <div class="cta__inner">
             <div>
-              <span class="cta__badge">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="16" height="16" x="4" y="4" rx="2" />
-                  <rect width="6" height="6" x="9" y="9" />
-                  <path d="M15 2v2" /><path d="M15 20v2" />
-                  <path d="M2 15h2" /><path d="M2 9h2" />
-                  <path d="M20 15h2" /><path d="M20 9h2" />
-                  <path d="M9 2v2" /><path d="M9 20v2" />
-                </svg>
-                IoT Hardware Essentials
-              </span>
-              <h2>No bulky kits. Buy only the exact IoT parts you need.</h2>
+              <h2>No bulky kits. Buy only what you need.</h2>
               <p class="cta__desc">
                 Tired of paying for starter kits full of parts you'll never use? Pick individual
                 microcontrollers, sensors, breakout boards, and modules for your build. Every unit is bench-checked,
@@ -420,7 +514,7 @@
 
               <!-- Category 2: Sensors & Modules -->
               <a href="/shop?category=<%= encodeURIComponent('Sensors & Modules') %>" class="vault-file">
-                <div class="vault-file__icon" style="color: #a78bfa; border-color: rgba(167, 139, 250, 0.25); background: rgba(139, 92, 246, 0.12);">
+                <div class="vault-file__icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
@@ -442,7 +536,7 @@
 
               <!-- Category 3: Displays & Power -->
               <a href="/shop?category=<%= encodeURIComponent('Displays & Power') %>" class="vault-file">
-                <div class="vault-file__icon" style="color: #34d399; border-color: rgba(52, 211, 153, 0.25); background: rgba(16, 185, 129, 0.12);">
+                <div class="vault-file__icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
@@ -462,7 +556,7 @@
 
               <!-- Category 4: Buzzers & Audio -->
               <a href="/shop?category=<%= encodeURIComponent('Buzzers & Audio') %>" class="vault-file">
-                <div class="vault-file__icon" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.25); background: rgba(245, 158, 11, 0.12);">
+                <div class="vault-file__icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
@@ -484,7 +578,7 @@
 
               <!-- Category 5: IoT Kits -->
               <a href="/shop?category=<%= encodeURIComponent('IoT Kits') %>" class="vault-file">
-                <div class="vault-file__icon" style="color: #f43f5e; border-color: rgba(244, 63, 94, 0.25); background: rgba(244, 63, 94, 0.12);">
+                <div class="vault-file__icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
@@ -512,8 +606,8 @@
   </main>
 
   <!-- Cart Drawer -->
-  <div class="cart-drawer-backdrop" id="cartBackdrop"></div>
-  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+  <div class="cart-drawer-backdrop" id="cartBackdrop" aria-hidden="true"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart" aria-hidden="true">
     <div class="cart-drawer__header">
       <div class="cart-drawer__title-wrap">
         <svg class="cart-drawer__bag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"

@@ -4,7 +4,8 @@ const checkoutController = require("../controllers/checkoutController");
 const adminController = require("../controllers/adminController");
 
 function requireAuthentication(req, res, next) {
-  if (!req.session || !req.session.user) {
+  const user = req.session?.user || req.user;
+  if (!user || (!user.id && !user._id && !user.userId)) {
     if (req.method !== "GET" || req.get("Accept")?.includes("application/json")) {
       return res.status(401).json({
         error: "Your session has expired. Please sign in again before checking out."

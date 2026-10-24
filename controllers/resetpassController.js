@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const User = require("../models/userSchema");
 const { sendOtpEmail } = require("../utils/sendEmail");
 
@@ -17,15 +18,14 @@ exports.sendOtp = async (req, res) => {
   const isJson = req.is("json") || req.headers.accept?.includes("application/json");
 
   try {
-    const { email } = req.body;
-    if (!email || !email.trim()) {
+    const cleanEmail = String(req.body?.email || "").toLowerCase().trim();
+    if (!cleanEmail) {
       const msg = "Please enter your email address.";
       return isJson
         ? res.status(400).json({ success: false, error: msg })
         : res.status(400).render("resetpass", { error: msg, success: null });
     }
 
-    const cleanEmail = email.toLowerCase().trim();
     const user = await User.findOne({ email: cleanEmail });
 
     if (!user) {
@@ -35,8 +35,8 @@ exports.sendOtp = async (req, res) => {
         : res.status(404).render("resetpass", { error: msg, success: null });
     }
 
-    // Generate random 6-digit numeric OTP
-    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+    // Generate cryptographically secure random 6-digit numeric OTP (CSPRNG)
+    const otpCode = crypto.randomInt(100000, 1000000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
 
     user.resetPasswordCode = otpCode;
@@ -84,13 +84,12 @@ exports.sendOtp = async (req, res) => {
 // POST /resetpass/verify-otp - Check if OTP code is valid before entering new password
 exports.verifyOtp = async (req, res) => {
   try {
-    const { email, code } = req.body;
-    if (!email || !code) {
+    const cleanEmail = String(req.body?.email || "").toLowerCase().trim();
+    const cleanCode = String(req.body?.code || "").trim();
+    if (!cleanEmail || !cleanCode) {
       return res.status(400).json({ success: false, error: "Email and verification code are required." });
     }
 
-    const cleanEmail = email.toLowerCase().trim();
-    const cleanCode = code.trim();
     const user = await User.findOne({ email: cleanEmail });
 
     if (!user) {
@@ -117,9 +116,12 @@ exports.resetPassword = async (req, res) => {
   const isJson = req.is("json") || req.headers.accept?.includes("application/json");
 
   try {
-    const { email, code, newPassword, confirmPassword } = req.body;
+    const cleanEmail = String(req.body?.email || "").toLowerCase().trim();
+    const cleanCode = String(req.body?.code || "").trim();
+    const newPassword = String(req.body?.newPassword || "");
+    const confirmPassword = String(req.body?.confirmPassword || "");
 
-    if (!email || !code || !newPassword || !confirmPassword) {
+    if (!cleanEmail || !cleanCode || !newPassword || !confirmPassword) {
       const msg = "All fields are required.";
       return isJson
         ? res.status(400).json({ success: false, error: msg })
@@ -140,8 +142,6 @@ exports.resetPassword = async (req, res) => {
         : res.status(400).render("resetpass", { error: msg, success: null });
     }
 
-    const cleanEmail = email.toLowerCase().trim();
-    const cleanCode = code.trim();
     const user = await User.findOne({ email: cleanEmail });
 
     if (!user) {

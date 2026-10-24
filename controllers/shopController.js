@@ -3,37 +3,39 @@ const Item = require("../models/itemSchema");
 
 // GET /shop - Display shop catalog with filters
 exports.renderShop = async (req, res) => {
-  const { category, difficulty, sort, q } = req.query;
+  const category = typeof req.query?.category === "string" ? req.query.category.trim() : null;
+  const difficulty = typeof req.query?.difficulty === "string" ? req.query.difficulty.trim() : null;
+  const sort = typeof req.query?.sort === "string" ? req.query.sort.trim() : null;
+  const q = typeof req.query?.q === "string" ? req.query.q.trim() : null;
 
   let filtered = [];
 
   // 1. Fetch database items added using itemSchema
   try {
-    const databaseItems = await Item.find({
-      $or: [
-        { stockQuantity: { $gt: 0 } },
-        { stock_quantity: { $gt: 0 } },
-        { in_stock: true }
-      ]
-    }).sort({ createdAt: -1 }).lean();
+    const databaseItems = await Item.find().sort({ createdAt: -1 }).lean();
 
-    const customItems = databaseItems.map((item) => ({
-      ...item,
-      id: String(item._id),
-      name: item.name,
-      tagline: item.tagline || (item.description ? item.description.slice(0, 80) : ""),
-      description: item.description,
-      price: Number(item.price) || 0,
-      compare_at_price: item.compare_at_price ? Number(item.compare_at_price) : null,
-      category: item.category || "Sensors & Modules",
-      difficulty: item.difficulty || "Beginner",
-      image_url: item.imageUrl || item.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
-      rating: item.rating || 5.0,
-      review_count: item.review_count || 0,
-      in_stock: (item.stockQuantity !== undefined ? item.stockQuantity > 0 : true),
-      maxPurchaseQuantity: item.maxPurchaseQuantity || 10,
-      productType: "item"
-    }));
+    const customItems = databaseItems.map((item) => {
+      const stock = Math.max(0, Number(item.stockQuantity !== undefined ? item.stockQuantity : (item.stock || 0)));
+      return {
+        ...item,
+        id: String(item._id),
+        name: item.name,
+        tagline: item.tagline || (item.description ? item.description.slice(0, 80) : ""),
+        description: item.description,
+        price: Number(item.price) || 0,
+        compare_at_price: item.compare_at_price ? Number(item.compare_at_price) : null,
+        category: item.category || "Sensors & Modules",
+        difficulty: item.difficulty || "Beginner",
+        image_url: item.imageUrl || item.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
+        rating: item.rating || 5.0,
+        review_count: item.review_count || 0,
+        stockQuantity: stock,
+        stock: stock,
+        in_stock: stock > 0,
+        maxPurchaseQuantity: stock,
+        productType: "item"
+      };
+    });
     filtered = filtered.concat(customItems);
   } catch (error) {
     console.error("Shop custom items load error:", error);
@@ -41,15 +43,21 @@ exports.renderShop = async (req, res) => {
 
   // 2. Fetch database kits if any exist in the database
   try {
-    const databaseKits = await Kit.find({ in_stock: true, stock_quantity: { $gt: 0 } }).lean();
-    const customProducts = databaseKits.map((kit) => ({
-      ...kit,
-      id: String(kit._id),
-      image_url: kit.image_url || kit.imageUrl,
-      review_count: kit.review_count || 0,
-      maxPurchaseQuantity: kit.maxPurchaseQuantity || 10,
-      productType: "kit"
-    }));
+    const databaseKits = await Kit.find().sort({ createdAt: -1 }).lean();
+    const customProducts = databaseKits.map((kit) => {
+      const stock = Math.max(0, Number(kit.stockQuantity !== undefined ? kit.stockQuantity : (kit.stock_quantity !== undefined ? kit.stock_quantity : 0)));
+      return {
+        ...kit,
+        id: String(kit._id),
+        image_url: kit.image_url || kit.imageUrl,
+        review_count: kit.review_count || 0,
+        stockQuantity: stock,
+        stock: stock,
+        in_stock: stock > 0,
+        maxPurchaseQuantity: stock,
+        productType: "kit"
+      };
+    });
     filtered = filtered.concat(customProducts);
   } catch (error) {
     console.error("Shop custom bundle load error:", error);

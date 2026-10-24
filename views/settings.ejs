@@ -41,20 +41,9 @@
         <a href="/" class="navbar__link">Home</a>
         <a href="/shop" class="navbar__link">Shop</a>
         <a href="/about" class="navbar__link">About Us</a>
-        <% if (locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) { %>
-        <a href="/admin" class="navbar__link navbar__link--admin">Admin</a>
-        <% } %>
       </nav>
 
       <div class="navbar__actions">
-        <div class="navbar-search">
-        <button type="button" class="navbar__icon-btn navbar-search__toggle" aria-label="Search" aria-expanded="false">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-        <form class="navbar-search__form" action="/shop" method="get" role="search">
-            <input class="navbar-search__input" name="q" type="search" placeholder="Search products..." aria-label="Search products" />
-        </form>
-        </div>
         <button type="button" class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -118,7 +107,7 @@
           </div>
         </div>
         <% } else { %>
-        <a href="/login" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.45rem 1rem; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; background: hsl(var(--primary)); color: #ffffff; text-decoration: none; transition: opacity 0.15s ease;">Login</a>
+        <a href="/login" class="navbar__login-btn">Login</a>
         <% } %>
       </div>
     </div>
@@ -127,169 +116,167 @@
 
   <main class="settings-page page-main">
     <div class="settings-container">
-      <div class="settings-title-row">
-        <svg class="settings-title-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="3" />
-          <path
-            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-        </svg>
-        <h1 class="settings-title">Settings</h1>
+      <header class="settings-header">
+        <h1 class="settings-title">Account Settings</h1>
+        <p class="settings-subtitle">Manage personal profile details, credentials, and workbench display preferences.</p>
+        <% if (locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) { %>
+          <div class="settings-admin-bar">
+            <a href="/admin" class="btn-settings-admin">Manage shop inventory &rarr;</a>
+          </div>
+        <% } %>
+      </header>
+
+      <div class="settings-main-col">
+        <div class="settings-card">
+
+          <div class="settings-row">
+            <div class="settings-row__left">
+              <span class="settings-row__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
+              <div class="settings-row__meta">
+                <span class="settings-row__label">Name</span>
+                <span class="settings-row__value" id="displayName"><%= locals.currentUser ? (locals.currentUser.firstName + ' ' + locals.currentUser.lastName) : 'Guest' %></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card__divider"></div>
+
+
+          <div class="settings-row">
+            <div class="settings-row__left">
+              <span class="settings-row__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+              </span>
+              <div class="settings-row__meta">
+                <span class="settings-row__label">Email</span>
+                <span class="settings-row__value" id="displayEmail"><%= locals.currentUser ? locals.currentUser.email : 'Not signed in' %></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card__divider"></div>
+
+
+          <div class="settings-row">
+            <div class="settings-row__left">
+              <span class="settings-row__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/>
+                </svg>
+              </span>
+              <div class="settings-row__meta">
+                <span class="settings-row__label">Username</span>
+                <span class="settings-row__value" id="displayUsername"><%= locals.currentUser?.username ? ('@' + locals.currentUser.username) : 'No username set' %></span>
+              </div>
+            </div>
+            <% if (locals.currentUser) { %>
+            <div class="settings-row__right">
+              <button type="button" class="btn-settings-action" id="openUsernameModalBtn">
+                <span id="usernameBtnText"><%= locals.currentUser?.username ? 'Edit' : 'Add username' %></span>
+              </button>
+            </div>
+            <% } %>
+          </div>
+
+          <div class="settings-card__divider"></div>
+
+
+          <div class="settings-row">
+            <div class="settings-row__left">
+              <span class="settings-row__icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <div class="settings-row__meta">
+                <span class="settings-row__label">Password</span>
+                <span class="settings-row__value">••••••••••••</span>
+              </div>
+            </div>
+            <% if (locals.currentUser) { %>
+            <div class="settings-row__right">
+              <button type="button" class="btn-settings-action" id="openPasswordModalBtn">
+                <span>Change password</span>
+              </button>
+            </div>
+            <% } %>
+          </div>
+
+          <div class="settings-card__divider"></div>
+
+
+          <div class="settings-row">
+            <div class="settings-row__left">
+              <span class="settings-row__icon" id="appearanceIcon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              </span>
+              <div class="settings-row__meta">
+                <span class="settings-row__label">Appearance</span>
+                <span class="settings-row__value" id="themeModeText">Light mode</span>
+              </div>
+            </div>
+            <div class="settings-row__right">
+              <label class="toggle-switch">
+                <input type="checkbox" id="themeToggleCheckbox" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+
+        <% if (locals.currentUser) { %>
+        <a href="/logout" class="btn-signout" onclick="localStorage.removeItem('userEmail'); localStorage.removeItem('userName'); localStorage.removeItem('theme'); document.documentElement.classList.remove('dark');">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Sign out</span>
+        </a>
+        <% } else { %>
+        <a href="/login" class="btn-signout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+            <polyline points="10 17 15 12 10 7" />
+            <line x1="15" y1="12" x2="3" y2="12" />
+          </svg>
+          <span>Sign in</span>
+        </a>
+        <% } %>
       </div>
-      <% if (locals.currentUser && locals.currentUser.role === 'admin') { %>
-        <a href="/admin" class="btn-signout" style="display: inline-flex; margin: 0 0 1rem;">Manage shop bundles</a>
-      <% } %>
-
-
-      <div class="settings-card">
-
-        <div class="settings-row">
-          <div class="settings-row__left">
-            <span class="settings-row__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </span>
-            <div class="settings-row__meta">
-              <span class="settings-row__label">Name</span>
-              <span class="settings-row__value" id="displayName"><%= locals.currentUser ? (locals.currentUser.firstName + ' ' + locals.currentUser.lastName) : 'Guest' %></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="settings-card__divider"></div>
-
-
-        <div class="settings-row">
-          <div class="settings-row__left">
-            <span class="settings-row__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect width="20" height="16" x="2" y="4" rx="2" />
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-              </svg>
-            </span>
-            <div class="settings-row__meta">
-              <span class="settings-row__label">Email</span>
-              <span class="settings-row__value" id="displayEmail"><%= locals.currentUser ? locals.currentUser.email : 'Not signed in' %></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="settings-card__divider"></div>
-
-
-        <div class="settings-row">
-          <div class="settings-row__left">
-            <span class="settings-row__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="4"/>
-                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/>
-              </svg>
-            </span>
-            <div class="settings-row__meta">
-              <span class="settings-row__label">Username</span>
-              <span class="settings-row__value" id="displayUsername"><%= locals.currentUser?.username ? ('@' + locals.currentUser.username) : 'No username set' %></span>
-            </div>
-          </div>
-          <% if (locals.currentUser) { %>
-          <div class="settings-row__right">
-            <button type="button" class="btn-settings-action" id="openUsernameModalBtn">
-              <span id="usernameBtnText"><%= locals.currentUser?.username ? 'Edit' : 'Add username' %></span>
-            </button>
-          </div>
-          <% } %>
-        </div>
-
-        <div class="settings-card__divider"></div>
-
-
-        <div class="settings-row">
-          <div class="settings-row__left">
-            <span class="settings-row__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-            </span>
-            <div class="settings-row__meta">
-              <span class="settings-row__label">Password</span>
-              <span class="settings-row__value">••••••••••••</span>
-            </div>
-          </div>
-          <% if (locals.currentUser) { %>
-          <div class="settings-row__right">
-            <button type="button" class="btn-settings-action" id="openPasswordModalBtn">
-              <span>Change password</span>
-            </button>
-          </div>
-          <% } %>
-        </div>
-
-        <div class="settings-card__divider"></div>
-
-
-        <div class="settings-row">
-          <div class="settings-row__left">
-            <span class="settings-row__icon" id="appearanceIcon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5" />
-                <line x1="12" y1="1" x2="12" y2="3" />
-                <line x1="12" y1="21" x2="12" y2="23" />
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                <line x1="1" y1="12" x2="3" y2="12" />
-                <line x1="21" y1="12" x2="23" y2="12" />
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-              </svg>
-            </span>
-            <div class="settings-row__meta">
-              <span class="settings-row__label">Appearance</span>
-              <span class="settings-row__value" id="themeModeText">Light mode</span>
-            </div>
-          </div>
-          <div class="settings-row__right">
-            <label class="toggle-switch">
-              <input type="checkbox" id="themeToggleCheckbox" />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-        </div>
-      </div>
-
-
-      <% if (locals.currentUser) { %>
-      <a href="/logout" class="btn-signout" onclick="localStorage.removeItem('userEmail'); localStorage.removeItem('userName'); localStorage.removeItem('theme'); document.documentElement.classList.remove('dark');">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-          <polyline points="16 17 21 12 16 7" />
-          <line x1="21" y1="12" x2="9" y2="12" />
-        </svg>
-        <span>Sign out</span>
-      </a>
-      <% } else { %>
-      <a href="/login" class="btn-signout">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-          <polyline points="10 17 15 12 10 7" />
-          <line x1="15" y1="12" x2="3" y2="12" />
-        </svg>
-        <span>Sign in</span>
-      </a>
-      <% } %>
     </div>
   </main>
 
-  <div class="cart-drawer-backdrop" id="cartBackdrop"></div>
-  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart">
+  <div class="cart-drawer-backdrop" id="cartBackdrop" aria-hidden="true"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart" aria-hidden="true">
     <div class="cart-drawer__header">
       <div class="cart-drawer__title-wrap">
         <svg class="cart-drawer__bag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"

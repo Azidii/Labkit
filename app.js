@@ -24,12 +24,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Express Session configuration
+const isProd = process.env.NODE_ENV === "production";
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'labkit-session-key-2026',
+  secret: process.env.SESSION_SECRET || JWT_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // Set to true if running over HTTPS
+    httpOnly: true,
+    sameSite: "lax",
+    secure: isProd, // True in production over HTTPS, false in local dev
     maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
   }
 }));
@@ -42,6 +45,7 @@ app.use(async (req, res, next) => {
   try {
     // 1. If active session already has user
     if (req.session && req.session.user) {
+      req.user = req.user || req.session.user;
       res.locals.currentUser = req.session.user;
       res.locals.userRole = req.session.user.role || null;
       return next();
@@ -50,8 +54,9 @@ app.use(async (req, res, next) => {
     // 2. Otherwise check token cookie
     const token = req.cookies?.token;
     if (token) {
+      const clearOptions = { httpOnly: true, sameSite: "lax", secure: isProd, path: "/" };
       try {
-        const decoded = jwt.verify(token, JWT_SECRET);
+        const decoded = jwt.verify(token, JWT_SECRET, { algorithms: ["HS256"] });
         req.user = decoded;
 
         // Restore user session from MongoDB
@@ -70,12 +75,12 @@ app.use(async (req, res, next) => {
           res.locals.userRole = req.session.user.role;
         } else {
           // Token user not found in DB: clear stale cookie
-          res.clearCookie("token", { httpOnly: true, path: "/" });
+          res.clearCookie("token", clearOptions);
           req.user = null;
         }
       } catch (err) {
         // Token invalid or expired: clear cookie
-        res.clearCookie("token", { httpOnly: true, path: "/" });
+        res.clearCookie("token", clearOptions);
         req.user = null;
       }
     }

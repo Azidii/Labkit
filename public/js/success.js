@@ -5,6 +5,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const main = document.querySelector(".page-main");
   if (main?.dataset.purchaseSuccess === "true") return;
+  if (window.location.search.includes("noredirect")) return;
 
   const continueBtn = document.getElementById("continueBtn");
   const targetUrl = continueBtn ? continueBtn.getAttribute("href") : "/";

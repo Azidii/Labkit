@@ -161,9 +161,14 @@ itemSchema.methods.reduceStock = async function (quantity = 1) {
   if (!this.hasStock(qty)) {
     throw new Error(`Insufficient stock for item: ${this.name}. Available: ${this.stockQuantity}`);
   }
-  this.stockQuantity -= qty;
+  this.stockQuantity = Math.max(0, (this.stockQuantity || 0) - qty);
   this.in_stock = this.stockQuantity > 0;
-  return this.save();
+  await this.save();
+  await this.constructor.findByIdAndUpdate(this._id, {
+    stockQuantity: this.stockQuantity,
+    in_stock: this.in_stock
+  });
+  return this;
 };
 
 /**

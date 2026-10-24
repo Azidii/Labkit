@@ -27,17 +27,8 @@
         <a href="/" class="navbar__link">Home</a>
         <a href="/shop" class="navbar__link">Shop</a>
         <a href="/about" class="navbar__link">About Us</a>
-        <a href="/admin" class="navbar__link navbar__link--active">Admin</a>
       </nav>
       <div class="navbar__actions">
-        <div class="navbar-search">
-          <button type="button" class="navbar__icon-btn navbar-search__toggle" aria-label="Search" aria-expanded="false">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </button>
-          <form class="navbar-search__form" action="/shop" method="get" role="search">
-            <input class="navbar-search__input" name="q" type="search" placeholder="Search products..." aria-label="Search products" />
-          </form>
-        </div>
         <button type="button" class="navbar__icon-btn navbar__cart" id="openCartBtn" aria-label="Cart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span class="navbar__cart-badge" id="cartBadge" style="display:none;">0</span>
@@ -67,6 +58,17 @@
               <% } %>
             </div>
             <div class="profile-dropdown__divider"></div>
+            <% if ((locals.currentUser && (locals.currentUser.role === 'admin' || locals.userRole === 'admin')) || locals.userRole === 'admin') { %>
+            <a href="/admin" class="profile-dropdown__item profile-dropdown__item--admin">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>Admin Dashboard</span>
+            </a>
+            <% } %>
             <a href="/settings" class="profile-dropdown__item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="3" />
@@ -91,23 +93,11 @@
   <main class="admin-page">
     <section class="console-header">
       <div class="console-title">
-        <span class="console-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect width="7" height="9" x="3" y="3" rx="1.5"/>
-            <rect width="7" height="5" x="14" y="3" rx="1.5"/>
-            <rect width="7" height="9" x="14" y="12" rx="1.5"/>
-            <rect width="7" height="5" x="3" y="16" rx="1.5"/>
-          </svg>
-        </span>
         <div>
-          <h1>Admin Console</h1>
-          <p>Manage hardware bundles, catalog inventory, and user accounts.</p>
+          <h1 class="console-heading">Admin Console</h1>
+          <p class="console-subtitle">Manage hardware bundles, catalog inventory, and user accounts.</p>
         </div>
       </div>
-      <span class="console-badge">
-        <span class="badge-dot"></span>
-        Inventory &amp; Storefront Console
-      </span>
     </section>
 
     <% if (error) { %>
@@ -206,14 +196,21 @@
                 &bull;
                 <span class="bundle-price">₱<%= (Number(item.price) || 0).toFixed(2) %></span>
                 &bull;
-                <span class="bundle-stock"><%= (item.stockQuantity !== undefined ? item.stockQuantity : item.stock_quantity) %> in stock</span>
+                <% const itemStock = (item.stockQuantity !== undefined ? item.stockQuantity : item.stock_quantity); %>
+                <% if (itemStock <= 0) { %>
+                  <span class="bundle-stock bundle-stock--out">0 in stock</span>
+                <% } else if (itemStock <= 5) { %>
+                  <span class="bundle-stock bundle-stock--low"><%= itemStock %> in stock</span>
+                <% } else { %>
+                  <span class="bundle-stock"><%= itemStock %> in stock</span>
+                <% } %>
                 <% if (item.difficulty) { %>
                   &bull;
                   <span class="bundle-diff"><%= item.difficulty %></span>
                 <% } %>
               </span>
             </div>
-            <div class="bundle-row__actions" style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="bundle-row__actions">
               <div class="bundle-row__badge">
                 <span>Limit: <strong><%= item.maxPurchaseQuantity || 10 %></strong></span>
               </div>
@@ -248,10 +245,17 @@
                 &bull;
                 <span class="bundle-price">₱<%= kit.price.toFixed(2) %></span>
                 &bull;
-                <span class="bundle-stock"><%= (kit.stock_quantity !== undefined ? kit.stock_quantity : kit.stockQuantity) %> in stock</span>
+                <% const kitStock = (kit.stock_quantity !== undefined ? kit.stock_quantity : kit.stockQuantity); %>
+                <% if (kitStock <= 0) { %>
+                  <span class="bundle-stock bundle-stock--out">0 in stock</span>
+                <% } else if (kitStock <= 5) { %>
+                  <span class="bundle-stock bundle-stock--low"><%= kitStock %> in stock</span>
+                <% } else { %>
+                  <span class="bundle-stock"><%= kitStock %> in stock</span>
+                <% } %>
               </span>
             </div>
-            <div class="bundle-row__actions" style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="bundle-row__actions">
               <div class="bundle-row__badge">
                 <span>Limit: <strong><%= kit.maxPurchaseQuantity %></strong></span>
               </div>
@@ -326,7 +330,15 @@
                   <span class="form-label__title">URL Slug</span>
                   <span class="form-label__hint">Auto-generated</span>
                 </label>
-                <input id="bundleSlug" placeholder="auto-generated from name" readonly />
+                <div class="input-with-icon">
+                  <span class="input-icon" aria-hidden="true">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                  </span>
+                  <input id="bundleSlug" placeholder="auto-generated from name" readonly />
+                </div>
               </div>
               <div class="form-field">
                 <label class="form-label" for="bundleTagline">
@@ -438,14 +450,20 @@
                 <label class="form-label" for="bundlePrice">
                   <span class="form-label__title">Price (PHP) <span class="req">*</span></span>
                 </label>
-                <input name="price" id="bundlePrice" type="number" min="0" step="0.01" required placeholder="0.00" value="<%= formData.price || '' %>" />
+                <div class="input-prefix-wrap">
+                  <span class="input-prefix" aria-hidden="true">₱</span>
+                  <input name="price" id="bundlePrice" type="number" min="0" step="0.01" required placeholder="0.00" value="<%= formData.price || '' %>" />
+                </div>
               </div>
               <div class="form-field">
                 <label class="form-label" for="bundleComparePrice">
                   <span class="form-label__title">Compare-at Price</span>
                   <span class="form-label__hint">Optional</span>
                 </label>
-                <input name="compare_at_price" id="bundleComparePrice" type="number" min="0" step="0.01" placeholder="0.00" value="<%= formData.compare_at_price || '' %>" />
+                <div class="input-prefix-wrap">
+                  <span class="input-prefix" aria-hidden="true">₱</span>
+                  <input name="compare_at_price" id="bundleComparePrice" type="number" min="0" step="0.01" placeholder="0.00" value="<%= formData.compare_at_price || '' %>" />
+                </div>
               </div>
               <div class="form-field">
                 <label class="form-label" for="bundleStock">
@@ -462,12 +480,16 @@
               </div>
             </div>
             <label class="feature-toggle" for="bundleFeatured">
-
-              <span class="feature-toggle__label">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-                <span>Feature this item on the home page showcase</span>
+              <span class="feature-toggle__left">
+                <span class="feature-toggle__star">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                </span>
+                <span class="feature-toggle__text">
+                  <strong>Feature this item on the home page showcase</strong>
+                  <span>Highlight this hardware item on the store homepage workbench spotlight</span>
+                </span>
               </span>
               <input type="checkbox" id="bundleFeatured" />
             </label>
@@ -511,8 +533,8 @@
 
         <aside class="editor-side">
           <div class="preview-badge">
-            <span class="live-dot"></span>
-            LIVE PREVIEW
+            <span class="live-dot" aria-hidden="true"></span>
+            <span>LIVE PREVIEW</span>
           </div>
           <article class="preview-card">
             <div class="preview-image" id="previewImage">
