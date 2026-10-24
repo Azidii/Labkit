@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       animFrameId = requestAnimationFrame(tick);
     };
 
-    if (!prefersReducedMotion) {
+    if (!prefersReducedMotion && total > 1) {
       animFrameId = requestAnimationFrame(tick);
     }
 

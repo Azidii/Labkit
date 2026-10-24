@@ -6,51 +6,62 @@ const Kit = require("../models/kitsSchema");
 async function getFeaturedProducts() {
   try {
     const databaseItems = await Item.find({
-      $or: [
-        { stockQuantity: { $gt: 0 } },
-        { stock_quantity: { $gt: 0 } },
-        { in_stock: true }
-      ]
+      stockQuantity: { $gt: 0 }
     })
       .sort({ createdAt: -1 })
       .limit(6)
       .lean();
 
-    const featuredItems = databaseItems.map((item) => ({
-      ...item,
-      id: String(item._id),
-      slug: item.slug || String(item._id),
-      name: item.name,
-      tagline: item.tagline || (item.description ? item.description.slice(0, 80) : ""),
-      description: item.description,
-      price: Number(item.price) || 0,
-      compare_at_price: item.compare_at_price ? Number(item.compare_at_price) : null,
-      category: item.category || "Sensors & Modules",
-      difficulty: item.difficulty || "Beginner",
-      image_url: item.imageUrl || item.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
-      rating: item.rating || 5.0,
-      review_count: item.review_count || 0,
-      in_stock: item.stockQuantity !== undefined ? item.stockQuantity > 0 : true,
-      maxPurchaseQuantity: item.maxPurchaseQuantity || 10
-    }));
+    const featuredItems = databaseItems.map((item) => {
+      const stock = Math.max(0, Number(item.stockQuantity !== undefined ? item.stockQuantity : (item.stock || 0)));
+      return {
+        ...item,
+        id: String(item._id),
+        slug: item.slug || String(item._id),
+        name: item.name,
+        tagline: item.tagline || (item.description ? item.description.slice(0, 80) : ""),
+        description: item.description,
+        price: Number(item.price) || 0,
+        compare_at_price: item.compare_at_price ? Number(item.compare_at_price) : null,
+        category: item.category || "Sensors & Modules",
+        difficulty: item.difficulty || "Beginner",
+        image_url: item.imageUrl || item.image_url || "/img/electronics-workbench.jpg",
+        imageUrl: item.imageUrl || item.image_url || "/img/electronics-workbench.jpg",
+        rating: item.rating || 5.0,
+        review_count: item.review_count || 0,
+        stockQuantity: stock,
+        stock: stock,
+        in_stock: stock > 0,
+        maxPurchaseQuantity: stock
+      };
+    });
 
     if (featuredItems.length < 6) {
-      const databaseKits = await Kit.find({ in_stock: true, stock_quantity: { $gt: 0 } })
+      const databaseKits = await Kit.find({
+        stockQuantity: { $gt: 0 }
+      })
         .sort({ createdAt: -1 })
         .limit(6 - featuredItems.length)
         .lean();
 
-      const featuredKits = databaseKits.map((kit) => ({
-        ...kit,
-        id: String(kit._id),
-        slug: kit.slug || String(kit._id),
-        name: kit.name,
-        tagline: kit.tagline || (kit.description ? kit.description.slice(0, 80) : ""),
-        image_url: kit.image_url || kit.imageUrl || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
-        rating: kit.rating || 5.0,
-        review_count: kit.review_count || 0,
-        maxPurchaseQuantity: kit.maxPurchaseQuantity || 10
-      }));
+      const featuredKits = databaseKits.map((kit) => {
+        const stock = Math.max(0, Number(kit.stockQuantity !== undefined ? kit.stockQuantity : (kit.stock_quantity !== undefined ? kit.stock_quantity : 0)));
+        return {
+          ...kit,
+          id: String(kit._id),
+          slug: kit.slug || String(kit._id),
+          name: kit.name,
+          tagline: kit.tagline || (kit.description ? kit.description.slice(0, 80) : ""),
+          image_url: kit.image_url || kit.imageUrl || "/img/electronics-workbench.jpg",
+          imageUrl: kit.imageUrl || kit.image_url || "/img/electronics-workbench.jpg",
+          rating: kit.rating || 5.0,
+          review_count: kit.review_count || 0,
+          stockQuantity: stock,
+          stock: stock,
+          in_stock: stock > 0,
+          maxPurchaseQuantity: stock
+        };
+      });
 
       return featuredItems.concat(featuredKits);
     }

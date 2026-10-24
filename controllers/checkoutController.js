@@ -79,16 +79,23 @@ exports.createCheckout = async (req, res) => {
       }
 
       const quantity = Number(cartItem.quantity);
-      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
-        return res.status(400).json({ error: "Cart quantities must be between 1 and 10." });
+      if (!Number.isInteger(quantity) || quantity < 1) {
+        return res.status(400).json({ error: "Please enter a valid quantity of at least 1." });
       }
-
-      totalQuantity += quantity;
 
       const product = await Item.findById(cartItem.id) || await Kit.findById(cartItem.id);
       if (!product) {
         return res.status(400).json({ error: "One or more cart items are no longer available." });
       }
+
+      const availableStock = Number(product.stockQuantity !== undefined ? product.stockQuantity : (product.stock || 0));
+      if (quantity > availableStock) {
+        return res.status(400).json({
+          error: `Insufficient stock for "${product.name}". Only ${availableStock} available.`
+        });
+      }
+
+      totalQuantity += quantity;
 
       const productData = product.constructor.modelName === "Kit"
         ? { kit: product._id, item: null }
@@ -127,6 +134,30 @@ exports.createCheckout = async (req, res) => {
       orderStatus: "processing",
       shippingFee
     });
+
+    // Ensure database stock is fully synchronized and zeroed out if exhausted
+    for (const orderItem of order.items) {
+      const targetId = orderItem.item || orderItem.kit;
+      if (targetId) {
+        const itemDoc = await Item.findById(targetId);
+        if (itemDoc) {
+          if (itemDoc.stockQuantity <= 0) {
+            itemDoc.stockQuantity = 0;
+            itemDoc.in_stock = false;
+            await itemDoc.save();
+            await Item.findByIdAndUpdate(targetId, { stockQuantity: 0, in_stock: false });
+          }
+        } else {
+          const kitDoc = await Kit.findById(targetId);
+          if (kitDoc && kitDoc.stockQuantity <= 0) {
+            kitDoc.stockQuantity = 0;
+            kitDoc.in_stock = false;
+            await kitDoc.save();
+            await Kit.findByIdAndUpdate(targetId, { stockQuantity: 0, in_stock: false });
+          }
+        }
+      }
+    }
     const invoice = await Invoice.generateForOrder(order);
     const user = await User.findById(userId).lean();
     const recipientEmail = String(billing.email || user?.email || "").trim().toLowerCase();
@@ -134,14 +165,19 @@ exports.createCheckout = async (req, res) => {
       throw new Error("A valid email address is required to send the invoice.");
     }
 
-    await sendInvoiceEmail({
-      to: recipientEmail,
-      name: [user?.firstName || billing.firstName, user?.lastName || billing.lastName].filter(Boolean).join(" ") || user?.username,
-      order,
-      invoice
-    });
-    invoice.emailSent = true;
-    await invoice.save();
+    try {
+      await sendInvoiceEmail({
+        to: recipientEmail,
+        name: [user?.firstName || billing.firstName, user?.lastName || billing.lastName].filter(Boolean).join(" ") || user?.username,
+        order,
+        invoice
+      });
+      invoice.emailSent = true;
+      await invoice.save();
+    } catch (emailErr) {
+      console.warn("Could not send invoice email (non-fatal):", emailErr.message);
+    }
+
     const cart = await Cart.findOne({ userId });
     if (cart) {
       for (const item of order.items) {
@@ -160,7 +196,7 @@ exports.createCheckout = async (req, res) => {
   } catch (error) {
     console.error("Checkout creation error:", error);
     return res.status(500).json({
-      error: "We could not complete your order. Please verify your cart and try again."
+      error: error.message || "We could not complete your order. Please verify your cart and try again."
     });
   }
 };

@@ -199,7 +199,7 @@ exports.createItem = async (req, res) => {
     const numericPrice = Number(price);
     const rawStock = stockQuantity !== undefined && stockQuantity !== "" ? stockQuantity : stock_quantity;
     const numericStock = Number(rawStock);
-    const numericLimit = Number(maxPurchaseQuantity || 10);
+    const numericLimit = Number(maxPurchaseQuantity);
 
     if (
       !cleanName ||
@@ -248,7 +248,7 @@ exports.createItem = async (req, res) => {
       difficulty: cleanDifficulty,
       imageUrl: cleanImageUrl,
       stockQuantity: numericStock,
-      maxPurchaseQuantity: Number.isInteger(numericLimit) && numericLimit >= 1 ? numericLimit : 10,
+      maxPurchaseQuantity: Number.isInteger(numericLimit) && numericLimit >= 1 ? numericLimit : numericStock,
       components: cleanComponents,
       features: cleanFeatures
     });
@@ -397,7 +397,7 @@ exports.updateItem = async (req, res) => {
     const numericPrice = Number(price);
     const rawStock = stockQuantity !== undefined && stockQuantity !== "" ? stockQuantity : stock_quantity;
     const numericStock = Number(rawStock);
-    const numericLimit = Number(maxPurchaseQuantity || 10);
+    const numericLimit = Number(maxPurchaseQuantity);
 
     if (
       !cleanName ||
@@ -439,7 +439,7 @@ exports.updateItem = async (req, res) => {
     targetDoc.difficulty = cleanDifficulty;
     targetDoc.imageUrl = cleanImageUrl;
     targetDoc.stockQuantity = numericStock;
-    targetDoc.maxPurchaseQuantity = Number.isInteger(numericLimit) && numericLimit >= 1 ? numericLimit : 10;
+    targetDoc.maxPurchaseQuantity = Number.isInteger(numericLimit) && numericLimit >= 1 ? numericLimit : numericStock;
     targetDoc.components = cleanComponents;
     if (!isKit) {
       targetDoc.features = cleanFeatures;

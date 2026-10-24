@@ -53,31 +53,55 @@ exports.addToCart = async (req, res) => {
     }
 
     const { id, kitId, itemId, price, unitPrice, quantity, qty } = req.body;
-    const rawKitId = kitId || id;
-    const rawItemId = itemId;
-    const targetKit = rawKitId && mongoose.Types.ObjectId.isValid(rawKitId) ? String(rawKitId) : null;
-    const targetItem = rawItemId && mongoose.Types.ObjectId.isValid(rawItemId) ? String(rawItemId) : null;
+    let targetKit = kitId && mongoose.Types.ObjectId.isValid(kitId) ? String(kitId) : null;
+    let targetItem = itemId && mongoose.Types.ObjectId.isValid(itemId) ? String(itemId) : null;
+
+    if (!targetKit && !targetItem && id && mongoose.Types.ObjectId.isValid(id)) {
+      const dbItem = await Item.findById(id).lean();
+      if (dbItem) {
+        targetItem = String(id);
+      } else {
+        const dbKit = await Kit.findById(id).lean();
+        if (dbKit) {
+          targetKit = String(id);
+        } else {
+          targetItem = String(id);
+        }
+      }
+    }
 
     if (!targetKit && !targetItem) {
       return res.status(400).json({ success: false, error: "Missing or invalid item/kit ID." });
     }
 
-    // Authoritative server-side price check to prevent client price tampering
+    // Authoritative server-side price check and stock validation
     let verifiedPrice = Number(unitPrice !== undefined ? unitPrice : price);
+    let availableStock = 9999;
     if (targetItem) {
       const dbItem = await Item.findById(targetItem).lean();
-      if (dbItem && Number.isFinite(dbItem.price) && dbItem.price >= 0) {
-        verifiedPrice = dbItem.price;
+      if (dbItem) {
+        if (Number.isFinite(dbItem.price) && dbItem.price >= 0) {
+          verifiedPrice = dbItem.price;
+        }
+        availableStock = Number(dbItem.stockQuantity !== undefined ? dbItem.stockQuantity : (dbItem.stock || 0));
       }
     } else if (targetKit) {
       const dbKit = await Kit.findById(targetKit).lean() || await Item.findById(targetKit).lean();
-      if (dbKit && Number.isFinite(dbKit.price) && dbKit.price >= 0) {
-        verifiedPrice = dbKit.price;
+      if (dbKit) {
+        if (Number.isFinite(dbKit.price) && dbKit.price >= 0) {
+          verifiedPrice = dbKit.price;
+        }
+        availableStock = Number(dbKit.stockQuantity !== undefined ? dbKit.stockQuantity : (dbKit.stock_quantity !== undefined ? dbKit.stock_quantity : 0));
       }
     }
 
+    if (availableStock <= 0) {
+      return res.status(400).json({ success: false, error: "This item is currently out of stock." });
+    }
+
     const parsedQty = Number(quantity || qty || 1);
-    const itemQty = Math.min(10, Math.max(1, Number.isInteger(parsedQty) ? parsedQty : 1));
+    const requestedQty = Math.max(1, Number.isInteger(parsedQty) ? parsedQty : 1);
+    const itemQty = Math.min(availableStock, requestedQty);
 
     const cart = await Cart.getOrCreateForUser(userId);
     await cart.addItem({
@@ -135,15 +159,24 @@ exports.updateCartQty = async (req, res) => {
       return res.status(404).json({ success: false, error: "Item not found in cart." });
     }
 
+    // Determine available stock in database for dynamic limit
+    const targetProduct = (item.item ? await Item.findById(item.item).lean() : null) ||
+                          (item.kit ? await Kit.findById(item.kit).lean() : null) ||
+                          await Item.findById(item.item || item.kit).lean() ||
+                          await Kit.findById(item.item || item.kit).lean();
+    const availableStock = targetProduct
+      ? Number(targetProduct.stockQuantity !== undefined ? targetProduct.stockQuantity : (targetProduct.stock || 0))
+      : 9999;
+
     if (delta !== undefined) {
       const deltaNum = Number(delta);
       if (Number.isFinite(deltaNum)) {
-        item.quantity = Math.min(10, Math.max(0, item.quantity + deltaNum));
+        item.quantity = Math.min(availableStock, Math.max(0, item.quantity + deltaNum));
       }
     } else if (quantity !== undefined) {
       const qtyNum = Number(quantity);
       if (Number.isFinite(qtyNum)) {
-        item.quantity = Math.min(10, Math.max(0, Math.round(qtyNum)));
+        item.quantity = Math.min(availableStock, Math.max(0, Math.round(qtyNum)));
       }
     }
 

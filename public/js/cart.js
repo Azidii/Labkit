@@ -74,16 +74,20 @@ function requireAuthentication() {
   return false;
 }
 
-function addToCart(id, name, price, img, maxPurchaseQuantity, productType = "item") {
+function addToCart(id, name, price, img, maxPurchaseQuantity, productType = "item", availableStock) {
   if (!isAuthenticated()) {
     requireAuthentication();
     return;
   }
 
+  const rawStock = availableStock !== undefined ? availableStock : maxPurchaseQuantity;
+  const stockLimit = Number(rawStock) > 0 ? Number(rawStock) : Infinity;
+
   const cart = getCart();
   const existing = cart.find((item) => String(item.id) === String(id));
   if (existing) {
-    const limit = Number(existing.maxPurchaseQuantity || maxPurchaseQuantity || 10);
+    existing.stock = stockLimit;
+    const limit = Number(existing.stock) > 0 ? Number(existing.stock) : Infinity;
     if (existing.qty < limit) existing.qty += 1;
   } else {
     getSelectedCartIds(cart).add(String(id));
@@ -94,10 +98,11 @@ function addToCart(id, name, price, img, maxPurchaseQuantity, productType = "ite
       price: Number(price),
       qty: 1,
       img: img || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
-      maxPurchaseQuantity: Number(maxPurchaseQuantity) || 10
+      stock: stockLimit
     });
   }
   saveCart(cart);
+  renderCart();
   fetch("/cart/add", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -111,6 +116,28 @@ function addToCart(id, name, price, img, maxPurchaseQuantity, productType = "ite
   openCart();
 }
 
+function setCartQty(id, qty) {
+  if (!isAuthenticated()) {
+    requireAuthentication();
+    return;
+  }
+
+  let cart = getCart();
+  const item = cart.find((i) => String(i.id) === String(id));
+  if (!item) return;
+  const parsed = parseInt(qty, 10);
+  const limit = Number(item.stock) > 0 ? Number(item.stock) : Infinity;
+  const newQty = Math.max(1, Math.min(limit, isNaN(parsed) ? 1 : parsed));
+  item.qty = newQty;
+  saveCart(cart);
+  renderCart();
+  fetch("/cart/update", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, quantity: newQty })
+  }).catch((error) => console.error("Unable to sync cart quantity:", error));
+}
+
 function updateCartQty(id, delta) {
   if (!isAuthenticated()) {
     requireAuthentication();
@@ -120,7 +147,7 @@ function updateCartQty(id, delta) {
   let cart = getCart();
   const item = cart.find((i) => String(i.id) === String(id));
   if (!item) return;
-  const limit = Number(item.maxPurchaseQuantity) || 10;
+  const limit = Number(item.stock) > 0 ? Number(item.stock) : Infinity;
   item.qty = Math.min(limit, item.qty + delta);
   if (item.qty <= 0) {
     cart = cart.filter((i) => String(i.id) !== String(id));
@@ -129,6 +156,7 @@ function updateCartQty(id, delta) {
     saveSelectedCartIds(selectedIds);
   }
   saveCart(cart);
+  renderCart();
   fetch("/cart/update", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -316,7 +344,10 @@ function renderCart() {
               <div class="cart-item-card__bottom">
                 <div class="cart-qty-control">
                   <button type="button" class="cart-qty-btn" onclick="updateCartQty('${item.id}', -1)" aria-label="Decrease quantity">−</button>
-                  <span class="cart-qty-num">${item.qty}</span>
+                  <input type="number" class="cart-qty-input" min="1" max="${Number(item.stock) > 0 ? Number(item.stock) : 9999}" value="${item.qty}"
+                    onchange="setCartQty('${item.id}', this.value)"
+                    onkeydown="if(event.key==='Enter'){event.preventDefault();setCartQty('${item.id}', this.value);}"
+                    aria-label="Item quantity" />
                   <button type="button" class="cart-qty-btn" onclick="updateCartQty('${item.id}', 1)" aria-label="Increase quantity">+</button>
                 </div>
                 <button type="button" class="cart-item-delete" onclick="removeCartItem('${item.id}')" aria-label="Remove item">
@@ -353,10 +384,11 @@ document.addEventListener(
         return false;
       }
       // If authenticated and button has dataset values, trigger addToCart
-      const { id, name, price, img, max, type } = addBtn.dataset;
+      const { id, name, price, img, max, type, stock } = addBtn.dataset;
       if (id && name && price) {
         event.preventDefault();
-        addToCart(id, name, Number(price), img, Number(max) || 10, type);
+        const maxStock = Number(stock !== undefined ? stock : max);
+        addToCart(id, name, Number(price), img, maxStock, type, maxStock);
       }
     }
 

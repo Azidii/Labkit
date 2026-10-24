@@ -301,6 +301,29 @@
   user-select: none;
 }
 
+.cart-qty-input {
+  width: 2.25rem;
+  padding: 0 0.15rem;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  -moz-appearance: textfield;
+}
+
+.cart-qty-input::-webkit-outer-spin-button,
+.cart-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cart-qty-input:focus {
+  outline: none;
+  background: hsl(var(--muted) / 0.5);
+}
+
 .cart-item-delete {
   background: transparent;
   border: none;
