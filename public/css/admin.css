@@ -1155,9 +1155,44 @@ textarea {
   margin-bottom: 6px;
 }
 
+.admin-footer__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.admin-footer__logo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.admin-footer__logo-img--dark {
+  display: none !important;
+}
+
+.dark .admin-footer__logo-img--light {
+  display: none !important;
+}
+
+.dark .admin-footer__logo-img--dark {
+  display: block !important;
+}
+
 .admin-footer__brand strong {
+  font-family: 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: var(--admin-heading);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.15rem;
 }
 
 .admin-footer__badge {
