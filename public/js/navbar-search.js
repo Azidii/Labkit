@@ -10,13 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!toggle || !form || !input) return;
 
     const suggestionItems = [
-      { label: "IoT Kits", type: "Category" },
       { label: "Microcontrollers", type: "Category" },
-      { label: "Single-Board Computers", type: "Category" },
       { label: "Sensors & Modules", type: "Category" },
-      { label: "Buzzers & Audio", type: "Category" },
-      { label: "Motors & Actuators", type: "Category" },
       { label: "Displays & Power", type: "Category" },
+      { label: "Buzzers & Audio", type: "Category" },
+      { label: "IoT Kits", type: "Category" },
       { label: "Arduino", type: "Component" },
       { label: "Raspberry Pi", type: "Component" },
       { label: "ESP32", type: "Component" },
