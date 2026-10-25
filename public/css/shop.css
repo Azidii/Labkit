@@ -577,6 +577,8 @@ img { display: block; max-width: 100%; }
 
 /* ── Results Bar ── */
 .results-bar {
+  position: relative;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -603,6 +605,7 @@ img { display: block; max-width: 100%; }
 
 .sort-menu {
   position: relative;
+  z-index: 60;
 }
 
 .results-sort label {
@@ -660,7 +663,7 @@ img { display: block; max-width: 100%; }
   position: absolute;
   top: calc(100% + 0.35rem);
   right: 0;
-  z-index: 30;
+  z-index: 100;
   min-width: 100%;
   padding: 0.35rem;
   border: 1px solid #cbd5e1;

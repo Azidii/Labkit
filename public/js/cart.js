@@ -115,7 +115,69 @@ function addToCart(id, name, price, img, maxPurchaseQuantity, productType = "ite
       unitPrice: Number(price)
     })
   }).catch((error) => console.error("Unable to sync cart with database:", error));
-  openCart();
+  showCartToast(name || "Item");
+}
+
+let cartToastTimer = null;
+function showCartToast(itemName) {
+  let toast = document.getElementById("cartToastNotification");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "cartToastNotification";
+    toast.className = "cart-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    document.body.appendChild(toast);
+  }
+
+  const displayName = itemName && itemName.length > 32 ? itemName.slice(0, 30) + "…" : (itemName || "Item");
+
+  toast.innerHTML = `
+    <div class="cart-toast__content">
+      <span class="cart-toast__icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </span>
+      <div class="cart-toast__body">
+        <h4 class="cart-toast__title">Added to cart successfully</h4>
+        <p class="cart-toast__name">${escapeHtml(displayName)}</p>
+      </div>
+      <button type="button" class="cart-toast__close" aria-label="Close notification" onclick="this.closest('.cart-toast').classList.remove('cart-toast--visible')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  `;
+
+  // Clear existing animation / timeout
+  if (cartToastTimer) clearTimeout(cartToastTimer);
+
+  // Trigger reflow & show
+  toast.classList.remove("cart-toast--visible");
+  void toast.offsetWidth;
+  toast.classList.add("cart-toast--visible");
+
+  // Animate cart badge in navbar
+  const badge = document.getElementById("cartBadge");
+  if (badge) {
+    badge.classList.remove("cart-badge-bounce");
+    void badge.offsetWidth;
+    badge.classList.add("cart-badge-bounce");
+    setTimeout(() => badge.classList.remove("cart-badge-bounce"), 600);
+  }
+
+  // Auto disappear after 2.4 seconds
+  cartToastTimer = setTimeout(() => {
+    toast.classList.remove("cart-toast--visible");
+  }, 2400);
+}
+
+function escapeHtml(text) {
+  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+  return String(text).replace(/[&<>"']/g, (m) => map[m]);
 }
 
 function setCartQty(id, qty) {

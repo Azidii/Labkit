@@ -206,8 +206,19 @@ function escapeHtml(value) {
   }[character]));
 }
 
-async function sendInvoiceEmail({ to, name, order, invoice }) {
+async function sendInvoiceEmail({ to, name, order, invoice, paymentMethod }) {
   const recipientName = name || "Engineer";
+  const resolvedPaymentMethod = String(paymentMethod || order?.paymentMethod || "").trim().toLowerCase();
+  const isCod = resolvedPaymentMethod === "cod";
+
+  const openingDescription = isCod
+    ? "Thank you for your order! We have received your order and are preparing your parts for shipment. Your official invoice and order details are summarized below:"
+    : "Thank you for your order. We've received your payment and are preparing your parts for shipment. Your official invoice and order details are summarized below:";
+
+  const statusBadge = isCod
+    ? "✓ Order Confirmed • Cash on Delivery"
+    : "✓ Payment Confirmed • Order Processing";
+
   const itemRows = order.items.map((item) => `
     <tr>
       <td style="padding:12px 0;font-size:13px;color:#1e293b;border-bottom:1px solid #f1f5f9;">${escapeHtml(item.name)}</td>
@@ -463,13 +474,13 @@ async function sendInvoiceEmail({ to, name, order, invoice }) {
             <div class="body-content" style="padding:32px;background-color:#ffffff;">
               <h2 class="greeting" style="font-size:18px;font-weight:600;color:#0f172a;margin-top:0;margin-bottom:12px;">Hello, ${escapeHtml(recipientName)}!</h2>
               <p class="message" style="font-size:14px;line-height:1.6;color:#475569;margin:0 0 24px 0;">
-                Thank you for your order. We’ve received your payment and are preparing your parts for shipment. Your official invoice and order details are summarized below:
+                ${escapeHtml(openingDescription)}
               </p>
 
               <div class="total-card" style="background-color:#f0fdfa;border:1.5px dashed #0f5d63;border-radius:10px;padding:22px 20px;text-align:center;margin:24px 0;">
                 <div class="total-label" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#0f5d63;margin-bottom:8px;">Total Amount Due</div>
                 <div class="total-amount" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:36px;font-weight:800;letter-spacing:-0.5px;color:#0f5d63;margin:0;line-height:1.1;">₱${totalFormatted}</div>
-                <p class="total-sub" style="font-size:12px;color:#64748b;margin-top:8px;margin-bottom:0;font-weight:500;">✓ Payment Confirmed &bull; Order ${escapeHtml(orderStatusText)}</p>
+                <p class="total-sub" style="font-size:12px;color:#64748b;margin-top:8px;margin-bottom:0;font-weight:500;">${escapeHtml(statusBadge)}</p>
               </div>
 
               <div class="meta-box" style="background-color:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin-bottom:24px;">

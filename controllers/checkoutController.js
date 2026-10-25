@@ -176,7 +176,8 @@ exports.createCheckout = async (req, res) => {
         to: recipientEmail,
         name: [user?.firstName || billing.firstName, user?.lastName || billing.lastName].filter(Boolean).join(" ") || user?.username,
         order,
-        invoice
+        invoice,
+        paymentMethod
       });
       invoice.emailSent = true;
       await invoice.save();
