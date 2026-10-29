@@ -41,10 +41,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  let suggestionDebounceTimer = null;
+
   const hideSuggestions = () => {
     if (!suggestions) return;
     suggestions.hidden = true;
     suggestions.innerHTML = "";
+  };
+
+  const populateSuggestions = (items) => {
+    suggestions.innerHTML = "";
+    if (!items || !items.length) {
+      hideSuggestions();
+      return;
+    }
+
+    items.forEach((product, index) => {
+      const option = document.createElement("button");
+      option.type = "button";
+      option.className = "search-suggestion";
+      option.setAttribute("role", "option");
+      option.setAttribute("aria-selected", "false");
+      option.dataset.index = String(index);
+      option.innerHTML = `<span class="search-suggestion__name"></span><span class="search-suggestion__meta"></span>`;
+      option.querySelector(".search-suggestion__name").textContent = product.name;
+      option.querySelector(".search-suggestion__meta").textContent = product.category || "";
+      option.addEventListener("click", () => {
+        searchInput.value = product.name;
+        document.getElementById("filterForm").submit();
+      });
+      suggestions.appendChild(option);
+    });
+    suggestions.hidden = false;
   };
 
   const renderSuggestions = () => {
@@ -55,42 +83,34 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const matches = suggestionProducts
-      .filter((product) => {
-        const searchableText = [
-          product.name,
-          product.tagline,
-          product.description,
-          product.category
-        ].join(" ").toLowerCase();
-        return searchableText.includes(query);
-      })
-      .slice(0, 6);
-
-    suggestions.innerHTML = "";
-    if (!matches.length) {
-      hideSuggestions();
-      return;
+    if (suggestionProducts.length) {
+      const matches = suggestionProducts
+        .filter((product) => {
+          const searchableText = [
+            product.name,
+            product.tagline,
+            product.description,
+            product.category
+          ].join(" ").toLowerCase();
+          return searchableText.includes(query);
+        })
+        .slice(0, 6);
+      populateSuggestions(matches);
+    } else {
+      clearTimeout(suggestionDebounceTimer);
+      suggestionDebounceTimer = setTimeout(() => {
+        fetch(`/api/shop/suggestions?q=${encodeURIComponent(query)}`)
+          .then((res) => (res.ok ? res.json() : []))
+          .then((items) => {
+            if (searchInput.value.trim().toLowerCase() === query) {
+              populateSuggestions(items);
+            }
+          })
+          .catch(() => hideSuggestions());
+      }, 150);
     }
-
-    matches.forEach((product, index) => {
-      const option = document.createElement("button");
-      option.type = "button";
-      option.className = "search-suggestion";
-      option.setAttribute("role", "option");
-      option.setAttribute("aria-selected", "false");
-      option.dataset.index = String(index);
-      option.innerHTML = `<span class="search-suggestion__name"></span><span class="search-suggestion__meta"></span>`;
-      option.querySelector(".search-suggestion__name").textContent = product.name;
-      option.querySelector(".search-suggestion__meta").textContent = product.category;
-      option.addEventListener("click", () => {
-        searchInput.value = product.name;
-        document.getElementById("filterForm").submit();
-      });
-      suggestions.appendChild(option);
-    });
-    suggestions.hidden = false;
   };
+
 
   if (searchInput) {
     searchInput.addEventListener("input", () => {
