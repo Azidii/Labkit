@@ -34,14 +34,14 @@ function getGoogleRedirectUri(req) {
   return `${protocol}://${host}/login/google/callback`;
 }
 
-// GET /login - Render login page
+// GET /login - Render login page (Always renders the login page without unexpected redirects)
 exports.renderLogin = (req, res) => {
-  if (req.session && req.session.user) {
-    return res.redirect("/");
-  }
+  res.set("Cache-Control", "private, no-cache, no-store, must-revalidate");
+
   res.render("login", {
     error: sanitizeErrorMessage(req.query.error),
-    success: req.query.success || null
+    success: req.query.success || null,
+    returnTo: req.query.returnTo || null
   });
 };
 
@@ -66,7 +66,7 @@ exports.processLogin = async (req, res) => {
       const msg = "Please enter your email/username and password.";
       return isJson
         ? res.status(400).json({ success: false, error: msg })
-        : res.status(400).render("login", { error: msg, success: null });
+        : res.status(400).render("login", { error: msg, success: null, returnTo });
     }
 
     const cleanId = rawIdentifier;
@@ -87,7 +87,7 @@ exports.processLogin = async (req, res) => {
       const msg = "Invalid email/username or password.";
       return isJson
         ? res.status(401).json({ success: false, error: msg })
-        : res.status(401).render("login", { error: msg, success: null });
+        : res.status(401).render("login", { error: msg, success: null, returnTo });
     }
 
     // Check if account only has Google OAuth
@@ -95,7 +95,7 @@ exports.processLogin = async (req, res) => {
       const msg = "This account was registered with Google. Please use 'Continue with Google'.";
       return isJson
         ? res.status(400).json({ success: false, error: msg })
-        : res.status(400).render("login", { error: msg, success: null });
+        : res.status(400).render("login", { error: msg, success: null, returnTo });
     }
 
     // Verify password using schema instance method
@@ -104,7 +104,7 @@ exports.processLogin = async (req, res) => {
       const msg = "Invalid email/username or password.";
       return isJson
         ? res.status(401).json({ success: false, error: msg })
-        : res.status(401).render("login", { error: msg, success: null });
+        : res.status(401).render("login", { error: msg, success: null, returnTo });
     }
 
     // Create JWT payload containing userId and role
@@ -174,7 +174,7 @@ exports.processLogin = async (req, res) => {
     if (isJson) {
       return res.status(500).json({ success: false, error: msg });
     }
-    return res.status(500).render("login", { error: msg, success: null });
+    return res.status(500).render("login", { error: msg, success: null, returnTo });
   }
 };
 

@@ -81,13 +81,8 @@ exports.renderDashboard = async (req, res) => {
   const featured = await getFeaturedProducts();
   const currentUser = (req.session && req.session.user) || (res.locals && res.locals.currentUser) || null;
 
-  // Set HTTP caching headers only for unauthenticated public requests
-  const isAuth = Boolean(currentUser || req.cookies?.token);
-  if (!isAuth) {
-    res.set("Cache-Control", "public, max-age=60, s-maxage=120, stale-while-revalidate=300");
-  } else {
-    res.set("Cache-Control", "private, no-cache, no-store, must-revalidate");
-  }
+  // Dynamic user auth state: never publicly cache SSR HTML on CDN to prevent stale navbar/auth leakage
+  res.set("Cache-Control", "private, no-cache, no-store, must-revalidate");
 
   res.render("dashboard", { featured, loading: false, currentUser });
 };

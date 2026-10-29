@@ -91,13 +91,8 @@ exports.renderShop = async (req, res) => {
 
   const totalPages = Math.max(1, Math.ceil(totalCount / limit));
 
-  // Set HTTP caching headers only for unauthenticated public requests
-  const isAuth = Boolean((req.session && req.session.user) || req.cookies?.token);
-  if (!isAuth && !dbError) {
-    res.set("Cache-Control", "public, max-age=60, s-maxage=120, stale-while-revalidate=300");
-  } else {
-    res.set("Cache-Control", "private, no-cache, no-store, must-revalidate");
-  }
+  // Dynamic user auth state: never publicly cache SSR HTML on CDN to prevent stale navbar/auth leakage
+  res.set("Cache-Control", "private, no-cache, no-store, must-revalidate");
 
   res.render("shop", {
     products,
@@ -141,4 +136,3 @@ exports.getSuggestions = async (req, res) => {
     return res.json([]);
   }
 };
-
