@@ -1,8 +1,24 @@
 require("dotenv").config();
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = require("../utils/jwtConfig");
 const User = require("../models/userSchema");
 
+function sanitizeErrorMessage(msg) {
+  if (!msg) return null;
+  const lower = String(msg).toLowerCase();
+  if (
+    lower.includes("buffering timed out") ||
+    lower.includes("mongo") ||
+    lower.includes("econnrefused") ||
+    lower.includes("topology") ||
+    lower.includes("serverselection") ||
+    lower.includes("operation")
+  ) {
+    return "Database service is temporarily unavailable. Please try again in a few moments.";
+  }
+  return msg;
+}
 
 // GET /login - Render login page
 exports.renderLogin = (req, res) => {
@@ -10,10 +26,11 @@ exports.renderLogin = (req, res) => {
     return res.redirect("/");
   }
   res.render("login", {
-    error: req.query.error || null,
+    error: sanitizeErrorMessage(req.query.error),
     success: req.query.success || null
   });
 };
+
 
 /**
  * processLogin:
@@ -88,13 +105,15 @@ exports.processLogin = async (req, res) => {
       expiresIn: "1d"
     });
 
-    // Set it in an httpOnly cookie
+    // Set it in an httpOnly cookie with root path
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000 // 1 day
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      path: "/"
     });
+
 
     // Establish user session
     if (req.session) {
@@ -161,8 +180,20 @@ exports.startGoogleAuth = (req, res) => {
   }
 
   const redirectUri = `${req.protocol}://${req.get("host")}/login/google/callback`;
-  const state = Math.random().toString(36).substring(2, 15);
-  req.session.oauthState = state;
+  const state = crypto.randomBytes(24).toString("hex");
+
+  // Store state in httpOnly cookie to reliably support serverless multi-container instances
+  res.cookie("oauth_state", state, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 10 * 60 * 1000,
+    path: "/"
+  });
+
+  if (req.session) {
+    req.session.oauthState = state;
+  }
 
   const authUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
   authUrl.searchParams.set("client_id", clientId);
@@ -178,7 +209,7 @@ exports.startGoogleAuth = (req, res) => {
 // GET /login/google/callback - Handle Google OAuth callback
 exports.handleGoogleCallback = async (req, res) => {
   try {
-    const { code, error } = req.query;
+    const { code, state, error } = req.query;
 
     if (error) {
       return res.redirect(
@@ -189,6 +220,15 @@ exports.handleGoogleCallback = async (req, res) => {
     if (!code) {
       return res.redirect(
         `/login?error=${encodeURIComponent("Authorization code missing from Google.")}`
+      );
+    }
+
+    // Verify OAuth state against stored state cookie
+    const storedState = req.cookies?.oauth_state || req.session?.oauthState;
+    res.clearCookie("oauth_state", { path: "/" });
+    if (!state || !storedState || state !== storedState) {
+      return res.redirect(
+        `/login?error=${encodeURIComponent("Authentication session expired. Please try signing in again.")}`
       );
     }
 
@@ -211,11 +251,9 @@ exports.handleGoogleCallback = async (req, res) => {
 
     const tokenData = await tokenResponse.json();
     if (!tokenResponse.ok || !tokenData.access_token) {
-      console.error("Google token exchange error:", tokenData);
+      console.error("Google token exchange error:", tokenData.error || tokenData);
       return res.redirect(
-        `/login?error=${encodeURIComponent(
-          tokenData.error_description || "Failed to exchange token with Google."
-        )}`
+        `/login?error=${encodeURIComponent("Failed to exchange authentication token with Google.")}`
       );
     }
 
@@ -228,6 +266,12 @@ exports.handleGoogleCallback = async (req, res) => {
     if (!profile || !profile.email) {
       return res.redirect(
         `/login?error=${encodeURIComponent("Unable to retrieve email from Google profile.")}`
+      );
+    }
+
+    if (profile.email_verified === false) {
+      return res.redirect(
+        `/login?error=${encodeURIComponent("Your Google account email is not verified.")}`
       );
     }
 
@@ -273,7 +317,7 @@ exports.handleGoogleCallback = async (req, res) => {
       }
     }
 
-    // Create and set JWT token cookie
+    // Create and set JWT token cookie with root path
     const payload = {
       userId: user._id,
       role: user.role
@@ -288,7 +332,8 @@ exports.handleGoogleCallback = async (req, res) => {
       httpOnly: true,
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000,
+      path: "/"
     });
 
     // Save session
@@ -304,15 +349,16 @@ exports.handleGoogleCallback = async (req, res) => {
       };
     }
 
-    const redirectUrl = user.role === "admin" ? "/admin/dashboard" : "/shop";
+    const redirectUrl = user.role === "admin" ? "/admin" : "/shop";
     res.redirect(redirectUrl);
   } catch (err) {
-    console.error("Google OAuth Error:", err);
+    console.error("Google OAuth Error:", err.message || err);
     res.redirect(
-      `/login?error=${encodeURIComponent(err.message || "Failed to sign in with Google.")}`
+      `/login?error=${encodeURIComponent("Unable to complete Google sign-in. Please try again.")}`
     );
   }
 };
+
 
 /**
  * Logout controller:

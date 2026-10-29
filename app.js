@@ -38,6 +38,27 @@ app.use(session({
   }
 }));
 
+// Database connection middleware for dynamic requests: ensure MongoDB is connected before handling routes
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("Database connection middleware error:", err.message);
+    if (req.headers.accept && req.headers.accept.includes("application/json")) {
+      return res.status(503).json({
+        success: false,
+        error: "Database service temporarily unavailable. Please try again shortly."
+      });
+    }
+    return res.status(503).render("error", {
+      title: "Service Temporarily Unavailable",
+      message: "Our catalog database is reconnecting. Please refresh the page in a few moments.",
+      statusCode: 503
+    });
+  }
+});
+
 // Global middleware: authenticate via session or JWT token cookie, synchronize currentUser and userRole
 app.use(async (req, res, next) => {
   res.locals.currentUser = null;
@@ -59,6 +80,7 @@ app.use(async (req, res, next) => {
       try {
         const decoded = jwt.verify(token, JWT_SECRET, { algorithms: ["HS256"] });
         req.user = decoded;
+        res.locals.userRole = decoded.role || null;
 
         // Restore user session from MongoDB
         const dbUser = await User.findById(decoded.userId).lean();
@@ -86,7 +108,7 @@ app.use(async (req, res, next) => {
       }
     }
   } catch (err) {
-    console.error("Auth middleware error:", err);
+    console.error("Auth middleware error:", err.message);
   }
 
   next();
@@ -104,8 +126,11 @@ const adminRoute = require('./routes/adminRoute');
 const cartRoute = require('./routes/cartRoute');
 
 const adminController = require('./controllers/adminController');
+const shopController = require('./controllers/shopController');
+
 app.get('/api/localities', adminController.getLocalities);
 app.get('/data/philippine-localities.json', adminController.getLocalities);
+app.get('/api/shop/suggestions', shopController.getSuggestions);
 
 app.use('/about', aboutRoute);
 app.use('/how-it-works', aboutRoute);
@@ -127,8 +152,38 @@ app.get('/auth/google/callback', (req, res) => {
   res.redirect(`/login/google/callback${query ? '?' + query : ''}`);
 });
 
-app.listen(PORT, () => {
-  console.log(`Labkit server running at http://localhost:${PORT}`);
+// 404 Not Found Handler
+app.use((req, res) => {
+  res.status(404);
+  if (req.headers.accept && req.headers.accept.includes("application/json")) {
+    return res.json({ error: "Resource not found" });
+  }
+  res.render("error", {
+    title: "Page Not Found",
+    message: "The page you are looking for does not exist or has been moved.",
+    statusCode: 404
+  });
 });
 
+// Centralized Unhandled Error Handler
+app.use((err, req, res, next) => {
+  console.error("Unhandled Application Error:", err);
+  res.status(err.status || 500);
+  if (req.headers.accept && req.headers.accept.includes("application/json")) {
+    return res.json({ error: "An unexpected error occurred. Please try again." });
+  }
+  res.render("error", {
+    title: "Something Went Wrong",
+    message: "An unexpected error occurred. Our team has been notified.",
+    statusCode: err.status || 500
+  });
+});
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Labkit server running at http://localhost:${PORT}`);
+  });
+}
+
 module.exports = app;
+

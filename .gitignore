@@ -9,3 +9,10 @@ npm-debug.log*
 Thumbs.db
 
 skills-lock.json
+scratch/
+
+.vercel/
+.next/
+out/
+dist/
+coverage/

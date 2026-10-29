@@ -5,9 +5,11 @@ const Kit = require("../models/kitsSchema");
 
 async function getFeaturedProducts() {
   try {
+    const projection = "name tagline description price compare_at_price category difficulty imageUrl rating review_count stockQuantity slug";
     const databaseItems = await Item.find({
       stockQuantity: { $gt: 0 }
     })
+      .select(projection)
       .sort({ createdAt: -1 })
       .limit(6)
       .lean();
@@ -25,8 +27,8 @@ async function getFeaturedProducts() {
         compare_at_price: item.compare_at_price ? Number(item.compare_at_price) : null,
         category: item.category || "Sensors & Modules",
         difficulty: item.difficulty || "Beginner",
-        image_url: item.imageUrl || item.image_url || "/img/electronics-workbench.jpg",
-        imageUrl: item.imageUrl || item.image_url || "/img/electronics-workbench.jpg",
+        image_url: item.imageUrl || "/img/electronics-workbench.jpg",
+        imageUrl: item.imageUrl || "/img/electronics-workbench.jpg",
         rating: item.rating || 5.0,
         review_count: item.review_count || 0,
         stockQuantity: stock,
@@ -40,6 +42,7 @@ async function getFeaturedProducts() {
       const databaseKits = await Kit.find({
         stockQuantity: { $gt: 0 }
       })
+        .select(projection)
         .sort({ createdAt: -1 })
         .limit(6 - featuredItems.length)
         .lean();
@@ -52,8 +55,8 @@ async function getFeaturedProducts() {
           slug: kit.slug || String(kit._id),
           name: kit.name,
           tagline: kit.tagline || (kit.description ? kit.description.slice(0, 80) : ""),
-          image_url: kit.image_url || kit.imageUrl || "/img/electronics-workbench.jpg",
-          imageUrl: kit.imageUrl || kit.image_url || "/img/electronics-workbench.jpg",
+          image_url: kit.imageUrl || "/img/electronics-workbench.jpg",
+          imageUrl: kit.imageUrl || "/img/electronics-workbench.jpg",
           rating: kit.rating || 5.0,
           review_count: kit.review_count || 0,
           stockQuantity: stock,
@@ -68,7 +71,7 @@ async function getFeaturedProducts() {
 
     return featuredItems;
   } catch (err) {
-    console.error("Dashboard getFeaturedProducts error:", err);
+    console.error("Dashboard getFeaturedProducts error:", err.message);
     return [];
   }
 }
@@ -77,8 +80,18 @@ async function getFeaturedProducts() {
 exports.renderDashboard = async (req, res) => {
   const featured = await getFeaturedProducts();
   const currentUser = (req.session && req.session.user) || (res.locals && res.locals.currentUser) || null;
+
+  // Set HTTP caching headers only for unauthenticated public requests
+  const isAuth = Boolean(currentUser || req.cookies?.token);
+  if (!isAuth) {
+    res.set("Cache-Control", "public, max-age=60, s-maxage=120, stale-while-revalidate=300");
+  } else {
+    res.set("Cache-Control", "private, no-cache, no-store, must-revalidate");
+  }
+
   res.render("dashboard", { featured, loading: false, currentUser });
 };
+
 
 // GET /settings - User Settings page
 exports.renderSettings = async (req, res) => {

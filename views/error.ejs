@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-auth="<%= locals.currentUser ? 'true' : 'false' %>">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof title !== 'undefined' && title ? title : 'Error' %> — LabKit Market</title>
+  <link rel="icon" type="image/png" href="/img/LabKit%20Logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <link rel="stylesheet" href="/css/success.css" />
+  <script src="/js/theme.js"></script>
+  <script src="/js/page-transitions.js"></script>
+  <style>
+    .error-card {
+      background: hsl(var(--card, 0 0% 100%));
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      max-width: 520px;
+      margin: 4rem auto;
+      text-align: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+    .dark .error-card {
+      background: #131922;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+    .error-badge {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .error-card__title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: hsl(var(--foreground, 222.2 84% 4.9%));
+      margin-bottom: 0.75rem;
+    }
+    .dark .error-card__title {
+      color: #f1f5f9;
+    }
+    .error-card__desc {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .dark .error-card__desc {
+      color: #94a3b8;
+    }
+    .error-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .error-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .error-btn--primary {
+      background: #0d6e7a;
+      color: #fff;
+      border: 1px solid #09535c;
+    }
+    .error-btn--primary:hover {
+      background: #09535c;
+      color: #fff;
+    }
+    .error-btn--secondary {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .dark .error-btn--secondary {
+      background: #1e293b;
+      color: #cbd5e1;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+    .dark .error-btn--secondary:hover {
+      background: #334155;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a href="/" class="navbar__brand">
+        <span class="navbar__logo">
+          <img src="/img/LK_light.png" alt="LabKit Logo" class="navbar__logo-img navbar__logo-img--light" width="36" height="36" />
+          <img src="/img/LK_dark.png" alt="LabKit Logo" class="navbar__logo-img navbar__logo-img--dark" width="36" height="36" />
+        </span>
+        <span class="navbar__brand-text">
+          <span class="navbar__wordmark"><span class="navbar__wordmark-lab">Lab</span><span class="navbar__wordmark-kit">Kit</span></span>
+          <span class="navbar__sub">/MARKET</span>
+        </span>
+      </a>
+      <nav class="navbar__nav">
+        <a href="/" class="navbar__link">Home</a>
+        <a href="/shop" class="navbar__link">Shop</a>
+        <a href="/about" class="navbar__link">About Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main container">
+    <div class="error-card">
+      <div class="error-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+      </div>
+
+      <h1 class="error-card__title">
+        <%= typeof title !== 'undefined' && title ? title : 'Something went wrong' %>
+      </h1>
+
+      <p class="error-card__desc">
+        <%= typeof message !== 'undefined' && message ? message : 'An unexpected error occurred while loading this page. Please try again or return to the shop.' %>
+      </p>
+
+      <div class="error-actions">
+        <button type="button" class="error-btn error-btn--primary" onclick="window.location.reload()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10" />
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+          </svg>
+          Try Again
+        </button>
+        <a href="/shop" class="error-btn error-btn--secondary">Browse Shop</a>
+        <a href="/" class="error-btn error-btn--secondary">Home</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="copyright-footer">
+    <p>Copyright &copy; 2026 Alain Bibaoco and Andrea Caunga. All rights reserved.</p>
+  </footer>
+</body>
+</html>

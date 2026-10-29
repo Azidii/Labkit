@@ -110,6 +110,13 @@ const itemSchema = new mongoose.Schema(
   }
 );
 
+// Query indexes to accelerate storefront filtering, sorting, and pagination
+itemSchema.index({ category: 1, difficulty: 1, createdAt: -1 });
+itemSchema.index({ stockQuantity: 1, createdAt: -1 });
+itemSchema.index({ price: 1, _id: 1 });
+itemSchema.index({ createdAt: -1, _id: 1 });
+
+
 // Virtual aliases for compatibility with snake_case fields used in views/controllers
 itemSchema.virtual("stock_quantity")
   .get(function () {

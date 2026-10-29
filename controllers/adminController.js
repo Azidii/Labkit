@@ -5,6 +5,8 @@ const Item = require("../models/itemSchema");
 const Kit = require("../models/kitsSchema");
 const User = require("../models/userSchema");
 const { requireAdmin } = require("../utils/authMiddleware");
+const { readState, adminUrl, emptyListing, loadListing } = require("../services/adminCatalog");
+const catalogModels = { Item, Kit, User };
 
 // In-memory cache for server-side Philippine localities
 let philippineLocalitiesCache = null;
@@ -71,12 +73,13 @@ async function getAdminUser(req) {
           hasPassword: !!dbUser.passwordHash
         };
         if (req.session?.user) req.session.user = currentUser;
+        return currentUser;
       }
     }
   } catch (err) {
     console.warn("Could not load fresh user in admin:", err.message);
   }
-  return currentUser;
+  return null;
 }
 
 // Handler-level authorization helper (AUTHZ-03 defense in depth)
@@ -93,31 +96,50 @@ async function verifyAdminAuth(req, res) {
   return admin;
 }
 
-exports.renderAdmin = async (req, res) => {
-  const currentUser = await getAdminUser(req);
+function requestState(req) {
+  return readState(req.method === "GET" ? req.query : { ...req.query, ...req.body, tab: "products" });
+}
+
+async function renderAdminPage(req, res, { status = 200, currentUser, error = null, success = null, formData = {} } = {}) {
+  const state = requestState(req);
+  let listing;
   try {
-    const items = await Item.find().sort({ createdAt: -1 }).lean();
-    const kits = await Kit.find().sort({ createdAt: -1 }).lean();
-    const users = await User.find({}, "firstName lastName username email role createdAt")
-      .sort({ createdAt: -1 })
+    listing = await loadListing(catalogModels, state);
+  } catch (err) {
+    console.error("Admin catalog load failed:", err.message);
+    listing = { ...emptyListing(state), listingError: true };
+    status = 503;
+    error = error || "Unable to load the catalog right now. Please try again.";
+  }
+  const editingId = req.params?.itemId || req.params?.bundleId || "";
+  const editingType = req.params?.bundleId ? "kit" : "item";
+  return res.status(status).render("admin", { ...listing, currentUser, error, success, formData, editingId, editingType });
+}
+
+exports.renderAdmin = async (req, res) => {
+  const currentUser = await verifyAdminAuth(req, res);
+  if (!currentUser) return;
+  const success = req.query.updated === "1" ? "Item updated successfully!"
+    : req.query.created === "1" ? "Item added to catalog successfully!" : null;
+  return renderAdminPage(req, res, { currentUser, success });
+};
+
+exports.getProductDetails = async (req, res) => {
+  const currentAdmin = await verifyAdminAuth(req, res);
+  if (!currentAdmin) return;
+  const model = req.params.productType === "item" ? Item : req.params.productType === "kit" ? Kit : null;
+  if (!model || !mongoose.Types.ObjectId.isValid(req.params.productId)) {
+    return res.status(400).json({ error: "Invalid product." });
+  }
+  try {
+    const product = await model.findById(req.params.productId)
+      .select("name slug tagline description price compare_at_price category difficulty imageUrl stockQuantity stock_quantity maxPurchaseQuantity components features")
       .lean();
-    const success = req.query.updated === "1"
-      ? "Item updated successfully!"
-      : req.query.created === "1"
-      ? "Item added to catalog successfully!"
-      : null;
-    res.render("admin", { items, kits, users, error: null, success, formData: {}, currentUser });
-  } catch (error) {
-    console.error("Admin catalog load error:", error);
-    res.status(500).render("admin", {
-      items: [],
-      kits: [],
-      users: [],
-      error: "Unable to load shop catalog right now.",
-      success: null,
-      formData: {},
-      currentUser
-    });
+    if (!product) return res.status(404).json({ error: "Product not found." });
+    return res.json(product);
+  } catch (err) {
+    console.error("Admin product details failed:", err.message);
+    return res.status(503).json({ error: "Unable to load product details. Please try again." });
   }
 };
 
@@ -153,13 +175,8 @@ exports.createItem = async (req, res) => {
 
   try {
     if (req.uploadError) {
-      const items = await Item.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const kits = await Kit.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const users = await User.find({}, "firstName lastName username email role createdAt").lean().catch(() => []);
-      return res.status(400).render("admin", {
-        items,
-        kits,
-        users,
+      return renderAdminPage(req, res, {
+        status: 400,
         error: req.uploadError,
         formData,
         currentUser
@@ -210,13 +227,8 @@ exports.createItem = async (req, res) => {
       !Number.isInteger(numericStock) ||
       numericStock < 0
     ) {
-      const items = await Item.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const kits = await Kit.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const users = await User.find({}, "firstName lastName username email role createdAt").lean().catch(() => []);
-      return res.status(400).render("admin", {
-        items,
-        kits,
-        users,
+      return renderAdminPage(req, res, {
+        status: 400,
         error: !cleanImageUrl
           ? "Please provide an item image (upload a file or enter an image URL)."
           : "Enter item name, description, valid price (≥ 0), and stock quantity (≥ 0).",
@@ -253,16 +265,11 @@ exports.createItem = async (req, res) => {
       features: cleanFeatures
     });
 
-    res.redirect("/admin?tab=products&created=1");
+    res.redirect(adminUrl(requestState(req), { page: "1", created: "1" }));
   } catch (error) {
     console.error("Admin item creation error:", error);
-    const items = await Item.find().sort({ createdAt: -1 }).lean().catch(() => []);
-    const kits = await Kit.find().sort({ createdAt: -1 }).lean().catch(() => []);
-    const users = await User.find({}, "firstName lastName username email role createdAt").lean().catch(() => []);
-    res.status(500).render("admin", {
-      items,
-      kits,
-      users,
+    await renderAdminPage(req, res, {
+        status: 500,
       error: "Unable to save this item. Check that all fields are correct.",
       formData,
       currentUser
@@ -281,7 +288,7 @@ exports.removeItem = async (req, res) => {
   const itemId = String(rawId);
   try {
     await Item.findByIdAndDelete(itemId);
-    res.redirect("/admin?tab=products");
+    res.redirect(adminUrl(requestState(req)));
   } catch (error) {
     console.error("Admin item removal error:", error);
     res.status(500).send("Unable to remove this item.");
@@ -299,7 +306,7 @@ exports.removeBundle = async (req, res) => {
   const bundleId = String(rawId);
   try {
     await Kit.findByIdAndDelete(bundleId);
-    res.redirect("/admin?tab=products");
+    res.redirect(adminUrl(requestState(req)));
   } catch (error) {
     console.error("Admin bundle removal error:", error);
     res.status(500).send("Unable to remove this bundle.");
@@ -330,13 +337,8 @@ exports.updateItem = async (req, res) => {
     }
 
     if (!targetDoc) {
-      const items = await Item.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const kits = await Kit.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const users = await User.find({}, "firstName lastName username email role createdAt").lean().catch(() => []);
-      return res.status(404).render("admin", {
-        items,
-        kits,
-        users,
+      return renderAdminPage(req, res, {
+        status: 404,
         error: "Item not found in catalog.",
         success: null,
         formData,
@@ -345,13 +347,8 @@ exports.updateItem = async (req, res) => {
     }
 
     if (req.uploadError) {
-      const items = await Item.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const kits = await Kit.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const users = await User.find({}, "firstName lastName username email role createdAt").lean().catch(() => []);
-      return res.status(400).render("admin", {
-        items,
-        kits,
-        users,
+      return renderAdminPage(req, res, {
+        status: 400,
         error: req.uploadError,
         success: null,
         formData,
@@ -408,13 +405,8 @@ exports.updateItem = async (req, res) => {
       !Number.isInteger(numericStock) ||
       numericStock < 0
     ) {
-      const items = await Item.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const kits = await Kit.find().sort({ createdAt: -1 }).lean().catch(() => []);
-      const users = await User.find({}, "firstName lastName username email role createdAt").lean().catch(() => []);
-      return res.status(400).render("admin", {
-        items,
-        kits,
-        users,
+      return renderAdminPage(req, res, {
+        status: 400,
         error: !cleanImageUrl
           ? "Please provide an item image (upload a file or enter an image URL)."
           : "Enter item name, description, valid price (≥ 0), and stock quantity (≥ 0).",
@@ -447,16 +439,11 @@ exports.updateItem = async (req, res) => {
 
     await targetDoc.save();
 
-    res.redirect("/admin?tab=products&updated=1");
+    res.redirect(adminUrl(requestState(req), { updated: "1" }));
   } catch (error) {
     console.error("Admin item update error:", error);
-    const items = await Item.find().sort({ createdAt: -1 }).lean().catch(() => []);
-    const kits = await Kit.find().sort({ createdAt: -1 }).lean().catch(() => []);
-    const users = await User.find({}, "firstName lastName username email role createdAt").lean().catch(() => []);
-    res.status(500).render("admin", {
-      items,
-      kits,
-      users,
+    await renderAdminPage(req, res, {
+        status: 500,
       error: "Unable to update this item. Check that all fields are correct.",
       success: null,
       formData,

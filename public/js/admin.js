@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".tabs")?.classList.toggle("accounts-active", name === "accounts");
   }
   selectTab(requestedTab === "accounts" ? "accounts" : "products");
-  tabs.forEach((tab) => tab.addEventListener("click", () => selectTab(tab.dataset.tab)));
 
   document.getElementById("focusBundleForm")?.addEventListener("click", () => {
     exitEditMode();
@@ -98,7 +97,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (previewImage) {
       const activeImg = uploadedImageSrc || image?.value?.trim();
       if (activeImg) {
-        previewImage.innerHTML = `<img src="${activeImg}" alt="Item preview" onerror="this.parentElement.innerHTML = '${defaultPlaceholder.replace(/\n/g, '').replace(/'/g, "\\'")}'">`;
+        if (previewImage.querySelector("img")?.getAttribute("src") !== activeImg) {
+          const img = document.createElement("img");
+          img.alt = "Item preview";
+          img.addEventListener("error", () => { previewImage.innerHTML = defaultPlaceholder; }, { once: true });
+          img.src = activeImg;
+          previewImage.replaceChildren(img);
+        }
       } else {
         previewImage.innerHTML = defaultPlaceholder;
       }
@@ -407,6 +412,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const maxPurchase = document.getElementById("bundleMaxPurchase");
   const components = document.getElementById("bundleComponents");
   const features = document.getElementById("bundleFeatures");
+  let editGeneration = 0;
+
+  if (bundleForm?.dataset.editId) {
+    if (editModeBanner) editModeBanner.style.display = "flex";
+    if (editingItemName) editingItemName.textContent = name?.value || "Selected item";
+    if (submitItemBtnText) submitItemBtnText.textContent = bundleForm.dataset.editType === "kit" ? "Update Bundle" : "Update Item";
+    if (discardChangesBtn) discardChangesBtn.style.display = "inline-flex";
+    if (adminResetLink) adminResetLink.style.display = "none";
+  }
 
   function enterEditMode(itemData, itemType = "item") {
     if (!bundleForm || !itemData) return;
@@ -519,6 +533,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function exitEditMode() {
     if (!bundleForm) return;
+    editGeneration++;
 
     // Reset action and hidden values
     bundleForm.action = "/admin/items";
@@ -564,34 +579,32 @@ document.addEventListener("DOMContentLoaded", () => {
     syncPreview();
   }
 
-  // Edit item click listeners
-  document.querySelectorAll(".js-edit-item-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
+  let editingRequest = false;
+  document.querySelectorAll(".js-edit-product-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (editingRequest) return;
       const row = btn.closest(".bundle-row");
-      const dataEl = row?.querySelector(".js-item-data");
-      if (!dataEl) return;
+      const errorBox = document.getElementById("catalogActionError");
+      if (!row) return;
+      editingRequest = true;
+      const generation = ++editGeneration;
+      btn.disabled = true;
+      btn.textContent = "Loading…";
+      if (errorBox) errorBox.hidden = true;
       try {
-        const itemData = JSON.parse(dataEl.textContent);
-        enterEditMode(itemData, "item");
+        const response = await fetch("/admin/products/" + encodeURIComponent(row.dataset.type) + "/" + encodeURIComponent(row.dataset.id), {
+          headers: { Accept: "application/json" }, cache: "no-store"
+        });
+        if (!response.ok || response.redirected) throw new Error("Unable to load product details. Please sign in again or retry.");
+        const product = await response.json();
+        if (generation !== editGeneration) return;
+        enterEditMode(product, row.dataset.type);
       } catch (err) {
-        console.error("Failed to parse item data:", err);
-      }
-    });
-  });
-
-  // Edit kit click listeners
-  document.querySelectorAll(".js-edit-kit-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const row = btn.closest(".bundle-row");
-      const dataEl = row?.querySelector(".js-item-data");
-      if (!dataEl) return;
-      try {
-        const kitData = JSON.parse(dataEl.textContent);
-        enterEditMode(kitData, "kit");
-      } catch (err) {
-        console.error("Failed to parse kit data:", err);
+        if (errorBox) { errorBox.textContent = err.message; errorBox.hidden = false; }
+      } finally {
+        editingRequest = false;
+        btn.disabled = false;
+        btn.textContent = "Edit";
       }
     });
   });

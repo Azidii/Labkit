@@ -8,7 +8,13 @@ const { handleItemImageUpload } = require("../utils/uploadMiddleware");
 router.get("/localities", adminController.getLocalities);
 
 // All admin routes are protected by JWT token and session verification
+router.use((req, res, next) => {
+  res.set("Cache-Control", "private, no-store");
+  res.vary("Cookie");
+  next();
+});
 router.use(requireAdmin);
+router.get("/products/:productType/:productId", adminController.getProductDetails);
 
 // Admin Console (uses views/admin.ejs)
 router.get("/", adminController.renderAdmin);
