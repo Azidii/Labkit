@@ -166,8 +166,8 @@
           </div>
           <% } %>
 
-            <div class="tabs" role="tablist">
-              <button type="button" class="tab is-active" data-tab="products">
+            <nav class="tabs" aria-label="Admin sections">
+              <a href="<%= listingUrl({ tab: 'products', page: '1' }) %>" class="tab <%= activeTab === 'products' ? 'is-active' : '' %>" data-tab="products" <%- activeTab === 'products' ? 'aria-current="page"' : '' %>>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
                   <path d="m7.5 4.27 9 5.15" />
@@ -178,10 +178,10 @@
                 </svg>
                 <span>Products &amp; Items</span>
                 <span class="tab-count">
-                  <%= (locals.items ? items.length : 0) + (locals.kits ? kits.length : 0) %>
+                  <%= productCount %>
                 </span>
-              </button>
-              <button type="button" class="tab" data-tab="accounts">
+              </a>
+              <a href="<%= listingUrl({ tab: 'accounts', page: '1' }) %>" class="tab <%= activeTab === 'accounts' ? 'is-active' : '' %>" data-tab="accounts" <%- activeTab === 'accounts' ? 'aria-current="page"' : '' %>>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
                   <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
@@ -191,12 +191,12 @@
                 </svg>
                 <span>User Accounts</span>
                 <span class="tab-count">
-                  <%= users.length %>
+                  <%= userCount %>
                 </span>
-              </button>
-            </div>
+              </a>
+            </nav>
 
-            <section class="tab-panel is-active" data-panel="products">
+            <section class="tab-panel <%= activeTab === 'products' ? 'is-active' : '' %>" data-panel="products">
               <section class="admin-card bundle-list-card">
                 <div class="section-heading">
                   <div class="section-heading__title">
@@ -211,8 +211,8 @@
                       </svg>
                     </span>
                     <div>
-                      <h2>Manage Catalog Items</h2>
-                      <p>Review active catalog items and stock levels in the shop.</p>
+                      <h2>Catalog products</h2>
+                      <p>Review prices, stock, and product details.</p>
                     </div>
                   </div>
                   <button type="button" class="outline-button" id="focusBundleForm">
@@ -221,162 +221,60 @@
                       <line x1="12" y1="5" x2="12" y2="19" />
                       <line x1="5" y1="12" x2="19" y2="12" />
                     </svg>
-                    <span>Add new item</span>
+                    <span>Add item</span>
                   </button>
                 </div>
-                <% const itemList=locals.items || []; %>
-                  <% const kitList=locals.kits || []; %>
-                    <% if (!itemList.length && !kitList.length) { %>
-                      <div class="empty-state">
-                        <div class="empty-state__icon">
-                          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m7.5 4.27 9 5.15" />
-                            <path
-                              d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
-                            <path d="m3.3 7 8.7 5 8.7-5" />
-                            <path d="M12 22V12" />
-                          </svg>
-                        </div>
-                        <p class="empty-state__title">No items yet</p>
-                        <p class="empty-state__desc">Add your first hardware item to the storefront using the form
-                          below.</p>
-                      </div>
-                      <% } %>
-                        <% itemList.forEach(item=> { %>
-                          <div class="bundle-row" data-id="<%= item._id %>" data-type="item">
-                            <script type="application/json" class="js-item-data">
-              <%- JSON.stringify(item).replace(/</g, '\\u003c') %>
-            </script>
-                            <div class="bundle-row__meta">
-                              <strong>
-                                <%= item.name %>
-                              </strong>
-                              <span>
-                                <span class="bundle-tag">
-                                  <%= item.category %>
-                                </span>
-                                &bull;
-                                <span class="bundle-price">₱<%= (Number(item.price) || 0).toFixed(2) %></span>
-                                &bull;
-                                <% const itemStock=(item.stockQuantity !==undefined ? item.stockQuantity :
-                                  item.stock_quantity); %>
-                                  <% if (itemStock <=0) { %>
-                                    <span class="bundle-stock bundle-stock--out">0 in stock</span>
-                                    <% } else if (itemStock <=5) { %>
-                                      <span class="bundle-stock bundle-stock--low">
-                                        <%= itemStock %> in stock
-                                      </span>
-                                      <% } else { %>
-                                        <span class="bundle-stock">
-                                          <%= itemStock %> in stock
-                                        </span>
-                                        <% } %>
-                                          <% if (item.difficulty) { %>
-                                            &bull;
-                                            <span class="bundle-diff">
-                                              <%= item.difficulty %>
-                                            </span>
-                                            <% } %>
-                              </span>
-                            </div>
-                            <div class="bundle-row__actions">
-                              <div class="bundle-row__badge">
-                                <span>Limit: <strong>
-                                    <%= item.maxPurchaseQuantity || 10 %>
-                                  </strong></span>
-                              </div>
-                              <button class="outline-button edit-button js-edit-item-btn" type="button"
-                                title="Edit item">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M12 20h9" />
-                                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                                </svg>
-                                <span>Edit</span>
-                              </button>
-                              <form method="post" action="/admin/items/<%= item._id %>/delete"
-                                class="js-delete-item-form" data-name="<%= item.name %>" style="margin: 0;">
-                                <button class="remove-button js-remove-item-btn" type="button" title="Remove item">
-                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="3 6 5 6 21 6" />
-                                    <path
-                                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                  </svg>
-                                  <span>Remove</span>
-                                </button>
-                              </form>
-                            </div>
-                          </div>
-                          <% }) %>
-                            <% kitList.forEach(kit=> { %>
-                              <div class="bundle-row" data-id="<%= kit._id %>" data-type="kit">
-                                <script type="application/json" class="js-item-data">
-              <%- JSON.stringify(kit).replace(/</g, '\\u003c') %>
-            </script>
-                                <div class="bundle-row__meta">
-                                  <strong>
-                                    <%= kit.name %>
-                                  </strong>
-                                  <span>
-                                    <span class="bundle-tag">
-                                      <%= kit.category %>
-                                    </span>
-                                    &bull;
-                                    <span class="bundle-price">₱<%= kit.price.toFixed(2) %></span>
-                                    &bull;
-                                    <% const kitStock=(kit.stock_quantity !==undefined ? kit.stock_quantity :
-                                      kit.stockQuantity); %>
-                                      <% if (kitStock <=0) { %>
-                                        <span class="bundle-stock bundle-stock--out">0 in stock</span>
-                                        <% } else if (kitStock <=5) { %>
-                                          <span class="bundle-stock bundle-stock--low">
-                                            <%= kitStock %> in stock
-                                          </span>
-                                          <% } else { %>
-                                            <span class="bundle-stock">
-                                              <%= kitStock %> in stock
-                                            </span>
-                                            <% } %>
-                                  </span>
-                                </div>
-                                <div class="bundle-row__actions">
-                                  <div class="bundle-row__badge">
-                                    <span>Limit: <strong>
-                                        <%= kit.maxPurchaseQuantity %>
-                                      </strong></span>
-                                  </div>
-                                  <button class="outline-button edit-button js-edit-kit-btn" type="button"
-                                    title="Edit bundle">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                      <path d="M12 20h9" />
-                                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                                    </svg>
-                                    <span>Edit</span>
-                                  </button>
-                                  <form method="post" action="/admin/bundles/<%= kit._id %>/delete"
-                                    class="js-delete-kit-form" data-name="<%= kit.name %>" style="margin: 0;">
-                                    <button class="remove-button js-remove-kit-btn" type="button" title="Remove bundle">
-                                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="3 6 5 6 21 6" />
-                                        <path
-                                          d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                      </svg>
-                                      <span>Remove</span>
-                                    </button>
-                                  </form>
-                                </div>
-                              </div>
-                              <% }) %>
+                <form class="catalog-search" method="get" action="/admin" role="search" aria-label="Search catalog">
+                  <input type="hidden" name="tab" value="products" />
+                  <div class="catalog-search__field">
+                    <label for="adminProductSearch">Search products</label>
+                    <input id="adminProductSearch" name="q" type="search" maxlength="100" value="<%= searchQuery %>" placeholder="Name, category or product slug" />
+                  </div>
+                  <button class="outline-button" type="submit">Search</button>
+                  <% if (searchQuery) { %><a class="catalog-clear" href="/admin?tab=products">Clear</a><% } %>
+                </form>
+                <p class="catalog-summary" role="status"><% if (!listingError) { %>Showing <%= rangeStart %>–<%= rangeEnd %> of <%= matchedCount %> products<% if (searchQuery) { %> matching “<%= searchQuery %>”<% } %><% } %></p>
+                <p id="catalogActionError" class="catalog-action-error" role="alert" hidden></p>
+                <% if (listingError) { %>
+                  <div class="empty-state"><p class="empty-state__title">Catalog unavailable</p><p class="empty-state__desc">Please reload to try again.</p></div>
+                <% } else if (!products.length) { %>
+                  <div class="empty-state">
+                    <p class="empty-state__title"><%= searchQuery ? 'No matching products' : 'No products yet' %></p>
+                    <p class="empty-state__desc"><%= searchQuery ? 'Try another name or category, or clear your search.' : 'Add your first product using the form below.' %></p>
+                  </div>
+                <% } %>
+                <% products.forEach(product => { const isKit = product.productType === 'kit'; const stock = Number(product.stockQuantity) || 0; %>
+                  <div class="bundle-row" data-id="<%= product._id %>" data-type="<%= product.productType %>">
+                    <div class="bundle-row__meta">
+                      <strong><%= product.name %></strong>
+                      <span>
+                        <span class="bundle-tag"><%= product.category %></span>
+                        <% if (isKit) { %><span class="bundle-tag">Kit</span><% } %>
+                        <span class="bundle-price">₱<%= (Number(product.price) || 0).toFixed(2) %></span>
+                        <span class="bundle-stock <%= stock <= 0 ? 'bundle-stock--out' : stock <= 5 ? 'bundle-stock--low' : '' %>"><%= stock %> in stock</span>
+                        <% if (product.difficulty) { %><span class="bundle-diff"><%= product.difficulty %></span><% } %>
+                      </span>
+                    </div>
+                    <div class="bundle-row__actions">
+                      <div class="bundle-row__badge"><span>Limit: <strong><%= product.maxPurchaseQuantity ?? 10 %></strong></span></div>
+                      <button class="outline-button edit-button js-edit-product-btn" type="button" aria-label="Edit <%= product.name %>">Edit</button>
+                      <form method="post" action="/admin/<%= isKit ? 'bundles' : 'items' %>/<%= product._id %>/delete" class="js-delete-<%= isKit ? 'kit' : 'item' %>-form" data-name="<%= product.name %>" style="margin: 0;">
+                        <input type="hidden" name="q" value="<%= searchQuery %>" />
+                        <input type="hidden" name="page" value="<%= currentPage %>" />
+                        <button class="remove-button js-remove-<%= isKit ? 'kit' : 'item' %>-btn" type="button" aria-label="Remove <%= product.name %>">Remove</button>
+                      </form>
+                    </div>
+                  </div>
+                <% }) %>
+                <% if (activeTab === 'products' && !listingError) { %><%- include('partials/adminPagination') %><% } %>
               </section>
 
-              <form class="bundle-editor" id="bundleForm" method="post" action="/admin/items"
-                enctype="multipart/form-data">
+              <form class="bundle-editor" id="bundleForm" method="post" action="<%= editingId ? '/admin/' + (editingType === 'kit' ? 'bundles' : 'items') + '/' + editingId + '/edit' : '/admin/items' %>"
+                data-edit-id="<%= editingId %>" data-edit-type="<%= editingType %>" enctype="multipart/form-data">
                 <input type="hidden" name="existingImageUrl" id="existingImageUrl" value="" />
-                <input type="hidden" name="itemId" id="formItemId" value="" />
+                <input type="hidden" name="itemId" id="formItemId" value="<%= editingId %>" />
+                <input type="hidden" name="q" value="<%= searchQuery %>" />
+                <input type="hidden" name="page" value="<%= currentPage %>" />
                 <div class="editor-main">
                   <div class="edit-mode-banner" id="editModeBanner" style="display: none;">
                     <div class="edit-mode-banner__info">
@@ -701,7 +599,7 @@
               </form>
             </section>
 
-            <section class="tab-panel" data-panel="accounts">
+            <section class="tab-panel <%= activeTab === 'accounts' ? 'is-active' : '' %>" data-panel="accounts">
               <section class="admin-card accounts-card">
                 <div class="section-heading">
                   <div class="section-heading__title">
@@ -721,6 +619,7 @@
                     </div>
                   </div>
                 </div>
+                <% if (activeTab === 'accounts' && !listingError) { %><p class="catalog-summary">Showing <%= rangeStart %>–<%= rangeEnd %> of <%= matchedCount %> accounts</p><% } %>
                 <% users.forEach(user=> { %>
                   <div class="account-row">
                     <div class="account-row__meta">
@@ -766,6 +665,7 @@
                           <% } %>
                   </div>
                   <% }) %>
+                <% if (activeTab === 'accounts' && !listingError) { %><%- include('partials/adminPagination') %><% } %>
               </section>
 
               <section class="admin-card password-card">
