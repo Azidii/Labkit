@@ -92,49 +92,9 @@ document.addEventListener("DOMContentLoaded", () => {
     suggestions.hidden = false;
   };
 
-  const filterVisibleProducts = () => {
-    if (!searchInput) return;
-    const cards = Array.from(document.querySelectorAll(".product-card"));
-    const resultCount = document.querySelector(".results-count strong");
-    if (!cards.length || !resultCount) return;
-
-    const query = searchInput.value.trim().toLowerCase();
-    let visibleCount = 0;
-    cards.forEach((card) => {
-      const matches = !query || (card.dataset.search || "").toLowerCase().includes(query);
-      card.hidden = !matches;
-      card.setAttribute("aria-hidden", String(!matches));
-      if (matches) visibleCount += 1;
-    });
-
-    resultCount.textContent = String(visibleCount);
-    let emptyState = document.getElementById("liveSearchEmptyState");
-    if (visibleCount === 0) {
-      if (!emptyState) {
-        emptyState = document.createElement("div");
-        emptyState.id = "liveSearchEmptyState";
-        emptyState.className = "empty-state";
-        emptyState.innerHTML = `
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            <line x1="8" y1="11" x2="14" y2="11"></line>
-          </svg>
-          <h3>No parts match your search</h3>
-          <p>Try another keyword or clear the search field.</p>`;
-        document.querySelector(".shop-products").appendChild(emptyState);
-      }
-      emptyState.hidden = false;
-    } else if (emptyState) {
-      emptyState.hidden = true;
-    }
-  };
-
   if (searchInput) {
     searchInput.addEventListener("input", () => {
       renderSuggestions();
-      filterVisibleProducts();
     });
     searchInput.addEventListener("focus", renderSuggestions);
     searchInput.addEventListener("keydown", (e) => {
