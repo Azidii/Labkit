@@ -20,6 +20,20 @@ function sanitizeErrorMessage(msg) {
   return msg;
 }
 
+// Canonical redirect URI generator for Google OAuth
+function getGoogleRedirectUri(req) {
+  if (process.env.GOOGLE_CALLBACK_URL) {
+    return process.env.GOOGLE_CALLBACK_URL;
+  }
+  const isProd = process.env.NODE_ENV === "production";
+  if (isProd) {
+    return "https://labkit-market.vercel.app/login/google/callback";
+  }
+  const protocol = req.headers["x-forwarded-proto"] || req.protocol || "http";
+  const host = req.headers["x-forwarded-host"] || req.get("host");
+  return `${protocol}://${host}/login/google/callback`;
+}
+
 // GET /login - Render login page
 exports.renderLogin = (req, res) => {
   if (req.session && req.session.user) {
@@ -36,7 +50,7 @@ exports.renderLogin = (req, res) => {
  * processLogin:
  * Authenticate the user, create a JWT payload containing userId and role,
  * sign it with process.env.JWT_SECRET (1-day expiration), and set it in an httpOnly cookie.
- * Route logic: If the role is "admin", redirect to /admin/dashboard. Otherwise, redirect to /shop.
+ * Route logic: If the role is "admin", redirect to /admin. Otherwise, redirect to returnTo or /shop.
  */
 exports.processLogin = async (req, res) => {
   const isJson = req.is("json") || req.headers.accept?.includes("application/json");
@@ -114,7 +128,6 @@ exports.processLogin = async (req, res) => {
       path: "/"
     });
 
-
     // Establish user session
     if (req.session) {
       req.session.user = {
@@ -143,6 +156,14 @@ exports.processLogin = async (req, res) => {
           email: user.email,
           role: user.role
         }
+      });
+    }
+
+    // Save session explicitly before redirecting to avoid race condition
+    if (req.session) {
+      return req.session.save((err) => {
+        if (err) console.error("Session save error:", err);
+        res.redirect(redirectUrl);
       });
     }
 
@@ -179,7 +200,7 @@ exports.startGoogleAuth = (req, res) => {
     );
   }
 
-  const redirectUri = `${req.protocol}://${req.get("host")}/login/google/callback`;
+  const redirectUri = getGoogleRedirectUri(req);
   const state = crypto.randomBytes(24).toString("hex");
 
   // Store state in httpOnly cookie to reliably support serverless multi-container instances
@@ -208,6 +229,14 @@ exports.startGoogleAuth = (req, res) => {
 
 // GET /login/google/callback - Handle Google OAuth callback
 exports.handleGoogleCallback = async (req, res) => {
+  const isProd = process.env.NODE_ENV === "production";
+  const cookieOpts = {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: isProd,
+    path: "/"
+  };
+
   try {
     const { code, state, error } = req.query;
 
@@ -225,7 +254,8 @@ exports.handleGoogleCallback = async (req, res) => {
 
     // Verify OAuth state against stored state cookie
     const storedState = req.cookies?.oauth_state || req.session?.oauthState;
-    res.clearCookie("oauth_state", { path: "/" });
+    res.clearCookie("oauth_state", cookieOpts);
+
     if (!state || !storedState || state !== storedState) {
       return res.redirect(
         `/login?error=${encodeURIComponent("Authentication session expired. Please try signing in again.")}`
@@ -234,7 +264,7 @@ exports.handleGoogleCallback = async (req, res) => {
 
     const clientId = process.env.GOOGLE_CLIENT_ID;
     const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-    const redirectUri = `${req.protocol}://${req.get("host")}/login/google/callback`;
+    const redirectUri = getGoogleRedirectUri(req);
 
     // Exchange authorization code for token
     const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
@@ -285,7 +315,7 @@ exports.handleGoogleCallback = async (req, res) => {
     if (!user) {
       let baseUsername = (email.split("@")[0] || "user")
         .replace(/[^a-zA-Z0-9_]/g, "")
-        .toLowerCase();
+        .toLowerCase() || "user";
       let username = baseUsername;
       let counter = 1;
       while (await User.findOne({ username })) {
@@ -329,14 +359,13 @@ exports.handleGoogleCallback = async (req, res) => {
     });
 
     res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000,
-      path: "/"
+      ...cookieOpts,
+      maxAge: 24 * 60 * 60 * 1000
     });
 
-    // Save session
+    // Save session explicitly before redirecting to avoid race condition on Vercel
+    const redirectUrl = user.role === "admin" ? "/admin" : "/shop";
+
     if (req.session) {
       req.session.user = {
         id: user._id,
@@ -347,10 +376,14 @@ exports.handleGoogleCallback = async (req, res) => {
         role: user.role,
         avatar: user.avatar || ""
       };
+
+      return req.session.save((err) => {
+        if (err) console.error("Session save error:", err);
+        res.redirect(redirectUrl);
+      });
     }
 
-    const redirectUrl = user.role === "admin" ? "/admin" : "/shop";
-    res.redirect(redirectUrl);
+    return res.redirect(redirectUrl);
   } catch (err) {
     console.error("Google OAuth Error:", err.message || err);
     res.redirect(
