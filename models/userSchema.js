@@ -35,9 +35,11 @@ const userSchema = new mongoose.Schema(
 
     googleId: {
       type: String,
-      unique: true,
-      sparse: true,
-      default: null
+      index: {
+        unique: true,
+        sparse: true,
+        partialFilterExpression: { googleId: { $type: "string" } }
+      }
     },
 
     role: {

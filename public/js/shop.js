@@ -111,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-
   if (searchInput) {
     searchInput.addEventListener("input", () => {
       renderSuggestions();
@@ -176,6 +175,41 @@ document.addEventListener("DOMContentLoaded", () => {
       filterForm.appendChild(sortInput);
       filterForm.submit();
     });
+  }
+
+  // Mobile filter drawer toggle
+  const mobileFilterToggle = document.getElementById("mobileFilterToggle");
+  const mobileFilterDrawer = document.getElementById("mobileFilterDrawer");
+  const mobileFilterClose = document.getElementById("mobileFilterClose");
+
+  if (mobileFilterToggle && mobileFilterDrawer) {
+    const toggleDrawer = (forceOpen) => {
+      const willOpen = forceOpen !== undefined ? forceOpen : mobileFilterDrawer.hidden;
+      mobileFilterDrawer.hidden = !willOpen;
+      mobileFilterToggle.classList.toggle("is-active", willOpen);
+      mobileFilterToggle.setAttribute("aria-expanded", String(willOpen));
+    };
+
+    mobileFilterToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleDrawer();
+    });
+    if (mobileFilterClose) {
+      mobileFilterClose.addEventListener("click", () => toggleDrawer(false));
+    }
+  }
+
+  // Auto-scroll active category pill into center view in mobile category scrollbar
+  const activeMobileCat = document.querySelector(".mobile-cat-pill.is-active");
+  if (activeMobileCat) {
+    try {
+      activeMobileCat.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    } catch (_) {
+      const container = activeMobileCat.closest(".mobile-categories-scroll");
+      if (container) {
+        container.scrollLeft = activeMobileCat.offsetLeft - (container.clientWidth / 2) + (activeMobileCat.clientWidth / 2);
+      }
+    }
   }
 
   document.addEventListener("click", (e) => {

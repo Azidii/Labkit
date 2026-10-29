@@ -144,8 +144,22 @@
         aria-label="Product suggestions" hidden></div>
     </form>
 
+    <!-- Mobile Horizontal Category Scrollbar (Visible on mobile < 768px) -->
+    <nav class="mobile-categories-bar" aria-label="Component categories">
+      <div class="mobile-categories-scroll">
+        <% const mobileCats = ["All", "Microcontrollers", "Sensors & Modules", "Displays & Power", "Buzzers & Audio", "IoT Kits"]; %>
+        <% mobileCats.forEach(c => { %>
+          <button type="button" class="mobile-cat-pill <%= activeCategory === c ? 'is-active' : '' %>"
+            onclick="setFilter('category', '<%= c %>')"
+            <%= activeCategory === c ? 'aria-current="page"' : '' %>>
+            <%= c %>
+          </button>
+        <% }) %>
+      </div>
+    </nav>
+
     <div class="shop-layout">
-      <!-- Sidebar Filters -->
+      <!-- Desktop Sidebar Filters (Hidden on mobile < 768px) -->
       <aside class="shop-sidebar">
         <div class="sidebar-header">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -188,32 +202,91 @@
           <% } %>
       </aside>
 
-      <!-- Products Grid -->
+      <!-- Products Grid & Controls -->
       <section class="shop-products">
         <div class="results-bar">
-          <span class="results-count"><strong>
-              <%= totalCount %>
-            </strong> items</span>
-          <div class="results-sort">
-            <label for="sortSelect">Sort</label>
-            <div class="sort-menu" id="sortMenu">
-              <button type="button" class="sort-select" id="sortSelect" aria-haspopup="listbox"
-                aria-expanded="false">
-                <span id="sortSelectLabel">
-                  <%= activeSort==='price-asc' ? 'Price: Low to High' : activeSort==='price-desc' ? 'Price: High to Low' : 'Featured' %>
-                </span>
-                <span class="sort-select__chevron" aria-hidden="true"></span>
-              </button>
-              <div class="sort-options" id="sortOptions" role="listbox" aria-label="Sort products" hidden>
-                <button type="button" class="sort-option <%= activeSort==='featured' ? 'is-active' : '' %>"
-                  role="option" aria-selected="<%= activeSort==='featured' %>" data-value="featured">Featured</button>
-                <button type="button" class="sort-option <%= activeSort==='price-asc' ? 'is-active' : '' %>"
-                  role="option" aria-selected="<%= activeSort==='price-asc' %>" data-value="price-asc">Price: Low to High</button>
-                <button type="button" class="sort-option <%= activeSort==='price-desc' ? 'is-active' : '' %>"
-                  role="option" aria-selected="<%= activeSort==='price-desc' %>" data-value="price-desc">Price: High to Low</button>
+          <div class="results-bar__left">
+            <span class="results-count"><strong><%= totalCount %></strong> items</span>
+            <% if (activeCategory !== 'All' || activeDifficulty !== 'All levels' || searchQuery) { %>
+              <a href="/shop" class="mobile-active-reset" title="Clear all filters">
+                <span>Clear</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </a>
+            <% } %>
+          </div>
+
+          <div class="results-bar__right">
+            <!-- Mobile Filters Toggle Button (Visible on mobile < 768px) -->
+            <% const activeFilterCount = (activeCategory !== 'All' ? 1 : 0) + (activeDifficulty !== 'All levels' ? 1 : 0); %>
+            <button type="button" class="mobile-filter-btn <%= activeDifficulty !== 'All levels' ? 'has-active' : '' %>" id="mobileFilterToggle" aria-expanded="false" aria-controls="mobileFilterDrawer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+              </svg>
+              <span>Difficulty</span>
+              <% if (activeDifficulty !== 'All levels') { %>
+                <span class="mobile-filter-badge">1</span>
+              <% } %>
+              <span class="mobile-filter-chevron" aria-hidden="true"></span>
+            </button>
+
+            <div class="results-sort">
+              <label for="sortSelect">Sort</label>
+              <div class="sort-menu" id="sortMenu">
+                <button type="button" class="sort-select" id="sortSelect" aria-haspopup="listbox"
+                  aria-expanded="false">
+                  <span id="sortSelectLabel">
+                    <%= activeSort==='price-asc' ? 'Price: Low to High' : activeSort==='price-desc' ? 'Price: High to Low' : 'Featured' %>
+                  </span>
+                  <span class="sort-select__chevron" aria-hidden="true"></span>
+                </button>
+                <div class="sort-options" id="sortOptions" role="listbox" aria-label="Sort products" hidden>
+                  <button type="button" class="sort-option <%= activeSort==='featured' ? 'is-active' : '' %>"
+                    role="option" aria-selected="<%= activeSort==='featured' %>" data-value="featured">Featured</button>
+                  <button type="button" class="sort-option <%= activeSort==='price-asc' ? 'is-active' : '' %>"
+                    role="option" aria-selected="<%= activeSort==='price-asc' %>" data-value="price-asc">Price: Low to High</button>
+                  <button type="button" class="sort-option <%= activeSort==='price-desc' ? 'is-active' : '' %>"
+                    role="option" aria-selected="<%= activeSort==='price-desc' %>" data-value="price-desc">Price: High to Low</button>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- Mobile Filter Drawer (Collapsible Difficulty & Reset on mobile < 768px) -->
+        <div class="mobile-filter-drawer" id="mobileFilterDrawer" hidden>
+          <div class="mobile-filter-drawer__header">
+            <span class="mobile-filter-drawer__title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+              </svg>
+              Filter by Difficulty
+            </span>
+            <button type="button" class="mobile-filter-drawer__close" id="mobileFilterClose" aria-label="Close filters">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="mobile-filter-drawer__pills">
+            <% const diffOptions = ["All levels", "Beginner", "Intermediate", "Advanced"]; %>
+            <% diffOptions.forEach(d => { %>
+              <button type="button" class="filter-pill <%= activeDifficulty === d ? 'is-active' : '' %>"
+                onclick="setFilter('difficulty', '<%= d %>')">
+                <%= d %>
+              </button>
+            <% }) %>
+          </div>
+          <% if (activeCategory !== 'All' || activeDifficulty !== 'All levels' || searchQuery) { %>
+            <div class="mobile-filter-drawer__footer">
+              <a href="/shop" class="btn-clear-filters">
+                Reset all filters
+              </a>
+            </div>
+          <% } %>
         </div>
 
         <% if (typeof error !== 'undefined' && error) { %>
