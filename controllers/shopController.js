@@ -74,7 +74,7 @@ exports.renderShop = async (req, res) => {
         compare_at_price: item.compare_at_price ? Number(item.compare_at_price) : null,
         category: item.category || "Sensors & Modules",
         difficulty: item.difficulty || "Beginner",
-        image_url: item.imageUrl || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600",
+        image_url: item.imageUrl || "/img/product-unavailable.svg",
         rating: item.rating || 5.0,
         review_count: item.review_count || 0,
         stockQuantity: stock,

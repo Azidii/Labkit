@@ -714,7 +714,7 @@
         if (itemsListEl) {
           const summaryMarkup = items.map(item => `
             <div class="order-summary-item">
-              <img src="${item.img}" alt="${item.name}" class="order-summary-item__img" />
+              <img src="${item.img}" alt="${item.name}" class="order-summary-item__img" onerror="this.onerror=null;this.src='/img/product-unavailable.svg';" />
               <div class="order-summary-item__info">
                 <h4 class="order-summary-item__name">${item.name}</h4>
                 <span class="order-summary-item__qty">Qty ${item.qty}</span>

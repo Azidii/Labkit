@@ -203,7 +203,7 @@
                   <% spotlights.forEach(function(item, idx) { %>
                     <article class="spotlight-slide <%= idx === 0 ? 'is-active' : '' %>" data-slide-index="<%= idx %>" aria-hidden="<%= idx === 0 ? 'false' : 'true' %>">
                       <div class="spotlight-slide__media">
-                        <img src="<%= item.image_url %>" alt="<%= item.name %>" class="spotlight-slide__img" loading="<%= idx === 0 ? 'eager' : 'lazy' %>" />
+                        <img src="<%= item.image_url %>" alt="<%= item.name %>" class="spotlight-slide__img" loading="<%= idx === 0 ? 'eager' : 'lazy' %>" onerror="this.onerror=null;this.src='/img/product-unavailable.svg';" />
                         <div class="spotlight-slide__badges">
                           <span class="spotlight-badge spotlight-badge--cat"><%= item.category %></span>
                           <span class="spotlight-badge spotlight-badge--diff spotlight-badge--<%= (item.difficulty || 'beginner').toLowerCase().replace(/\s/g, '-') %>"><%= item.difficulty || 'Beginner' %></span>
@@ -368,7 +368,7 @@
                           </span>
                           <% } %>
                       </div>
-                      <img src="<%= p.image_url %>" alt="<%= p.name %>" loading="lazy" />
+                      <img src="<%= p.image_url %>" alt="<%= p.name %>" loading="lazy" onerror="this.onerror=null;this.src='/img/product-unavailable.svg';" />
                     </div>
                     <div class="product-card__body">
                       <h3 class="product-card__name">

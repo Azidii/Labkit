@@ -399,7 +399,7 @@ function renderCart() {
                   onchange="toggleCartItemSelection('${item.id}', this.checked)" aria-label="Select ${item.name} for checkout" />
                 <span aria-hidden="true"></span>
               </label>
-              <img src="${item.img}" alt="${item.name}" class="cart-item-card__img" />
+              <img src="${item.img}" alt="${item.name}" class="cart-item-card__img" onerror="this.onerror=null;this.src='/img/product-unavailable.svg';" />
             <div class="cart-item-card__content">
               <div class="cart-item-card__top">
                 <h4 class="cart-item-card__title">${item.name}</h4>
